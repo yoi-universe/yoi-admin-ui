@@ -13,8 +13,16 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@types/nprogress": "^0.2.3",
+    "axios": "^1.7.7",
+    "element-plus": "^2.8.7",
+    "js-md5": "^0.8.3",
+    "nprogress": "^0.2.0",
     "pinia": "^2.2.4",
+    "pinia-plugin-persistedstate": "^4.1.2",
+    "sass": "^1.80.6",
     "vue": "^3.5.12",
+    "vue-i18n": "^10.0.4",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
@@ -29,6 +37,8 @@
     "npm-run-all2": "^7.0.1",
     "prettier": "^3.3.3",
     "typescript": "~5.6.0",
+    "unplugin-auto-import": "^0.18.3",
+    "unplugin-vue-components": "^0.27.4",
     "vite": "^5.4.10",
     "vue-tsc": "^2.1.6"
   }
