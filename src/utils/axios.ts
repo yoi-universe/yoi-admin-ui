@@ -1,5 +1,6 @@
 import type {
   AxiosInstance,
+  AxiosResponse,
   Canceler,
   CreateAxiosDefaults,
   InternalAxiosRequestConfig,
@@ -7,13 +8,11 @@ import type {
 import axios from 'axios'
 import { ElLoading, ElMessage, type LoadingOptions } from 'element-plus'
 
-// axios 配置
-const config: CreateAxiosDefaults = {
-  baseURL: import.meta.env.VITE_BASE_URL,
-  timeout: 10000,
-}
-
-class Yoi {
+abstract class Yoi {
+  private config: CreateAxiosDefaults = {
+    baseURL: import.meta.env.VITE_BASE_URL,
+    timeout: 10000,
+  }
   private instance: AxiosInstance
   private pendingMap = new Map<string, Canceler>()
   private options: Options = {}
@@ -23,12 +22,77 @@ class Yoi {
     count: 0,
   }
 
-  constructor(config: CreateAxiosDefaults) {
-    this.instance = axios.create(config)
+  constructor(config?: CreateAxiosDefaults) {
+    this.instance = axios.create(config || this.config)
     this.interceptors()
   }
 
-  // 请求拦截器
+  /**
+   * 请求拦截器成功
+   * @param config 请求配置
+   * @returns 请求配置
+   */
+  public onRequestFulfilled(config: InternalAxiosRequestConfig) {
+    // 防止重复请求
+    this.removePending(config)
+    if (this.options.cancelRepeatRequest) this.addPending(config)
+
+    // 创建loading实例
+    if (this.options.loading) {
+      this.loadingInstance.count++
+      if (this.loadingInstance.count === 1) {
+        this.loadingInstance.target = ElLoading.service(this.loading)
+      }
+    }
+    return config
+  }
+
+  /**
+   * 请求拦截器失败
+   * @param error 请求错误
+   * @returns Promise
+   */
+  public onRequestRejected(error: InternalAxiosRequestConfig) {
+    return Promise.reject(error)
+  }
+
+  /**
+   * 响应拦截器成功
+   * @param response Axios响应
+   * @returns Promise
+   */
+  public onResponseFulfilled(response: AxiosResponse) {
+    this.removePending(response.config)
+    if (this.options.loading) this.closeLoading()
+
+    if (
+      this.options.showCodeMessage &&
+      response.data &&
+      response.data.code !== 200
+    ) {
+      ElMessage({
+        message: response.data.message,
+        type: 'error',
+        plain: true,
+      })
+      return Promise.reject(response.data) // code不等于200, 页面具体逻辑就不执行了
+    }
+
+    return this.options.reductDataFormat ? response.data : response
+  }
+
+  /**
+   * 响应拦截器失败
+   * @param error Axios响应
+   * @returns Promise
+   */
+  public onResponseRejected(error: AxiosResponse) {
+    if (error.config) this.removePending(error.config)
+    if (this.options.loading) this.closeLoading()
+    if (this.options.showErrorMessage) this.httpErrorStatusHandle(error) // 处理错误状态码
+    return Promise.reject(error) // 错误继续返回给到具体页面
+  }
+
   private interceptors() {
     // 自定义配置
     this.options = Object.assign(
@@ -43,57 +107,13 @@ class Yoi {
     )
 
     this.instance.interceptors.request.use(
-      config => {
-        this.removePending(config)
-        if (this.options.cancelRepeatRequest) this.addPending(config)
-
-        // 创建loading实例
-        if (this.options.loading) {
-          this.loadingInstance.count++
-          if (this.loadingInstance.count === 1) {
-            this.loadingInstance.target = ElLoading.service(this.loading)
-          }
-        }
-
-        // 获取token
-        // const token = getToken()
-        // if(token){
-        //   config.headers.Authorization = token
-        // }
-        // 防止重复请求
-        return config
-      },
-      error => {
-        return Promise.reject(error)
-      },
+      config => this.onRequestFulfilled(config),
+      error => this.onRequestRejected(error),
     )
 
     this.instance.interceptors.response.use(
-      response => {
-        this.removePending(response.config)
-        if (this.options.loading) this.closeLoading()
-
-        if (
-          this.options.showCodeMessage &&
-          response.data &&
-          response.data.code !== 200
-        ) {
-          ElMessage({
-            message: response.data.message,
-            type: 'error',
-            plain: true,
-          })
-          return Promise.reject(response.data) // code不等于200, 页面具体逻辑就不执行了
-        }
-
-        return this.options.reductDataFormat ? response.data : response
-      },
-      error => {
-        if (error.config) this.removePending(error.config)
-        if (this.options.loading) this.closeLoading()
-        if (this.options.showErrorMessage) this.httpErrorStatusHandle(error) // 处理错误状态码
-        return Promise.reject(error) // 错误继续返回给到具体页面
-      },
+      response => this.onResponseFulfilled(response),
+      error => this.onResponseRejected(error),
     )
   }
 
@@ -160,7 +180,9 @@ class Yoi {
     }
   }
 
-  // 关闭Loading层实例
+  /**
+   * 关闭Loading层实例
+   */
   private closeLoading() {
     if (this.options.loading && this.loadingInstance.count > 0)
       this.loadingInstance.count--
@@ -170,8 +192,11 @@ class Yoi {
     }
   }
 
-  // 储存每个请求的唯一cancel回调, 以此为标识
-  addPending(config: InternalAxiosRequestConfig) {
+  /**
+   * 储存每个请求的唯一cancel回调, 以此为标识
+   * @param config axios请求配置对象
+   */
+  private addPending(config: InternalAxiosRequestConfig) {
     const pendingKey = this.getPendingKey(config)
     config.cancelToken =
       config.cancelToken ||
@@ -182,7 +207,10 @@ class Yoi {
       })
   }
 
-  // 删除重复请求
+  /**
+   * 删除重复请求
+   * @param config axios请求配置对象
+   */
   private removePending(config: InternalAxiosRequestConfig) {
     const pendingKey = this.getPendingKey(config)
     if (this.pendingMap.has(pendingKey)) {
@@ -192,7 +220,11 @@ class Yoi {
     }
   }
 
-  // 生成唯一的每个请求的唯一key
+  /**
+   * 生成唯一的每个请求的唯一key
+   * @param config axios请求配置对象
+   * @returns string
+   */
   private getPendingKey(config: InternalAxiosRequestConfig) {
     const { url, method, params, headers } = config
     let { data } = config
@@ -206,8 +238,15 @@ class Yoi {
     ].join('&')
   }
 
-  // Get 请求
-  get<T = Result>(
+  /**
+   * Get 请求
+   * @param url 接口地址
+   * @param params 请求参数
+   * @param options 配置参数
+   * @param loading 加载loading参数
+   * @returns Promise
+   */
+  public get<T = Result>(
     url: string,
     params?: object,
     options?: Options,
@@ -218,8 +257,15 @@ class Yoi {
     return this.instance.get(url, { params })
   }
 
-  // Post 请求
-  post<T = Result>(
+  /**
+   * Post 请求
+   * @param url 接口地址
+   * @param data 请求参数
+   * @param options 配置参数
+   * @param loading 加载loading参数
+   * @returns Promise
+   */
+  public post<T = Result>(
     url: string,
     data?: object,
     options?: Options,
@@ -230,8 +276,15 @@ class Yoi {
     return this.instance.post(url, data)
   }
 
-  // Put 请求
-  put<T = Result>(
+  /**
+   * Put 请求
+   * @param url 接口地址
+   * @param data 请求参数
+   * @param options 配置参数
+   * @param loading 加载loading参数
+   * @returns Promise
+   */
+  public put<T = Result>(
     url: string,
     data?: object,
     options?: Options,
@@ -242,8 +295,15 @@ class Yoi {
     return this.instance.put(url, data)
   }
 
-  // Delete 请求
-  delete<T = Result>(
+  /**
+   * Delete 请求
+   * @param url 接口地址
+   * @param data 请求参数
+   * @param options 配置参数
+   * @param loading 加载loading参数
+   * @returns Promise
+   */
+  public delete<T = Result>(
     url: string,
     data?: object,
     options?: Options,
@@ -254,8 +314,22 @@ class Yoi {
     return this.instance.delete(url, data)
   }
 
-  // 图片上传
-  upload<T = Result>(url: string, data?: object): Promise<T> {
+  /**
+   * 图片上传
+   * @param url 接口地址
+   * @param data 请求参数
+   * @param options 配置参数
+   * @param loading 加载loading参数
+   * @returns Promise
+   */
+  public upload<T = Result>(
+    url: string,
+    data?: object,
+    options?: Options,
+    loading?: LoadingOptions,
+  ): Promise<T> {
+    this.options = options || {}
+    this.loading = loading || {}
     return this.instance.post(url, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -264,7 +338,7 @@ class Yoi {
   }
 }
 
-export default new Yoi(config)
+export default Yoi
 
 interface Options {
   // 是否开启取消重复请求, 默认为 true
