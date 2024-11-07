@@ -1,8 +1,4 @@
-import AbsAxios, {
-  type MessageHandler,
-  type Options,
-  type Result,
-} from '@/utils/axios'
+import AbsAxios, { type Options, type Result } from '@/utils/axios'
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { ElLoading, ElMessage, type LoadingOptions } from 'element-plus'
 
@@ -15,18 +11,27 @@ class YoiAxios extends AbsAxios {
   }
 
   constructor() {
-    super(undefined, {
-      showMessage(
-        message: string,
-        type: 'error' | 'success' | 'info' | 'warning',
-      ) {
-        ElMessage({
-          message,
-          type,
-          plain: true,
-        })
+    super(
+      {
+        baseURL:
+          import.meta.env.VITE_ENV === 'development'
+            ? '/api'
+            : import.meta.env.VITE_BASE_URL,
+        timeout: 10000,
       },
-    })
+      {
+        showMessage(
+          message: string,
+          type: 'error' | 'success' | 'info' | 'warning',
+        ) {
+          ElMessage({
+            message,
+            type,
+            plain: true,
+          })
+        },
+      },
+    )
   }
 
   public override onRequestFulfilled(config: InternalAxiosRequestConfig) {
@@ -77,8 +82,8 @@ class YoiAxios extends AbsAxios {
     options?: IOptions,
     loading?: LoadingOptions,
   ): Promise<T> {
-    this.options = options || {}
-    this.loading = loading || {}
+    if (options) this.options = options
+    if (loading) this.loading = loading
     return super.get(url, params, options)
   }
 
@@ -96,8 +101,8 @@ class YoiAxios extends AbsAxios {
     options?: IOptions,
     loading?: LoadingOptions,
   ): Promise<T> {
-    this.options = options || {}
-    this.loading = loading || {}
+    if (options) this.options = options
+    if (loading) this.loading = loading
     return super.post(url, data, options)
   }
 
@@ -115,8 +120,8 @@ class YoiAxios extends AbsAxios {
     options?: IOptions,
     loading?: LoadingOptions,
   ): Promise<T> {
-    this.options = options || {}
-    this.loading = loading || {}
+    if (options) this.options = options
+    if (loading) this.loading = loading
     return super.put(url, data, options)
   }
 
@@ -134,8 +139,8 @@ class YoiAxios extends AbsAxios {
     options?: IOptions,
     loading?: LoadingOptions,
   ): Promise<T> {
-    this.options = options || {}
-    this.loading = loading || {}
+    if (options) this.options = options
+    if (loading) this.loading = loading
     return super.delete(url, data, options)
   }
 
@@ -153,23 +158,13 @@ class YoiAxios extends AbsAxios {
     options?: IOptions,
     loading?: LoadingOptions,
   ): Promise<T> {
-    this.options = options || {}
-    this.loading = loading || {}
-    return super.upload(url, data)
+    if (options) this.options = options
+    if (loading) this.loading = loading
+    return super.upload(url, data, options)
   }
 }
 
 export default new YoiAxios()
-
-class ElMessageHandler implements MessageHandler {
-  showMessage(message: string, type: 'error' | 'success' | 'info' | 'warning') {
-    ElMessage({
-      message,
-      type,
-      plain: true,
-    })
-  }
-}
 
 interface LoadingInstance {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
