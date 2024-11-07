@@ -24,8 +24,6 @@ export default abstract class AbsAxios {
 
   constructor(config?: CreateAxiosDefaults, messageHandler?: MessageHandler) {
     this.instance = axios.create(config || this.config)
-    console.log(config || this.config)
-
     this.messageHandler = messageHandler || {
       showMessage: (msg, type) => console.error(`默认消息: ${msg} [${type}]`),
     }
