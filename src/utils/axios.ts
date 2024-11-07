@@ -14,7 +14,7 @@ export default abstract class AbsAxios {
   }
   private instance: AxiosInstance
   private pendingMap = new Map<string, Canceler>()
-  public options: Options = {}
+  protected options: Options = {}
 
   /**
    * 消息提示
@@ -66,6 +66,8 @@ export default abstract class AbsAxios {
       this.messageHandler.showMessage(response.data.message, 'error')
       return Promise.reject(response.data) // code不等于200, 页面具体逻辑就不执行了
     }
+    console.log(this.options)
+
     return this.options.reductDataFormat ? response.data : response
   }
 
@@ -82,15 +84,7 @@ export default abstract class AbsAxios {
 
   private interceptors() {
     // 自定义配置
-    this.options = Object.assign(
-      {
-        cancelRepeatRequest: true, // 是否开启取消重复请求, 默认为 true
-        reductDataFormat: true, // 是否开启简洁的数据结构响应, 默认为true
-        showErrorMessage: true, // 是否开启接口错误信息展示,默认为true
-        showCodeMessage: false, // 是否开启code不为200时的信息提示, 默认为false
-      },
-      this.options,
-    )
+    this.configureOptions()
 
     this.instance.interceptors.request.use(
       config => this.onRequestFulfilled(config),
@@ -100,6 +94,19 @@ export default abstract class AbsAxios {
     this.instance.interceptors.response.use(
       response => this.onResponseFulfilled(response),
       error => this.onResponseRejected(error),
+    )
+  }
+
+  private configureOptions(options?: Options) {
+    // 自定义配置
+    this.options = Object.assign(
+      {
+        cancelRepeatRequest: true, // 是否开启取消重复请求, 默认为 true
+        reductDataFormat: true, // 是否开启简洁的数据结构响应, 默认为true
+        showErrorMessage: true, // 是否开启接口错误信息展示,默认为true
+        showCodeMessage: false, // 是否开启code不为200时的信息提示, 默认为false
+      },
+      options,
     )
   }
 
@@ -196,7 +203,7 @@ export default abstract class AbsAxios {
     params?: object,
     options?: Options,
   ): Promise<T> {
-    this.options = options || {}
+    if (options) this.configureOptions(options)
     return this.instance.get(url, { params })
   }
 
@@ -213,7 +220,7 @@ export default abstract class AbsAxios {
     data?: object,
     options?: Options,
   ): Promise<T> {
-    this.options = options || {}
+    if (options) this.configureOptions(options)
     return this.instance.post(url, data)
   }
 
@@ -230,7 +237,7 @@ export default abstract class AbsAxios {
     data?: object,
     options?: Options,
   ): Promise<T> {
-    this.options = options || {}
+    if (options) this.configureOptions(options)
     return this.instance.put(url, data)
   }
 
@@ -247,7 +254,7 @@ export default abstract class AbsAxios {
     data?: object,
     options?: Options,
   ): Promise<T> {
-    this.options = options || {}
+    if (options) this.configureOptions(options)
     return this.instance.delete(url, data)
   }
 
@@ -263,7 +270,7 @@ export default abstract class AbsAxios {
     data?: object,
     options?: Options,
   ): Promise<T> {
-    this.options = options || {}
+    if (options) this.configureOptions(options)
     return this.instance.post(url, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
