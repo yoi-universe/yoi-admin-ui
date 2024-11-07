@@ -6,24 +6,29 @@ import type {
   InternalAxiosRequestConfig,
 } from 'axios'
 import axios from 'axios'
-import { ElLoading, ElMessage, type LoadingOptions } from 'element-plus'
 
-abstract class Yoi {
+export default abstract class AbsAxios {
   private config: CreateAxiosDefaults = {
     baseURL: import.meta.env.VITE_BASE_URL,
     timeout: 10000,
   }
   private instance: AxiosInstance
   private pendingMap = new Map<string, Canceler>()
-  private options: Options = {}
-  private loading: LoadingOptions = {}
-  private loadingInstance: LoadingInstance = {
-    target: null,
-    count: 0,
-  }
+  public options: Options = {}
 
-  constructor(config?: CreateAxiosDefaults) {
+  /**
+   * 消息提示
+   * 使用策略模式，创建消息处理策略
+   */
+  private messageHandler: MessageHandler
+
+  constructor(config?: CreateAxiosDefaults, messageHandler?: MessageHandler) {
     this.instance = axios.create(config || this.config)
+    console.log(config || this.config)
+
+    this.messageHandler = messageHandler || {
+      showMessage: (msg, type) => console.error(`默认消息: ${msg} [${type}]`),
+    }
     this.interceptors()
   }
 
@@ -36,14 +41,6 @@ abstract class Yoi {
     // 防止重复请求
     this.removePending(config)
     if (this.options.cancelRepeatRequest) this.addPending(config)
-
-    // 创建loading实例
-    if (this.options.loading) {
-      this.loadingInstance.count++
-      if (this.loadingInstance.count === 1) {
-        this.loadingInstance.target = ElLoading.service(this.loading)
-      }
-    }
     return config
   }
 
@@ -63,21 +60,14 @@ abstract class Yoi {
    */
   public onResponseFulfilled(response: AxiosResponse) {
     this.removePending(response.config)
-    if (this.options.loading) this.closeLoading()
-
     if (
       this.options.showCodeMessage &&
       response.data &&
       response.data.code !== 200
     ) {
-      ElMessage({
-        message: response.data.message,
-        type: 'error',
-        plain: true,
-      })
+      this.messageHandler.showMessage(response.data.message, 'error')
       return Promise.reject(response.data) // code不等于200, 页面具体逻辑就不执行了
     }
-
     return this.options.reductDataFormat ? response.data : response
   }
 
@@ -88,7 +78,6 @@ abstract class Yoi {
    */
   public onResponseRejected(error: AxiosResponse) {
     if (error.config) this.removePending(error.config)
-    if (this.options.loading) this.closeLoading()
     if (this.options.showErrorMessage) this.httpErrorStatusHandle(error) // 处理错误状态码
     return Promise.reject(error) // 错误继续返回给到具体页面
   }
@@ -98,7 +87,6 @@ abstract class Yoi {
     this.options = Object.assign(
       {
         cancelRepeatRequest: true, // 是否开启取消重复请求, 默认为 true
-        loading: false, // 是否开启loading层效果, 默认为false
         reductDataFormat: true, // 是否开启简洁的数据结构响应, 默认为true
         showErrorMessage: true, // 是否开启接口错误信息展示,默认为true
         showCodeMessage: false, // 是否开启code不为200时的信息提示, 默认为false
@@ -124,71 +112,30 @@ abstract class Yoi {
       return console.error('请求的重复请求：' + error.message)
     let message = ''
     if (error && error.response) {
-      switch (error.response.status) {
-        case 302:
-          message = '接口重定向了！'
-          break
-        case 400:
-          message = '参数不正确！'
-          break
-        case 401:
-          message = '您未登录，或者登录已经超时，请先登录！'
-          break
-        case 403:
-          message = '您没有权限操作！'
-          break
-        case 404:
-          message = `请求地址出错: ${error.response.config.url}`
-          break
-        case 408:
-          message = '请求超时！'
-          break
-        case 409:
-          message = '系统已存在相同数据！'
-          break
-        case 500:
-          message = '服务器内部错误！'
-          break
-        case 501:
-          message = '服务未实现！'
-          break
-        case 502:
-          message = '网关错误！'
-          break
-        case 503:
-          message = '服务不可用！'
-          break
-        case 504:
-          message = '服务暂时无法访问，请稍后再试！'
-          break
-        case 505:
-          message = 'HTTP版本不受支持！'
-          break
-        default:
-          message = '异常问题，请联系管理员！'
-          break
+      const statusMap = new Map<number, string>([
+        [302, '接口重定向了！'],
+        [400, '参数不正确！'],
+        [401, '您未登录，或者登录已经超时，请先登录！'],
+        [403, '您没有权限操作！'],
+        [404, `请求地址出错: ${error.response.config.url}`],
+        [408, '请求超时！'],
+        [409, '系统已存在相同数据！'],
+        [500, '服务器内部错误！'],
+        [501, '服务未实现！'],
+        [502, '网关错误！'],
+        [503, '服务不可用！'],
+        [504, '服务暂时无法访问，请稍后再试！'],
+        [505, 'HTTP版本不受支持！'],
+      ])
+      if (statusMap.has(error.response.status)) {
+        message = statusMap.get(error.response.status)!
+      } else {
+        message = '异常问题，请联系管理员！'
       }
       if (error.message.includes('timeout')) message = '网络请求超时！'
       if (error.message.includes('Network'))
         message = window.navigator.onLine ? '服务端异常！' : '您断网了！'
-
-      ElMessage({
-        message,
-        type: 'error',
-        plain: true,
-      })
-    }
-  }
-
-  /**
-   * 关闭Loading层实例
-   */
-  private closeLoading() {
-    if (this.options.loading && this.loadingInstance.count > 0)
-      this.loadingInstance.count--
-    if (this.loadingInstance.count === 0) {
-      this.loadingInstance.target.close()
-      this.loadingInstance.target = null
+      this.messageHandler.showMessage(message, 'error')
     }
   }
 
@@ -250,10 +197,8 @@ abstract class Yoi {
     url: string,
     params?: object,
     options?: Options,
-    loading?: LoadingOptions,
   ): Promise<T> {
     this.options = options || {}
-    this.loading = loading || {}
     return this.instance.get(url, { params })
   }
 
@@ -269,10 +214,8 @@ abstract class Yoi {
     url: string,
     data?: object,
     options?: Options,
-    loading?: LoadingOptions,
   ): Promise<T> {
     this.options = options || {}
-    this.loading = loading || {}
     return this.instance.post(url, data)
   }
 
@@ -288,10 +231,8 @@ abstract class Yoi {
     url: string,
     data?: object,
     options?: Options,
-    loading?: LoadingOptions,
   ): Promise<T> {
     this.options = options || {}
-    this.loading = loading || {}
     return this.instance.put(url, data)
   }
 
@@ -307,29 +248,24 @@ abstract class Yoi {
     url: string,
     data?: object,
     options?: Options,
-    loading?: LoadingOptions,
   ): Promise<T> {
     this.options = options || {}
-    this.loading = loading || {}
     return this.instance.delete(url, data)
   }
 
   /**
-   * 图片上传
+   * 上传文件
    * @param url 接口地址
    * @param data 请求参数
    * @param options 配置参数
-   * @param loading 加载loading参数
    * @returns Promise
    */
   public upload<T = Result>(
     url: string,
     data?: object,
     options?: Options,
-    loading?: LoadingOptions,
   ): Promise<T> {
     this.options = options || {}
-    this.loading = loading || {}
     return this.instance.post(url, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -338,13 +274,19 @@ abstract class Yoi {
   }
 }
 
-export default Yoi
+/**
+ * 消息处理类
+ */
+export interface MessageHandler {
+  showMessage(message: string, type: string): void
+}
 
-interface Options {
+/**
+ * 请求配置参数
+ */
+export interface Options {
   // 是否开启取消重复请求, 默认为 true
   cancelRepeatRequest?: boolean
-  // 是否开启loading层效果, 默认为false
-  loading?: boolean
   // 是否开启简洁的数据结构响应, 默认为true
   reductDataFormat?: boolean
   // 是否开启接口错误信息展示,默认为true
@@ -353,12 +295,9 @@ interface Options {
   showCodeMessage?: boolean
 }
 
-interface LoadingInstance {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  target: any
-  count: number
-}
-
+/**
+ * 接口返回数据结构
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface Result<T = any> {
   code: number
