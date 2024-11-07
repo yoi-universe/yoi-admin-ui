@@ -66,8 +66,6 @@ export default abstract class AbsAxios {
       this.messageHandler.showMessage(response.data.message, 'error')
       return Promise.reject(response.data) // code不等于200, 页面具体逻辑就不执行了
     }
-    console.log(this.options)
-
     return this.options.reductDataFormat ? response.data : response
   }
 
