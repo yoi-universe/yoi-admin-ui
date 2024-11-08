@@ -201,7 +201,7 @@ export default abstract class AbsAxios {
     params?: object,
     options?: Options,
   ): Promise<T> {
-    if (options) this.configureOptions(options)
+    this.configureOptions(options)
     return this.instance.get(url, { params })
   }
 
@@ -218,7 +218,7 @@ export default abstract class AbsAxios {
     data?: object,
     options?: Options,
   ): Promise<T> {
-    if (options) this.configureOptions(options)
+    this.configureOptions(options)
     return this.instance.post(url, data)
   }
 
@@ -235,7 +235,7 @@ export default abstract class AbsAxios {
     data?: object,
     options?: Options,
   ): Promise<T> {
-    if (options) this.configureOptions(options)
+    this.configureOptions(options)
     return this.instance.put(url, data)
   }
 
@@ -252,7 +252,7 @@ export default abstract class AbsAxios {
     data?: object,
     options?: Options,
   ): Promise<T> {
-    if (options) this.configureOptions(options)
+    this.configureOptions(options)
     return this.instance.delete(url, data)
   }
 
@@ -268,7 +268,7 @@ export default abstract class AbsAxios {
     data?: object,
     options?: Options,
   ): Promise<T> {
-    if (options) this.configureOptions(options)
+    this.configureOptions(options)
     return this.instance.post(url, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
