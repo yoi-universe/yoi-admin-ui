@@ -8,6 +8,7 @@ import pinia from '@/stores'
  * css样式
  */
 import '@/styles/reset.scss'
+import 'virtual:uno.css'
 
 const app = createApp(App)
 
