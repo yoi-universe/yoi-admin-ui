@@ -4,6 +4,11 @@ import App from './App.vue'
 import router from './router'
 import pinia from '@/stores'
 
+/**
+ * css样式
+ */
+import '@/styles/reset.scss'
+
 const app = createApp(App)
 
 app.use(pinia)
