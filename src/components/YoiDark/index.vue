@@ -83,6 +83,7 @@ const handleSwitchDark = (event: MouseEvent) => {
 }
 
 .dark {
+  // 颜色方案
   color-scheme: dark;
 }
 </style>
