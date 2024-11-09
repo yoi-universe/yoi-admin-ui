@@ -1,6 +1,7 @@
 import AbsAxios, { type Options, type Result } from '@/utils/axios'
+import { elMsg } from '@/utils/elMsg'
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { ElLoading, ElMessage, type LoadingOptions } from 'element-plus'
+import { ElLoading, type LoadingOptions, type messageType } from 'element-plus'
 
 class YoiAxios extends AbsAxios {
   public options: IOptions = {}
@@ -20,15 +21,8 @@ class YoiAxios extends AbsAxios {
         timeout: 10000,
       },
       {
-        showMessage(
-          message: string,
-          type: 'error' | 'success' | 'info' | 'warning',
-        ) {
-          ElMessage({
-            message,
-            type,
-            plain: true,
-          })
+        showMessage(message: string, type: messageType) {
+          elMsg(message, type)
         },
       },
     )
