@@ -10,7 +10,13 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
  * css样式
  */
 import '@/styles/reset.scss'
+import 'element-plus/theme-chalk/el-message.css'
 import 'virtual:uno.css'
+
+/**
+ * 自定义全局指令
+ */
+import YoiDirectives from '@/directives/index'
 
 const app = createApp(App)
 
@@ -21,5 +27,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.use(pinia)
 app.use(router)
+app.use(YoiDirectives)
 
 app.mount('#app')
