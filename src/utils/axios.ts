@@ -196,11 +196,11 @@ export default abstract class AbsAxios {
    * @param loading 加载loading参数
    * @returns Promise
    */
-  public get<T = Result>(
+  public get<T = any>(
     url: string,
     params?: object,
     options?: Options,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     this.configureOptions(options)
     return this.instance.get(url, { params })
   }
@@ -213,11 +213,11 @@ export default abstract class AbsAxios {
    * @param loading 加载loading参数
    * @returns Promise
    */
-  public post<T = Result>(
+  public post<T = any>(
     url: string,
     data?: object,
     options?: Options,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     this.configureOptions(options)
     return this.instance.post(url, data)
   }
@@ -230,11 +230,11 @@ export default abstract class AbsAxios {
    * @param loading 加载loading参数
    * @returns Promise
    */
-  public put<T = Result>(
+  public put<T = any>(
     url: string,
     data?: object,
     options?: Options,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     this.configureOptions(options)
     return this.instance.put(url, data)
   }
@@ -247,11 +247,11 @@ export default abstract class AbsAxios {
    * @param loading 加载loading参数
    * @returns Promise
    */
-  public delete<T = Result>(
+  public delete<T = any>(
     url: string,
     data?: object,
     options?: Options,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     this.configureOptions(options)
     return this.instance.delete(url, data)
   }
@@ -263,11 +263,11 @@ export default abstract class AbsAxios {
    * @param options 配置参数
    * @returns Promise
    */
-  public upload<T = Result>(
+  public upload<T = any>(
     url: string,
     data?: object,
     options?: Options,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     this.configureOptions(options)
     return this.instance.post(url, data, {
       headers: {

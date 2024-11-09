@@ -76,12 +76,12 @@ class YoiAxios extends AbsAxios {
    * @param loading 配置项
    * @returns Promise<T>
    */
-  public override get<T = Result>(
+  public override get<T = any>(
     url: string,
     params?: object,
     options?: IOptions,
     loading?: LoadingOptions,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     if (options) this.options = options
     if (loading) this.loading = loading
     return super.get(url, params, options)
@@ -95,12 +95,12 @@ class YoiAxios extends AbsAxios {
    * @param loading 配置项
    * @returns Promise<T>
    */
-  public override post<T = Result>(
+  public override post<T = any>(
     url: string,
     data?: object,
     options?: IOptions,
     loading?: LoadingOptions,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     if (options) this.options = options
     if (loading) this.loading = loading
     return super.post(url, data, options)
@@ -114,12 +114,12 @@ class YoiAxios extends AbsAxios {
    * @param loading 配置项
    * @returns Promise<T>
    */
-  public override put<T = Result>(
+  public override put<T = any>(
     url: string,
     data?: object,
     options?: IOptions,
     loading?: LoadingOptions,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     if (options) this.options = options
     if (loading) this.loading = loading
     return super.put(url, data, options)
@@ -133,12 +133,12 @@ class YoiAxios extends AbsAxios {
    * @param loading 配置项
    * @returns Promise<T>
    */
-  public override delete<T = Result>(
+  public override delete<T = any>(
     url: string,
     data?: object,
     options?: IOptions,
     loading?: LoadingOptions,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     if (options) this.options = options
     if (loading) this.loading = loading
     return super.delete(url, data, options)
@@ -152,12 +152,12 @@ class YoiAxios extends AbsAxios {
    * @param loading 加载loading参数
    * @returns Promise<T>
    */
-  public override upload<T = Result>(
+  public override upload<T = any>(
     url: string,
     data?: object,
     options?: IOptions,
     loading?: LoadingOptions,
-  ): Promise<T> {
+  ): Promise<Result<T>> {
     if (options) this.options = options
     if (loading) this.loading = loading
     return super.upload(url, data, options)
