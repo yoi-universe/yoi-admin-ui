@@ -12,7 +12,9 @@ enum Api {
  * 登录
  */
 export function loginApi(data: LoginParams) {
-  return yoiAxios.post<LoginRes>(Api.login, data)
+  return yoiAxios.post<LoginRes>(Api.login, data, {
+    showCodeMessage: true,
+  })
 }
 
 /**
