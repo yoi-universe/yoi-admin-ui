@@ -1,10 +1,11 @@
 import yoiAxios from '../yoiAxios'
-import type { LoginParams, LoginRes } from './type'
+import type { LoginParams, LoginRes, UserInfoRes } from './type'
 
 const prefix = '/sys_auth'
 
 enum Api {
   login = prefix + '/login',
+  getInfo = prefix + '/get_info',
 }
 
 /**
@@ -12,4 +13,13 @@ enum Api {
  */
 export function loginApi(data: LoginParams) {
   return yoiAxios.post<LoginRes>(Api.login, data)
+}
+
+/**
+ * 获取用户信息
+ */
+export function getInfoApi() {
+  return yoiAxios.get<UserInfoRes>(Api.getInfo, undefined, {
+    loading: true,
+  })
 }
