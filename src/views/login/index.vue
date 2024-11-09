@@ -15,21 +15,58 @@
         </div>
       </el-col>
       <el-col :span="8" class="dark:bg-#161616 bg-gray-100 flex! flex-col items-center justify-center">
-        <div>
-          <div>Yoi后台管理</div>
+        <div class="text-center">
+          <div class="mb-18px font-bold font-size-24px">Yoi管理平台</div>
+          <div class="mb-18px color-gray flex justify-center items-center">
+            <div class="w-40px h-1px bg-gray-3 mx-10px"></div>
+            <div>
+              账号密码登录
+            </div>
+            <div class="w-40px h-1px bg-gray-3 mx-10px"></div>
+          </div>
         </div>
-        <el-form ref="formRef" class="w-60%" :model="ruleForm" status-icon :rules="rules">
-          <el-form-item prop="pass">
-            <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+        <el-form ref="formRef" class="w-60%" :model="formData" hide-required-asterisk :rules="rules">
+          <el-form-item prop="userName">
+            <el-input v-model="formData.userName" type="text" placeholder="请输入用户名" autocomplete="off">
+              <template #prefix>
+                <el-icon>
+                  <User />
+                </el-icon>
+              </template>
+            </el-input>
           </el-form-item>
-          <el-form-item prop="checkPass">
-            <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" />
+
+          <el-form-item prop="password">
+            <el-input v-model="formData.password" type="password" placeholder="请输入密码" autocomplete="off">
+              <template #prefix>
+                <el-icon>
+                  <Lock />
+                </el-icon>
+              </template>
+            </el-input>
           </el-form-item>
-          <el-form-item prop="age">
-            <el-input v-model.number="ruleForm.age" />
+
+          <el-form-item prop="captcha">
+            <el-input v-model="formData.captcha" type="text" placeholder="请输入验证码" autocomplete="off">
+              <template #prefix>
+                <el-icon>
+                  <Key />
+                </el-icon>
+              </template>
+            </el-input>
           </el-form-item>
+
           <el-form-item>
-            <el-button class="w-100%" round type="primary" @click="submitForm(formRef)">
+            <el-image style="width: 100px; height: 30px" :src="captchaImage" @click="getCaptchaImage" />
+            <el-button class="ml-2 group" type="info" size="small" text @click="getCaptchaImage">
+              <span class=" font-size-12px group-hover:color-[--el-color-primary]">
+                看不起，换一张
+              </span>
+            </el-button>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button class="w-100%" round type="primary" v-throttle:3000="submitForm">
               登录
             </el-button>
           </el-form-item>
@@ -43,56 +80,72 @@
 import { getCaptchaImageApi } from '@/api/captcha';
 import { onMounted, reactive, ref } from 'vue';
 import YoiDark from '@/components/YoiDark/index.vue';
-import type { FormInstance, FormRules } from 'element-plus';
+import { type FormInstance, type FormRules } from 'element-plus';
 import { getAssets } from '@/utils/index';
+import type { LoginParams } from '@/api/auth/type';
+import { md5 } from 'js-md5';
+import { loginApi } from '@/api/auth';
+import { elMsgError, elMsgSuccess } from '@/utils/elMsg';
+import useUserStore from '@/stores/modules/user';
+import { useRoute, useRouter } from 'vue-router';
 
 const loginBg = getAssets('images/login/login-bg.png')
 
 const formRef = ref<FormInstance>()
 
-const checkAge = (rule: any, value: any, callback: any) => {
-  if (!value) {
-    return callback(new Error('Please input the age'))
-  }
-  setTimeout(() => {
-    if (!Number.isInteger(value)) {
-      callback(new Error('Please input digits'))
-    } else {
-      if (value < 18) {
-        callback(new Error('Age must be greater than 18'))
-      } else {
-        callback()
-      }
-    }
-  }, 1000)
-}
-
-const ruleForm = reactive({
-  pass: '',
-  checkPass: '',
-  age: '',
+const formData = reactive<LoginParams>({
+  userName: '',
+  password: '',
+  captcha: '',
+  key: '',
 })
 
-const rules = reactive<FormRules<typeof ruleForm>>({
-  // pass: [{ validator: validatePass, trigger: 'blur' }],
-  // checkPass: [{ validator: validatePass2, trigger: 'blur' }],
-  age: [{ validator: checkAge, trigger: 'blur' }],
+const captchaImage = ref('')
+
+const rules = reactive<FormRules<typeof formData>>({
+  userName: [{ required: true, message: '用户名不能为空', trigger: 'blur' },],
+  password: [{ required: true, message: '密码不能为空', trigger: 'blur' },],
+  captcha: [{ required: true, message: '验证码不能为空', trigger: 'blur' },],
 })
 
-const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.validate((valid) => {
+const userStore = useUserStore()
+const router = useRouter()
+const route = useRoute()
+const submitForm = () => {
+  if (!formRef.value) return
+  formRef.value.validate(async (valid) => {
     if (valid) {
       console.log('submit!')
+      let params: LoginParams = {
+        ...formData,
+        password: md5(formData.password).toUpperCase()
+      }
+      // 这里有点问题，方法触发promise.reject后会再次触发验证问题
+      const res = await loginApi(params)
+      if (res.code === 200) {
+        const data = res.data
+        userStore.setToken(data.token)
+        elMsgSuccess('登录成功')
+        const redirect = route.query.redirect as string
+        if (redirect) {
+          const redirectUrl = decodeURIComponent(redirect)
+          router.push(redirectUrl)
+        } else {
+          router.push('/')
+        }
+      }
     } else {
       console.log('error submit!')
+      elMsgError('请填写完整')
     }
   })
 }
 
 const getCaptchaImage = () => {
   getCaptchaImageApi().then(res => {
-    console.log(res)
+    const data = res.data
+    captchaImage.value = data.imageBase64
+    formData.key = data.key
   })
 }
 
