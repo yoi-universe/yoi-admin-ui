@@ -25,6 +25,7 @@ export function loginApi(data: LoginParams) {
 export function getUserInfoApi() {
   return yoiAxios.get<UserInfoRes>(Api.getInfo, undefined, {
     loading: true,
+    showCodeMessage: true,
     showMessage: false,
   })
 }
@@ -35,6 +36,7 @@ export function getUserInfoApi() {
 export function getUserMenuApi() {
   return yoiAxios.get<MenuInfoRes>(Api.getMenu, undefined, {
     loading: true,
+    showCodeMessage: true,
     showMessage: false,
   })
 }
