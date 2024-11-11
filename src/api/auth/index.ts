@@ -22,18 +22,20 @@ export function loginApi(data: LoginParams) {
 /**
  * 获取用户信息
  */
-export function getInfoApi() {
+export function getUserInfoApi() {
   return yoiAxios.get<UserInfoRes>(Api.getInfo, undefined, {
     loading: true,
+    showMessage: false,
   })
 }
 
 /**
  * 获取菜单
  */
-export function getMenuApi() {
+export function getUserMenuApi() {
   return yoiAxios.get<MenuInfoRes>(Api.getMenu, undefined, {
     loading: true,
+    showMessage: false,
   })
 }
 
