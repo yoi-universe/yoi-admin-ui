@@ -2,7 +2,7 @@ import { PINIA_PREFIX_KEY } from '@/config'
 import type { UserInfo } from '@/types/system/user'
 import { defineStore } from 'pinia'
 
-const useUserStore = defineStore('user', {
+export const useUserStore = defineStore('user', {
   state: (): State => ({
     token: '',
     userInfo: {
@@ -40,8 +40,6 @@ const useUserStore = defineStore('user', {
     storage: localStorage,
   },
 })
-
-export default useUserStore
 
 interface State {
   token: string
