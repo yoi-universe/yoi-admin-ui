@@ -1,3 +1,4 @@
+import type { MenuInfo } from '@/types/system/menu'
 import type { UserInfo } from '@/types/system/user'
 
 export interface LoginParams {
@@ -21,3 +22,5 @@ export interface UserInfoRes {
   /* 用户权限 */
   permissions: string[]
 }
+
+export type MenuInfoRes = MenuInfo[]
