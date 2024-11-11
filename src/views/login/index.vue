@@ -114,29 +114,32 @@ const route = useRoute()
 const submitForm = () => {
   if (!formRef.value) return
   formRef.value.validate(async (valid) => {
-    if (valid) {
-      console.log('submit!')
-      let params: LoginParams = {
-        ...formData,
-        password: md5(formData.password).toUpperCase()
-      }
-      // 这里有点问题，方法触发promise.reject后会再次触发验证问题
-      const res = await loginApi(params)
-      if (res.code === 200) {
-        const data = res.data
-        userStore.setToken(data.token)
-        elMsgSuccess('登录成功')
-        const redirect = route.query.redirect as string
-        if (redirect) {
-          const redirectUrl = decodeURIComponent(redirect)
-          router.push(redirectUrl)
-        } else {
-          router.push('/')
+    try {
+      if (valid) {
+        console.log('submit!')
+        let params: LoginParams = {
+          ...formData,
+          password: md5(formData.password).toUpperCase()
         }
+        const res = await loginApi(params)
+        if (res.code === 200) {
+          const data = res.data
+          userStore.setToken(data.token)
+          elMsgSuccess('登录成功')
+          const redirect = route.query.redirect as string
+          if (redirect) {
+            const redirectUrl = decodeURIComponent(redirect)
+            router.push(redirectUrl)
+          } else {
+            router.push('/')
+          }
+        }
+      } else {
+        console.log('error submit!')
+        elMsgError('请填写完整')
       }
-    } else {
-      console.log('error submit!')
-      elMsgError('请填写完整')
+    } catch (e: any) {
+      elMsgError(e.message)
     }
   })
 }
