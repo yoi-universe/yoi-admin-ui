@@ -63,7 +63,8 @@ export default abstract class AbsAxios {
       response.data &&
       response.data.code !== 200
     ) {
-      this.messageHandler.showMessage(response.data.message, 'error')
+      this.options.showMessage &&
+        this.messageHandler.showMessage(response.data.message, 'error')
       return Promise.reject(response.data) // code不等于200, 页面具体逻辑就不执行了
     }
     return this.options.reductDataFormat ? response.data : response
@@ -103,6 +104,7 @@ export default abstract class AbsAxios {
         reductDataFormat: true, // 是否开启简洁的数据结构响应, 默认为true
         showErrorMessage: true, // 是否开启接口错误信息展示,默认为true
         showCodeMessage: false, // 是否开启code不为200时的信息提示, 默认为false
+        showMessage: true, // 是否开启全局错误提示, 默认为true
       },
       options,
     )
@@ -138,7 +140,8 @@ export default abstract class AbsAxios {
       if (error.message.includes('timeout')) message = '网络请求超时！'
       if (error.message.includes('Network'))
         message = window.navigator.onLine ? '服务端异常！' : '您断网了！'
-      this.messageHandler.showMessage(message, 'error')
+      this.options.showMessage &&
+        this.messageHandler.showMessage(message, 'error')
     }
   }
 
@@ -296,6 +299,8 @@ export interface Options {
   showErrorMessage?: boolean
   // 是否开启code不为200时的信息提示, 默认为false
   showCodeMessage?: boolean
+  // 是否开启全局错误提示, 默认为true
+  showMessage?: boolean
 }
 
 /**
