@@ -57,7 +57,7 @@ router.beforeEach(
     // 判断访问的是否是登录页
     if (to.path === LOGIN_URL) {
       // 判断是否有token
-      if (userStore.token) {
+      if (userStore.getToken) {
         return next(from.fullPath)
       } else {
         elMsgError('您未登录，或者登录已经超时，请先登录！')
@@ -76,7 +76,7 @@ router.beforeEach(
     if (WHITE_URL_LIST.includes(to.path)) return next()
 
     // 判断是否有token
-    if (!userStore.token) return next({ path: LOGIN_URL, replace: true })
+    if (!userStore.getToken) return next({ path: LOGIN_URL, replace: true })
 
     // 判断是否有菜单，没有就初始化
     if (!authStore.getMenuList.length) {

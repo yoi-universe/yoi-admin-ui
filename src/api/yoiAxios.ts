@@ -1,3 +1,4 @@
+import { useUserStore } from '@/stores'
 import AbsAxios, { type Options, type Result } from '@/utils/axios'
 import { elMsg } from '@/utils/elMsg'
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
@@ -36,6 +37,10 @@ class YoiAxios extends AbsAxios {
       if (this.loadingInstance.count === 1) {
         this.loadingInstance.target = ElLoading.service(this.loading)
       }
+    }
+    const userStore = useUserStore()
+    if (userStore.getToken) {
+      config.headers.Authorization = userStore.getToken
     }
     return config
   }
