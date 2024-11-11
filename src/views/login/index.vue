@@ -86,8 +86,8 @@ import type { LoginParams } from '@/api/auth/type';
 import { md5 } from 'js-md5';
 import { loginApi } from '@/api/auth';
 import { elMsgError, elMsgSuccess } from '@/utils/elMsg';
-import useUserStore from '@/stores/modules/user';
 import { useRoute, useRouter } from 'vue-router';
+import { useUserStore } from '@/stores';
 
 const loginBg = getAssets('images/login/login-bg.png')
 
