@@ -29,10 +29,13 @@ export const initDynamicRouter = async () => {
 
     // 添加动态路由
     authStore.getMenuList.forEach(item => {
-      const componentString = item.component.replace(/^\/+/, '') // 过滤字符串前面所有 '/' 字符
-      const componentPath = componentString.replace(/\.\w+$/, '') // 过滤掉后缀名，为了让 import 加入 .vue ，不然会有警告提示...
-      const componentUrl = '/src/' + componentPath + '.vue'
-
+      // 默认值为 404 页面
+      let componentUrl = '/src/views/error/404.vue'
+      if (item.component) {
+        const componentString = item.component.replace(/^\/+/, '') // 过滤字符串前面所有 '/' 字符
+        const componentPath = componentString.replace(/\.\w+$/, '') // 过滤掉后缀名，为了让 import 加入 .vue ，不然会有警告提示...
+        componentUrl = '/src/' + componentPath + '.vue'
+      }
       const route = {
         path: item.path,
         name: item.routeName,
