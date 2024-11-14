@@ -2,6 +2,9 @@
 // pinia仓库前缀
 export const PINIA_PREFIX_KEY: string = 'yoi-'
 
+// 首页地址[默认]
+export const HOME_URL: string = '/home'
+
 // 登录页地址
 export const LOGIN_URL: string = '/login'
 

@@ -1,12 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import { HOME_URL } from '@/config'
 
 export const layoutRouter: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'layout',
     component: Layout,
-    redirect: '/home',
+    redirect: HOME_URL,
     children: [],
   },
   {
