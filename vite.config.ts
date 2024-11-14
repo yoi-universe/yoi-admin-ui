@@ -26,6 +26,13 @@ export default defineConfig(({ command, mode }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler', // or 'modern'
+        },
+      },
+    },
     server: {
       host: '0.0.0.0', // 允许本机IP访问 0.0.0.0
       port: 5173, // 端口号
