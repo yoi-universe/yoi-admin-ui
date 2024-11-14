@@ -23,7 +23,8 @@ export const initDynamicRouter = async () => {
     if (!authStore.getMenuList.length) {
       userStore.setToken('')
       router.replace(LOGIN_URL)
-      return
+      // router.replace('/403')
+      return Promise.reject('菜单权限为空')
     }
 
     // 添加动态路由
