@@ -47,7 +47,8 @@
           </el-form-item>
 
           <el-form-item prop="captcha">
-            <el-input v-model="formData.captcha" type="text" placeholder="请输入验证码" autocomplete="off">
+            <el-input v-model="formData.captcha" type="text" placeholder="请输入验证码" autocomplete="off"
+              @keyup.enter="submitForm">
               <template #prefix>
                 <el-icon>
                   <Key />
@@ -66,7 +67,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button class="w-100%" round type="primary" v-throttle:3000="submitForm">
+            <el-button class="w-100%" round type="primary" :loading="loading" v-throttle:3000="submitForm">
               登录
             </el-button>
           </el-form-item>
@@ -90,17 +91,16 @@ import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores';
 
 const loginBg = getAssets('images/login/login-bg.png')
-
+const captchaImage = ref('')
+const loading = ref(false)
 const formRef = ref<FormInstance>()
-
 const formData = reactive<LoginParams>({
-  userName: '',
-  password: '',
+  userName: 'youzi',
+  password: '123',
   captcha: '',
   key: '',
 })
 
-const captchaImage = ref('')
 
 const rules = reactive<FormRules<typeof formData>>({
   userName: [{ required: true, message: '用户名不能为空', trigger: 'blur' },],
@@ -112,10 +112,13 @@ const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
 const submitForm = () => {
+  // 判断是否已经提交
+  if (loading.value) return
   if (!formRef.value) return
   formRef.value.validate(async (valid) => {
-    try {
-      if (valid) {
+    if (valid) {
+      loading.value = true
+      try {
         console.log('submit!')
         let params: LoginParams = {
           ...formData,
@@ -134,12 +137,16 @@ const submitForm = () => {
             router.push('/')
           }
         }
-      } else {
-        console.log('error submit!')
-        elMsgError('请填写完整')
+      } catch (e: any) {
+        elMsgError(e.message)
+        // 等待1秒后关闭loading
+        setTimeout(() => {
+          loading.value = false
+        }, 1000)
       }
-    } catch (e: any) {
-      elMsgError(e.message)
+    } else {
+      console.log('error submit!')
+      elMsgError('请填写完整')
     }
   })
 }
