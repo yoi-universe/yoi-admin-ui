@@ -48,4 +48,63 @@ interface Props {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.el-menu-item {
+  height: $aside-menu-height;
+  margin-bottom: $aside-menu-margin-bottom;
+  font-weight: $aside-menu-font-weight;
+  --el-menu-item-height: $aside-header-height;
+  user-select: none; // 设置用户禁止选中
+  border-left: $aside-menu-border solid transparent;
+  border-radius: $aside-menu-border;
+  color: var(--el-menu-text-color);
+
+  &:hover {
+    color: var(--el-color-primary);
+    background: var(--el-color-primary-light-9);
+
+    i {
+      color: var(--el-color-primary);
+    }
+  }
+
+  &.is-active {
+    color: var(--el-color-primary);
+    background: var(--el-color-primary-light-8);
+    border-left: $aside-menu-border solid var(--el-color-primary);
+  }
+}
+
+:deep(.el-sub-menu__title) {
+  height: $aside-menu-height;
+  padding-right: 0; // 去除collapse缩小多余的边框
+  margin-bottom: $aside-menu-margin-bottom;
+  font-weight: $aside-menu-font-weight;
+  user-select: none; // 设置用户禁止选中
+  border-left: $aside-menu-border solid transparent;
+  border-radius: $aside-menu-border;
+  color: var(--el-menu-text-color);
+
+  &:hover {
+    color: var(--el-color-primary);
+    background: var(--el-color-primary-light-9);
+  }
+
+  &.is-active {
+    color: var(--el-color-primary);
+    background: var(--el-color-primary-light-8);
+    border-left: $aside-menu-border solid var(--el-color-primary);
+  }
+}
+</style>
+<style lang="scss">
+/* 子级菜单字体高亮，父级菜单也高亮 */
+.el-sub-menu.is-active>.el-sub-menu__title {
+  color: var(--el-color-primary);
+
+  /* icon图标也跟着变 */
+  i {
+    color: var(--el-color-primary);
+  }
+}
+</style>
