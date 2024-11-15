@@ -30,6 +30,9 @@ export default defineConfig(({ command, mode }) => {
       preprocessorOptions: {
         scss: {
           api: 'modern-compiler', // or 'modern'
+          additionalData: `
+          @use "@/styles/variable.scss";
+          `, // sass v1.8 不再支持全局内置函数 @import ，请使用 @use 替代。
         },
       },
     },
