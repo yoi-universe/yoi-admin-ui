@@ -1,6 +1,6 @@
 <template>
-  <div>
-    404
+  <div class="logo">
+    logo
   </div>
 </template>
 

@@ -1,8 +1,4 @@
-<template>
-  <div>
-    404
-  </div>
-</template>
+<template></template>
 
 <script lang="ts" setup></script>
 
