@@ -65,3 +65,7 @@ export interface MenuInfo {
   /* 备注 */
   remark: string
 }
+
+export interface MenuTree extends MenuInfo {
+  children: MenuTree[]
+}
