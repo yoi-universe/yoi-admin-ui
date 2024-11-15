@@ -73,3 +73,20 @@ export function elMsgError(
     dangerouslyUseHTMLString,
   })
 }
+
+export function elMsgWarning(
+  message: string,
+  duration: number = 3000,
+  plain: boolean = true,
+  dangerouslyUseHTMLString: boolean = false,
+) {
+  ElMessage.closeAll()
+  ElMessage({
+    type: 'warning',
+    message,
+    duration,
+    showClose: true,
+    plain,
+    dangerouslyUseHTMLString,
+  })
+}
