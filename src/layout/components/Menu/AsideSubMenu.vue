@@ -2,16 +2,19 @@
   <template v-for="item in menuList" :key="item.menuId">
     <!-- 叶子节点 -->
     <el-menu-item v-if="item.menuType === MENU_TYPE_MENU" :index="item.path" @click="handleMenuClick(item)">
-      <el-icon>
-        <MSIcon :name="item.icon" size="18"></MSIcon>
+      <!-- 动态图标 -->
+      <el-icon size="18">
+        <component :is="item.icon"></component>
       </el-icon>
-      <template #title>{{ item.menuName }}</template>
+      <template #title>
+        <span>{{ item.menuName }}</span>
+      </template>
     </el-menu-item>
     <!-- 非叶子节点 -->
     <el-sub-menu v-if="item.menuType === MENU_TYPE_DIRECTORY" :index="item.path">
       <template #title>
-        <el-icon>
-          <MSIcon :name="item.icon" size="18"></MSIcon>
+        <el-icon size="18">
+          <component :is="item.icon"></component>
         </el-icon>
         <span>{{ item.menuName }}</span>
       </template>
@@ -59,6 +62,14 @@ interface Props {
   border-radius: $aside-menu-border;
   color: var(--el-menu-text-color);
 
+  i {
+    transform: translate($aside-menu-offset);
+  }
+
+  span {
+    transform: translate($aside-menu-offset);
+  }
+
   &:hover {
     color: var(--el-color-primary);
     background: var(--el-color-primary-light-9);
@@ -84,6 +95,14 @@ interface Props {
   border-left: $aside-menu-border solid transparent;
   border-radius: $aside-menu-border;
   color: var(--el-menu-text-color);
+
+  i {
+    transform: translate($aside-menu-offset);
+  }
+
+  span {
+    transform: translate($aside-menu-offset);
+  }
 
   &:hover {
     color: var(--el-color-primary);
