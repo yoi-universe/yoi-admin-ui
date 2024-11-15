@@ -31,7 +31,7 @@ export default defineConfig(({ command, mode }) => {
         scss: {
           api: 'modern-compiler', // or 'modern'
           additionalData: `
-          @use "@/styles/variable.scss";
+          @use "@/styles/variable.scss" as *;
           `, // sass v1.8 不再支持全局内置函数 @import ，请使用 @use 替代。
         },
       },
