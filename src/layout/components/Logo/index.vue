@@ -1,7 +1,7 @@
 <template>
   <div class="logo">
     <img class="rounded-50% ml-9px" :src="logo" width="34" height="34" alt="avatar">
-    <div class="logo-text flex-1 font-size-18px font-bold ml-10px truncate" v-show="!isCollapse">
+    <div class="color-[--el-color-primary] flex-1 font-size-18px font-bold ml-10px truncate" v-show="!isCollapse">
       YOI-ADMIN
     </div>
   </div>
@@ -26,9 +26,5 @@ interface Props {
   display: flex;
   align-items: center;
   position: relative;
-
-  .logo-text {
-    color: var(--el-color-primary);
-  }
 }
 </style>
