@@ -47,3 +47,37 @@ export function recursiveTree<T, R extends T>(
   }
   return result
 }
+
+/**
+ * 获取面包屑列表
+ * @param items 路由列表
+ * @param path 当前路由路径
+ */
+export function getBreadcrumbList<T>(items: T[], path: string) {
+  const result: T[] = []
+
+  function dfs(nodes: T[], targetPath: string, pathStack: T[]) {
+    for (const node of nodes) {
+      // 添加当前节点到路径栈
+      pathStack.push(node)
+
+      // 如果找到目标路径，保存路径并返回
+      if ((node as any).path === targetPath) {
+        result.push(...pathStack)
+        return true
+      }
+
+      // 如果当前节点有子节点，递归查找
+      if ((node as any).children && (node as any).children.length) {
+        const found = dfs((node as any).children, targetPath, pathStack)
+        if (found) return true
+      }
+
+      // 当前节点不是目标路径，从路径栈移除
+      pathStack.pop()
+    }
+    return false // 未找到
+  }
+  dfs(items, path, [])
+  return result
+}

@@ -1,5 +1,5 @@
 import type { MenuInfo, MenuTree } from '@/types/system/menu'
-import { recursiveTree } from '@/utils'
+import { getBreadcrumbList, recursiveTree } from '@/utils'
 import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
@@ -34,6 +34,9 @@ export const useAuthStore = defineStore('auth', {
     },
     setPermissions(permissions: string[]) {
       this.permissions = permissions
+    },
+    getBreadcrumb(path: string) {
+      return getBreadcrumbList(this.MenuTreeList, path)
     },
   },
 })
