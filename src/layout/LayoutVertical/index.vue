@@ -1,7 +1,8 @@
 <template>
   <el-container class="layout-container">
-    <el-aside class="layout-aside" :width="!isCollapse ? `${menuWidth}px` : `${asideMenuCollapseWidth}px`">
-      <Logo />
+    <el-aside class="layout-aside transition-all"
+      :width="!isCollapse ? `${menuWidth}px` : `${asideMenuCollapseWidth}px`">
+      <Logo :isCollapse="isCollapse" />
       <el-scrollbar class="layout-scrollbar">
         <el-menu :default-active="activeMenu" :collapse="isCollapse" :collapse-transition="false" :router="false">
           <AsideSubMenu :menuList="menuList"></AsideSubMenu>
@@ -24,11 +25,13 @@ import Header from '@/layout/components/Header/index.vue';
 import Logo from '@/layout/components/Logo/index.vue';
 import AsideSubMenu from '@/layout/components/Menu/AsideSubMenu.vue';
 import Main from '@/layout/components/Main/index.vue';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { useAuthStore } from '@/stores';
+import { useAuthStore, useGlobalStore } from '@/stores';
+import { storeToRefs } from 'pinia';
 
-const isCollapse = ref(false);
+const globalStore = useGlobalStore()
+const { isCollapse } = storeToRefs(globalStore)
 const menuWidth = 220;
 const asideMenuCollapseWidth = 64;
 const route = useRoute()
@@ -47,6 +50,7 @@ const activeMenu = computed(() => route.path)
   .layout-aside {
     padding: 0 $aside-menu-padding;
     box-shadow: $aside-menu-box-shadow;
+    border-right: none;
   }
 
   .layout-header {
@@ -61,5 +65,11 @@ const activeMenu = computed(() => route.path)
 .layout-scrollbar {
   width: 100%;
   height: calc(100vh - $aside-header-height);
+}
+</style>
+<style lang="scss">
+/** 菜单悬浮折叠宽度 */
+.el-menu--collapse {
+  width: v-bind(asideMenuCollapseWidth) !important;
 }
 </style>
