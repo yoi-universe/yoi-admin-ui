@@ -58,9 +58,19 @@ interface Props {
   font-weight: $aside-menu-font-weight;
   --el-menu-item-height: $aside-header-height;
   user-select: none; // 设置用户禁止选中
-  border-left: $aside-menu-border solid transparent;
-  border-radius: $aside-menu-border;
   color: var(--el-menu-text-color);
+  border-radius: $aside-menu-border;
+  overflow: hidden;
+
+  &::before {
+    border-left: $aside-menu-border solid transparent;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
 
   i {
     transform: translate($aside-menu-offset);
@@ -82,7 +92,10 @@ interface Props {
   &.is-active {
     color: var(--el-color-primary);
     background: var(--el-color-primary-light-8);
-    border-left: $aside-menu-border solid var(--el-color-primary);
+
+    &::before {
+      border-left: $aside-menu-border solid var(--el-color-primary);
+    }
   }
 }
 
@@ -92,9 +105,19 @@ interface Props {
   margin-bottom: $aside-menu-margin-bottom;
   font-weight: $aside-menu-font-weight;
   user-select: none; // 设置用户禁止选中
-  border-left: $aside-menu-border solid transparent;
-  border-radius: $aside-menu-border;
   color: var(--el-menu-text-color);
+  border-radius: $aside-menu-border;
+  overflow: hidden;
+
+  &::before {
+    border-left: $aside-menu-border solid transparent;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
 
   i {
     transform: translate($aside-menu-offset);
@@ -112,7 +135,10 @@ interface Props {
   &.is-active {
     color: var(--el-color-primary);
     background: var(--el-color-primary-light-8);
-    border-left: $aside-menu-border solid var(--el-color-primary);
+
+    &::before {
+      border-left: $aside-menu-border solid var(--el-color-primary);
+    }
   }
 }
 </style>
