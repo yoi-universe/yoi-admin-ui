@@ -5,12 +5,15 @@
       <Collapse />
       <Breadcrumb />
     </div>
+    <!-- 右侧 -->
+    <Toolbar />
   </div>
 </template>
 
 <script lang="ts" setup>
 import Collapse from './components/Collapse.vue';
 import Breadcrumb from './components/Breadcrumb.vue';
+import Toolbar from './components/Toolbar.vue';
 </script>
 
 <style lang="scss" scoped>
