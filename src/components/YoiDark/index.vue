@@ -1,7 +1,7 @@
 <template>
-  <div class="btn">
+  <div class="dark">
     <span @click="handleSwitchDark">
-      <slot name="btn"></slot>
+      <slot name="dark"></slot>
     </span>
   </div>
 </template>

@@ -3,7 +3,7 @@
     <el-row class="h-100%">
       <div class="header-options">
         <YoiDark>
-          <template #btn>
+          <template #dark>
             <el-button type="primary" circle />
           </template>
         </YoiDark>
