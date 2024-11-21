@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="w-36px h-36px rounded-5px hover:bg-[--el-color-primary-light-9] group flex flex-justify-center flex-items-center"
+  <div class="w-36px h-36px rounded-5px hover:bg-[rgba(0,0,0,0.06)] group flex flex-justify-center flex-items-center"
     @click="handleCollapse">
     <el-icon size="20" class="group-hover:color-[--el-color-primary]">
       <Expand v-if="isCollapse" />
