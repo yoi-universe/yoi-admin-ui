@@ -9,5 +9,4 @@ const i18n = createI18n({
   messages: importMessages(),
 })
 
-export const { t } = i18n.global
 export default i18n

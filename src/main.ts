@@ -6,6 +6,8 @@ import pinia from '@/stores'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
+import i18n from '@/languages'
+
 /**
  * css样式
  */
@@ -28,6 +30,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.use(pinia)
 app.use(router)
+app.use(i18n)
 app.use(YoiDirectives)
 
 app.mount('#app')
