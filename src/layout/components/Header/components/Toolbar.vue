@@ -7,6 +7,7 @@
     <!-- 全屏配置 -->
     <FullScreen />
     <!-- 头像和下拉 -->
+    <User />
   </div>
 </template>
 
@@ -14,6 +15,7 @@
 import Dark from './Dark.vue';
 import Language from './Language.vue';
 import FullScreen from './FullScreen.vue';
+import User from './User.vue';
 </script>
 
 <style lang="scss" scoped>

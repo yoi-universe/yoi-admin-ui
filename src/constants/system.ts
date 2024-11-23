@@ -10,3 +10,11 @@ export const MENU_IS_LINK = 1
 // 连接打开方式 [0:内部;1:外部]
 export const MENU_LINK_TARGET_SELF = 0
 export const MENU_LINK_TARGET_BLANK = 1
+
+/**
+ * 顶部用户下拉菜单
+ * 个人中心 profile
+ * 退出登录 logout
+ */
+export const USER_DROP_DOWN_MENU_PROFILE = 'profile'
+export const USER_DROP_DOWN_MENU_LOGOUT = 'logout'
