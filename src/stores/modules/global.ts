@@ -9,6 +9,8 @@ export const useGlobalStore = defineStore('global', {
     isDark: false,
     // 语言
     language: 'zh_CN',
+    // 是否全屏
+    isFullscreen: false,
   }),
   actions: {
     setCollapse(isCollapse: boolean) {
@@ -19,6 +21,9 @@ export const useGlobalStore = defineStore('global', {
     },
     setLanguage(language: string) {
       this.language = language
+    },
+    setFullscreen(isFullscreen: boolean) {
+      this.isFullscreen = isFullscreen
     },
   },
   persist: {
@@ -31,4 +36,5 @@ interface State {
   isCollapse: boolean
   isDark: boolean
   language: string
+  isFullscreen: boolean
 }

@@ -41,6 +41,7 @@ const handleLanguage = (lang: string) => {
   justify-content: center;
   align-items: center;
   padding: 0 5px;
+  cursor: pointer;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.06);
