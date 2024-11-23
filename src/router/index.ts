@@ -12,7 +12,7 @@ import { useAuthStore, useUserStore } from '@/stores'
 import nProgress from 'nprogress'
 import getPageTitle from '@/utils/getPageTitle'
 import { LOGIN_URL, WHITE_URL_LIST } from '@/config'
-import { elMsgError } from '@/utils/elMsg'
+import { elMsgWarning } from '@/utils/elMsg'
 import { initDynamicRouter } from './modules/dynamicRouter'
 
 nProgress.configure({
@@ -60,7 +60,7 @@ router.beforeEach(
       if (userStore.getToken) {
         return next(from.fullPath)
       } else {
-        elMsgError('您未登录，或者登录已经超时，请先登录！')
+        elMsgWarning('您未登录，或者登录已经超时，请先登录！')
       }
       // 重置路由
       authStore.getMenuList.forEach(route => {
