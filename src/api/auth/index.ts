@@ -45,7 +45,5 @@ export function getUserMenuApi() {
  * 退出登录
  */
 export function logoutApi() {
-  return yoiAxios.post(Api.logout, undefined, {
-    showCodeMessage: true,
-  })
+  return yoiAxios.post(Api.logout)
 }
