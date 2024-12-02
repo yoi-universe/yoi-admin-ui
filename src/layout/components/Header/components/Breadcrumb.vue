@@ -4,9 +4,7 @@
       <transition-group name="breadcrumb">
         <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.menuId">
           <div class="el-breadcrumb__inner" @click="handleBreadcrumb(item)">
-            <el-icon size="18">
-              <component :is="item.icon"></component>
-            </el-icon>
+            <YoiGlobalIcon :icon="item.icon" size="18" />
             <span class="el-breadcrumb__text">{{ item.menuName }}</span>
           </div>
         </el-breadcrumb-item>
@@ -21,6 +19,7 @@ import type { MenuTree } from '@/types/system/menu';
 import { ArrowRight } from '@element-plus/icons-vue'
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue';
 
 const route = useRoute()
 const authStore = useAuthStore()

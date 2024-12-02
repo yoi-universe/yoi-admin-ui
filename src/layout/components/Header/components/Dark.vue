@@ -4,15 +4,11 @@
       <template #dark>
         <!-- 明亮模式 -->
         <el-tooltip content="明亮模式" placement="bottom" v-if="!isDark">
-          <el-icon size="20">
-            <Sunny />
-          </el-icon>
+          <YoiGlobalIcon icon="Sunny" size="20" />
         </el-tooltip>
         <!-- 暗黑模式 -->
         <el-tooltip content="暗黑模式" placement="bottom" v-if="isDark">
-          <el-icon size="20">
-            <Moon />
-          </el-icon>
+          <YoiGlobalIcon icon="Moon" size="20" />
         </el-tooltip>
       </template>
     </YoiDark>
@@ -21,6 +17,7 @@
 
 <script lang="ts" setup>
 import YoiDark from '@/components/YoiDark/index.vue';
+import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue';
 import { useGlobalStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 

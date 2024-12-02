@@ -30,9 +30,13 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Tabs: typeof import('./src/components/Tabs/index.vue')['default']
     YoiDark: typeof import('./src/components/YoiDark/index.vue')['default']
+    YoiGlobalIcon: typeof import('./src/components/YoiGlobalIcon/index.vue')['default']
   }
 }

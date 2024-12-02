@@ -2,9 +2,7 @@
   <div class="language">
     <el-tooltip content="翻译语言" placement="left">
       <el-dropdown @command="handleLanguage">
-        <el-icon size=20>
-          <SwitchFilled />
-        </el-icon>
+        <YoiGlobalIcon icon="SwitchFilled" size="20" />
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item v-for="item in langList()" :key="item.value" :command="item.value"
@@ -22,6 +20,7 @@ import { langList } from '@/languages/tools';
 import { useGlobalStore } from '@/stores';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue';
 
 const globalStore = useGlobalStore()
 const i18n = useI18n()

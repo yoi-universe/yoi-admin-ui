@@ -2,10 +2,7 @@
   <template v-for="item in menuList" :key="item.menuId">
     <!-- 叶子节点 -->
     <el-menu-item v-if="item.menuType === MENU_TYPE_MENU" :index="item.path" @click="handleMenuClick(item)">
-      <!-- 动态图标 -->
-      <el-icon size="18">
-        <component :is="item.icon"></component>
-      </el-icon>
+      <YoiGlobalIcon :icon="item.icon" size="18" />
       <template #title>
         <span>{{ item.menuName }}</span>
       </template>
@@ -13,9 +10,7 @@
     <!-- 非叶子节点 -->
     <el-sub-menu v-if="item.menuType === MENU_TYPE_DIRECTORY" :index="item.path">
       <template #title>
-        <el-icon size="18">
-          <component :is="item.icon"></component>
-        </el-icon>
+        <YoiGlobalIcon :icon="item.icon" size="18" />
         <span>{{ item.menuName }}</span>
       </template>
       <AsideSubMenu :menuList="item.children" />
@@ -28,6 +23,7 @@ import type { MenuTree } from '@/types/system/menu';
 import { MENU_TYPE_MENU, MENU_TYPE_DIRECTORY, MENU_LINK_TARGET_BLANK, MENU_NOT_LINK } from '@/constants/system';
 import { elMsgWarning } from '@/utils/elMsg';
 import { useRouter } from 'vue-router';
+import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue';
 
 const { menuList } = defineProps<Props>()
 
