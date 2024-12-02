@@ -44,6 +44,7 @@ const handleCommand = (command: string) => {
   switch (command) {
     case USER_DROP_DOWN_MENU_PROFILE:
       // TODO: 跳转个人中心
+      router.push('/personage')
       break;
     case USER_DROP_DOWN_MENU_LOGOUT:
       logout()
