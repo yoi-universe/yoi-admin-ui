@@ -13,9 +13,7 @@
       <el-header class="layout-header">
         <Header></Header>
       </el-header>
-      <el-main>
-        <Main></Main>
-      </el-main>
+      <Main></Main>
     </el-container>
   </el-container>
 </template>
