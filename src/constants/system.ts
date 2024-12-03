@@ -12,6 +12,13 @@ export const MENU_LINK_TARGET_SELF = 0
 export const MENU_LINK_TARGET_BLANK = 1
 
 /**
+ * 菜单是否缓存
+ * 0:缓存;1:不缓存
+ */
+export const MENU_CACHE_YES = 0
+export const MENU_CACHE_NO = 1
+
+/**
  * 顶部用户下拉菜单
  * 个人中心 profile
  * 退出登录 logout
