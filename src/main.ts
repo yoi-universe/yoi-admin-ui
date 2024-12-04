@@ -11,7 +11,7 @@ import i18n from '@/languages'
 /**
  * css样式
  */
-import '@/styles/reset.scss' // 重置样式
+import '@/styles/index.scss' // 全局样式
 import 'nprogress/nprogress.css' // 进度条
 import 'element-plus/theme-chalk/el-message.css' // 消息提示样式
 import 'element-plus/theme-chalk/dark/css-vars.css' // element plus dark 样式

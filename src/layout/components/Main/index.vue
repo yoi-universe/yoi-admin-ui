@@ -27,4 +27,10 @@ const handleRefreshPage = (val: boolean) => {
 provide('refresh', handleRefreshPage)
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.layout-main {
+  padding: 5px 6px;
+
+  @apply bg-[#f6f9fe] dark:bg-black;
+}
+</style>
