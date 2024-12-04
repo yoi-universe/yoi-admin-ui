@@ -2,6 +2,7 @@ import { MENU_CACHE_YES } from '@/constants/system'
 import type { TabInfo } from '@/types/tabs'
 import { defineStore } from 'pinia'
 import router from '@/router/index'
+import { HOME_URL } from '@/config'
 
 export const useTabsStore = defineStore('tabs', {
   state: (): State => ({
@@ -44,6 +45,20 @@ export const useTabsStore = defineStore('tabs', {
           if (!nextTab) return
           router.push(nextTab.path)
         })
+    },
+    /**
+     * 删除多个tabs
+     * @param reservePath 保留的path
+     */
+    delManyTabs(reservePath?: string) {
+      this.tabList = this.tabList.filter(
+        item =>
+          item.path === reservePath || (!reservePath && item.path === HOME_URL),
+      )
+      const keepAliveList = this.tabList.filter(
+        item => item.isCache === MENU_CACHE_YES,
+      )
+      this.keepAliveList = keepAliveList.map(item => `${item.name}Page`)
     },
     addKeepAliveList(name: string) {
       const componentName = `${name}Page` // 添加页面标识,防止名称与html默认名称冲突导致命名错误问题

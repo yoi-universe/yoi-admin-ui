@@ -1,6 +1,6 @@
 <template>
   <div class="tab-card" v-show="show" :style="{ left: position.x + 'px', top: position.y + 'px' }">
-    <div class="tab-menu-item" :class="{ 'is-disabled': route.path !== currentPath }" @click="handleRefresh">
+    <div class="tab-menu-item" @click="handleRefresh">
       <YoiGlobalIcon icon="Refresh" class="mr-5px" />重新刷新
     </div>
     <div class="tab-menu-item" @click="handleCloseCurrent">
@@ -17,16 +17,18 @@
 
 <script lang="ts" setup>
 import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue';
+import { HOME_URL } from '@/config';
 import { MENU_CACHE_YES } from '@/constants/system';
 import { useTabsStore } from '@/stores';
 import { inject, nextTick, reactive, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute()
+const router = useRouter()
 const tabsStore = useTabsStore()
 
 const show = ref(false);
-const currentPath = ref('');
+const choosePath = ref('');
 const position = reactive({
   x: 0,
   y: 0
@@ -34,7 +36,10 @@ const position = reactive({
 
 const refreshPage: Function = inject('refresh')!
 
+// 刷新页面
 const handleRefresh = () => {
+  // 刷新页面不为当前页面时跳转至刷新页面
+  if (route.fullPath !== choosePath.value) router.push(choosePath.value)
   setTimeout(() => {
     route.meta.isCache === MENU_CACHE_YES && tabsStore.removeKeepAliveList(route.name as string)
     refreshPage(false)
@@ -44,9 +49,23 @@ const handleRefresh = () => {
     })
   }, 0)
 }
-const handleCloseCurrent = () => { }
-const handleCloseOther = () => { }
-const handleCloseAll = () => { }
+
+// 关闭当前标签
+const handleCloseCurrent = () => {
+  tabsStore.delTabs(choosePath.value, route.fullPath === choosePath.value)
+}
+
+// 关闭其他标签
+const handleCloseOther = () => {
+  tabsStore.delManyTabs(choosePath.value)
+  if (route.fullPath !== choosePath.value) router.push(choosePath.value)
+}
+
+// 关闭所有标签
+const handleCloseAll = () => {
+  tabsStore.delManyTabs()
+  router.push(HOME_URL)
+}
 
 const handleHideMenu = () => {
   if (show.value) {
@@ -57,7 +76,7 @@ const handleHideMenu = () => {
 
 const handleShowMenu = (path: string, x: number, y: number) => {
   show.value = true;
-  currentPath.value = path;
+  choosePath.value = path;
   position.x = x;
   position.y = y;
   window.addEventListener('click', handleHideMenu);
@@ -95,14 +114,6 @@ defineExpose({
 
     &:first-child {
       margin-top: 0;
-    }
-
-    &.is-disabled {
-      color: var(--el-button-disabled-text-color);
-      cursor: not-allowed;
-      background-image: none;
-      background-color: var(--el-button-disabled-bg-color);
-      border-color: var(--el-button-disabled-border-color);
     }
   }
 }
