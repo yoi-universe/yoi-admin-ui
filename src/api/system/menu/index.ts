@@ -22,7 +22,9 @@ enum Api {
  * @returns Promise
  */
 export function getMenuListApi(params: GetMenuListParams) {
-  return yoiAxios.get<MenuTree[]>(Api.list, params)
+  return yoiAxios.get<MenuTree[]>(Api.list, params, {
+    showCodeMessage: true,
+  })
 }
 
 /**
