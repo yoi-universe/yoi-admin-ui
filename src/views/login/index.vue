@@ -67,7 +67,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button class="w-100%" round type="primary" :loading="loading" v-throttle:3000="submitForm">
+            <el-button class="w-100%" round type="primary" :loading="loading" v-throttle:1000="submitForm">
               登录
             </el-button>
           </el-form-item>
@@ -118,27 +118,25 @@ const submitForm = () => {
   formRef.value.validate(async (valid) => {
     if (valid) {
       loading.value = true
-      try {
-        console.log('submit!')
-        let params: LoginParams = {
-          ...formData,
-          password: md5(formData.password).toUpperCase()
+      console.log('submit!')
+      let params: LoginParams = {
+        ...formData,
+        password: md5(formData.password).toUpperCase()
+      }
+      const res = await loginApi(params).catch(e => e)
+      if (res.code === 200) {
+        const data = res.data
+        userStore.setToken(data.token)
+        elMsgSuccess('登录成功')
+        const redirect = route.query.redirect as string
+        if (redirect) {
+          const redirectUrl = decodeURIComponent(redirect)
+          router.push(redirectUrl)
+        } else {
+          router.push('/')
         }
-        const res = await loginApi(params)
-        if (res.code === 200) {
-          const data = res.data
-          userStore.setToken(data.token)
-          elMsgSuccess('登录成功')
-          const redirect = route.query.redirect as string
-          if (redirect) {
-            const redirectUrl = decodeURIComponent(redirect)
-            router.push(redirectUrl)
-          } else {
-            router.push('/')
-          }
-        }
-      } catch (e: any) {
-        elMsgError(e.message)
+      } else {
+        elMsgError(res.message)
         // 等待1秒后关闭loading
         setTimeout(() => {
           loading.value = false
