@@ -14,6 +14,7 @@ enum Api {
   update = prefix + '/update',
   delete = prefix + '/delete',
   getInfo = prefix + '/get_info',
+  selectTreeList = prefix + '/select_tree_list',
 }
 
 /**
@@ -67,4 +68,13 @@ export function deleteMenuApi(menuIds: number[]) {
  */
 export function getMenuInfoApi(menuId: number) {
   return yoiAxios.get<MenuTree>(Api.getInfo, { menuId })
+}
+
+/**
+ * 获取菜单树列表
+ * @param params 查询参数
+ * @returns Promise
+ */
+export function getMenuTreeListApi() {
+  return yoiAxios.get<MenuTree[]>(Api.selectTreeList)
 }
