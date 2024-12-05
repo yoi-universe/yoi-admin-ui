@@ -333,7 +333,6 @@ const handleConfirm = () => {
       console.log('submit!')
       const addRes = await addMenuApi(form.value).catch(e => e)
       if (addRes.code === 200) {
-        elMsgSuccess('添加成功')
         resetForm()
         yoiDialogRef.value.confirmClose()
         emit('confirm')
