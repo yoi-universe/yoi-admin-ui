@@ -1,11 +1,11 @@
 <template>
   <el-icon :size="size">
-    <component :is="icon ? icon : 'Sunny'"></component>
+    <component v-if="icon" :is="icon"></component>
   </el-icon>
 </template>
 
 <script lang="ts" setup>
-const { icon, size = 18 } = defineProps<Props>()
+const { icon = 'Sunny', size = 18 } = defineProps<Props>()
 </script>
 <script lang="ts">
 interface Props {
