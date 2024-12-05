@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import { elMsgWarning } from '@/utils/elMsg'
+import { elMsgSuccess, elMsgWarning } from '@/utils/elMsg'
 import { ElMessageBox } from 'element-plus'
 import { ref } from 'vue'
 
@@ -84,7 +84,7 @@ const open = () => {
 // 提交后关闭
 const confirmClose = () => {
   visible.value = false
-  elMsgWarning('已提交')
+  elMsgSuccess('已提交')
 }
 
 defineExpose({
