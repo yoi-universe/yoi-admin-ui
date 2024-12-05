@@ -1,8 +1,10 @@
 import type { App, Directive } from 'vue'
 import throttle from './modules/throttle'
+import debounce from './modules/debounce'
 
 const directives: Record<string, Directive> = {
   throttle,
+  debounce,
 }
 
 const install = (app: App) => {
