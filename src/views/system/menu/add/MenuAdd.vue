@@ -324,6 +324,7 @@ const resetForm = () => {
   }
 }
 const yoiDialogRef = ref()
+const emit = defineEmits(['confirm'])
 const handleConfirm = () => {
   if (!formRef.value) return
   formRef.value.validate(async valid => {
@@ -335,6 +336,7 @@ const handleConfirm = () => {
         elMsgSuccess('添加成功')
         resetForm()
         yoiDialogRef.value.confirmClose()
+        emit('confirm')
       }
       loading.value = false
     } else {

@@ -147,7 +147,7 @@
       </el-table>
     </YoiCard>
 
-    <MenuAdd ref="menuAddRef" />
+    <MenuAdd ref="menuAddRef" @confirm="getData" />
   </div>
 </template>
 
