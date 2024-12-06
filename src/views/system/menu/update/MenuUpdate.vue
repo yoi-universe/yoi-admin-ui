@@ -1,7 +1,8 @@
 <template>
   <YoiDialog
     ref="yoiDialogRef"
-    title="添加菜单"
+    title="修改菜单"
+    :loading="loading"
     :btn-loading="btnLoading"
     @confirm="handleConfirm"
     @cancel="handleCancel"
@@ -244,9 +245,13 @@
 <script lang="ts" setup>
 import { nextTick, reactive, ref } from 'vue'
 import YoiDialog from '@/components/YoiDialog/index.vue'
-import type { AddMenuInfoParams } from '@/api/system/menu/type'
+import type { UpdateMenuInfoParams } from '@/api/system/menu/type'
 import type { FormInstance } from 'element-plus'
-import { addMenuApi, getMenuTreeListApi } from '@/api/system/menu'
+import {
+  getMenuInfoApi,
+  getMenuTreeListApi,
+  updateMenuApi,
+} from '@/api/system/menu'
 import type { MenuTree } from '@/types/system/menu'
 import YoiSelectIcon from '@/components/YoiSelectIcon/index.vue'
 import {
@@ -255,9 +260,11 @@ import {
   MENU_IS_LINK,
 } from '@/constants/system'
 
+const loading = ref(false)
 const btnLoading = ref(false)
 const formRef = ref<FormInstance>()
-const form = ref<AddMenuInfoParams>({
+const form = ref<UpdateMenuInfoParams>({
+  menuId: 0,
   parentId: 0,
   menuName: '',
   path: '',
@@ -285,6 +292,7 @@ const rules = reactive({
 const menuTreeList = ref<Partial<MenuTree>[]>([])
 
 const getData = async () => {
+  loading.value = true
   const menuTreeListRes = await getMenuTreeListApi().catch(e => e)
   if (menuTreeListRes.code === 200) {
     menuTreeList.value = menuTreeListRes.data
@@ -294,6 +302,11 @@ const getData = async () => {
       children: [],
     })
   }
+  const menuInfoRes = await getMenuInfoApi(form.value.menuId).catch(e => e)
+  if (menuInfoRes.code === 200) {
+    form.value = menuInfoRes.data
+  }
+  loading.value = false
 }
 
 const resetForm = () => {
@@ -304,6 +317,7 @@ const resetForm = () => {
     }
   })
   form.value = {
+    menuId: 0,
     parentId: 0,
     menuName: '',
     path: '',
@@ -330,8 +344,8 @@ const handleConfirm = () => {
     if (valid) {
       btnLoading.value = true
       console.log('submit!')
-      const addRes = await addMenuApi(form.value).catch(e => e)
-      if (addRes.code === 200) {
+      const updateRes = await updateMenuApi(form.value).catch(e => e)
+      if (updateRes.code === 200) {
         resetForm()
         yoiDialogRef.value.confirmClose()
         emit('confirm')
@@ -345,9 +359,10 @@ const handleConfirm = () => {
 const handleCancel = () => {
   yoiDialogRef.value.close()
 }
-const open = () => {
+const open = (id: number) => {
   yoiDialogRef.value.open()
   resetForm()
+  form.value.menuId = id
   getData()
 }
 
