@@ -254,7 +254,6 @@ import {
   MENU_TYPE_BUTTON,
   MENU_IS_LINK,
 } from '@/constants/system'
-import { elMsgSuccess } from '@/utils/elMsg'
 
 const loading = ref(false)
 const formRef = ref<FormInstance>()
