@@ -261,7 +261,6 @@ const handleBatchUpdate = () => {
 }
 
 const handleBatchDelete = () => {
-  console.log(ids.value)
   if (ids.value.length === 0) {
     elMsgWarning('请选择要删除的数据')
     return
