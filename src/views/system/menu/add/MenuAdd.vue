@@ -74,7 +74,7 @@
               ></el-input>
             </el-form-item>
           </el-col>
-          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }">
+          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }" class="pl-10px">
             <el-form-item label="排序" prop="sortNum">
               <el-input-number v-model="form.sortNum" clearable />
             </el-form-item>
@@ -99,6 +99,7 @@
             :xs="{ span: 24 }"
             :sm="{ span: 12 }"
             v-if="form.menuType < MENU_TYPE_BUTTON"
+            class="pl-10px"
           >
             <!-- 路由地址 -->
             <el-form-item label="路由地址" prop="path">
@@ -120,7 +121,7 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }">
+          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }" class="pl-10px">
             <!-- 权限标识 -->
             <el-form-item label="权限标识" prop="perms">
               <el-input
@@ -149,6 +150,7 @@
             :xs="{ span: 24 }"
             :sm="{ span: 12 }"
             v-if="form.menuType == MENU_TYPE_MENU"
+            class="pl-10px"
           >
             <!-- 组件路径 -->
             <el-form-item label="组件路径" prop="component">
@@ -174,7 +176,7 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }">
+          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }" class="pl-10px">
             <!-- 菜单状态 -->
             <el-form-item label="菜单状态" prop="status">
               <el-radio-group v-model="form.status">
@@ -203,6 +205,7 @@
             :xs="{ span: 24 }"
             :sm="{ span: 12 }"
             v-if="form.isLink == MENU_IS_LINK"
+            class="pl-10px"
           >
             <!-- 链接类型 -->
             <el-form-item label="链接类型" prop="linkType">
