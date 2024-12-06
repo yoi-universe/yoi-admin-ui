@@ -234,9 +234,11 @@ const handleSelectionChange = (val: MenuTree[]) => {
 
 const getData = async () => {
   loading.value = true
-  const menuRes = await getMenuListApi(searchParams.value).catch(e => e)
+  const menuRes = await getMenuListApi(searchParams.value)
   if (menuRes.code === 200) {
     tableList.value = menuRes.data
+  } else {
+    elMsgError(menuRes.message)
   }
   loading.value = false
 }
