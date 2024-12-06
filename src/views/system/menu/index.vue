@@ -187,9 +187,9 @@
       </el-table>
     </YoiCard>
 
-    <MenuAdd ref="menuAddRef" @confirm="getData" />
-    <MenuUpdate ref="menuUpdateRef" @confirm="getData" />
-    <MenuBatchUpdate ref="menuBatchUpdateRef" @confirm="getData" />
+    <MenuAdd ref="addRef" @confirm="getData" />
+    <MenuUpdate ref="updateRef" @confirm="getData" />
+    <MenuBatchUpdate ref="batchUpdateRef" @confirm="getData" />
   </div>
 </template>
 
@@ -250,14 +250,14 @@ const resetSearch = () => {
   getData()
 }
 
-const menuAddRef = ref()
+const addRef = ref()
 const handleAdd = () => {
-  menuAddRef.value.open()
+  addRef.value.open()
 }
 
-const menuBatchUpdateRef = ref()
+const batchUpdateRef = ref()
 const handleBatchUpdate = () => {
-  menuBatchUpdateRef.value.open(ids.value)
+  batchUpdateRef.value.open(ids.value)
 }
 
 const handleBatchDelete = () => {
@@ -277,9 +277,9 @@ const handleBatchDelete = () => {
     })
 }
 
-const menuUpdateRef = ref()
+const updateRef = ref()
 const handleUpdate = (row: MenuTree) => {
-  menuUpdateRef.value.open(row.menuId)
+  updateRef.value.open(row.menuId)
 }
 const handleDelete = (row: MenuTree) => {
   const id = row.menuId
