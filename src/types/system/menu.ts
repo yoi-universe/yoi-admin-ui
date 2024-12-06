@@ -51,19 +51,19 @@ export interface MenuInfo {
   sortNum: number
 
   /* 创建者 */
-  createBy: string
+  createBy?: string
 
   /* 创建时间 */
-  createTime: string
+  createTime?: string
 
   /* 修改者 */
-  updateBy: string
+  updateBy?: string
 
   /* 修改时间 */
-  updateTime: string
+  updateTime?: string
 
   /* 备注 */
-  remark: string
+  remark?: string
 }
 
 export interface MenuTree extends MenuInfo {
