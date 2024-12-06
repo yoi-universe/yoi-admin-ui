@@ -9,13 +9,7 @@
     :height="500"
   >
     <template #content>
-      <el-form
-        ref="formRef"
-        :rules="rules"
-        :model="form"
-        label-width="auto"
-        status-icon
-      >
+      <el-form ref="formRef" :rules="rules" :model="form" label-width="auto">
         <el-row>
           <el-col :xs="{ span: 24 }" :sm="{ span: 24 }">
             <!-- 菜单级联选择框 -->
@@ -346,7 +340,6 @@ const handleConfirm = () => {
       console.log('submit!')
       const updateRes = await updateMenuApi(form.value).catch(e => e)
       if (updateRes.code === 200) {
-        resetForm()
         yoiDialogRef.value.confirmClose()
         emit('confirm')
       }
