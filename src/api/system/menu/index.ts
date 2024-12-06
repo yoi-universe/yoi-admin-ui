@@ -4,7 +4,7 @@ import type {
   GetMenuListParams,
   UpdateMenuInfoParams,
 } from './type'
-import type { MenuTree } from '@/types/system/menu'
+import type { MenuInfo, MenuTree } from '@/types/system/menu'
 
 const prefix = '/sys_menu'
 
@@ -67,7 +67,7 @@ export function deleteMenuApi(menuIds: number[]) {
  * @returns Promise
  */
 export function getMenuInfoApi(menuId: number) {
-  return yoiAxios.get<MenuTree>(Api.getInfo, { menuId })
+  return yoiAxios.get<MenuInfo>(Api.getInfo, { menuId })
 }
 
 /**
