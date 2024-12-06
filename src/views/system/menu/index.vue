@@ -50,12 +50,22 @@
           >
         </el-col>
         <el-col :span="1.5">
-          <el-button type="success" icon="Edit" plain :disabled="multiple"
+          <el-button
+            type="success"
+            icon="Edit"
+            plain
+            :disabled="multiple"
+            @click="handleBatchUpdate"
             >修改</el-button
           >
         </el-col>
         <el-col :span="1.5">
-          <el-button type="danger" icon="Delete" plain :disabled="multiple"
+          <el-button
+            type="danger"
+            icon="Delete"
+            plain
+            :disabled="multiple"
+            @click="handleBatchDelete"
             >删除</el-button
           >
         </el-col>
@@ -148,6 +158,8 @@
     </YoiCard>
 
     <MenuAdd ref="menuAddRef" @confirm="getData" />
+    <MenuUpdate ref="menuUpdateRef" @confirm="getData" />
+    <MenuBatchUpdate ref="menuBatchUpdateRef" @confirm="getData" />
   </div>
 </template>
 
@@ -157,9 +169,13 @@ import YoiCard from '@/components/YoiCard/index.vue'
 import YoiToolbar from '@/components/YoiToolbar/index.vue'
 import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue'
 import type { GetMenuListParams } from '@/api/system/menu/type'
-import { getMenuListApi } from '@/api/system/menu'
+import { deleteMenuApi, getMenuListApi } from '@/api/system/menu'
 import type { MenuTree } from '@/types/system/menu'
 import MenuAdd from './add/MenuAdd.vue'
+import MenuUpdate from './update/MenuUpdate.vue'
+import MenuBatchUpdate from './batchUpdate/MenuBatchUpdate.vue'
+import { elMsgError, elMsgSuccess, elMsgWarning } from '@/utils/elMsg'
+import { elMsgBox } from '@/utils/elMsgBox'
 
 const searchParams = ref<GetMenuListParams>({
   menuName: '',
@@ -200,11 +216,47 @@ const handleAdd = () => {
   menuAddRef.value.open()
 }
 
+const menuBatchUpdateRef = ref()
+const handleBatchUpdate = () => {
+  menuBatchUpdateRef.value.open(ids.value)
+}
+
+const handleBatchDelete = () => {
+  console.log(ids.value)
+  if (ids.value.length === 0) {
+    elMsgWarning('请选择要删除的数据')
+    return
+  }
+  elMsgBox('您确认进行删除么？')
+    .then(async () => {
+      await deleteMenuApi(ids.value)
+      elMsgSuccess('删除成功')
+      getData()
+    })
+    .catch(() => {
+      elMsgError('已取消')
+    })
+}
+
+const menuUpdateRef = ref()
 const handleUpdate = (row: MenuTree) => {
-  console.log(row)
+  menuUpdateRef.value.open(row.menuId)
 }
 const handleDelete = (row: MenuTree) => {
-  console.log(row)
+  const id = row.menuId
+  if (!id) {
+    elMsgWarning('请选择要删除的数据')
+    return
+  }
+  elMsgBox(`您确认需要删除菜单名称[${row.menuName}]吗？`)
+    .then(async () => {
+      await deleteMenuApi([id])
+      elMsgSuccess('删除成功')
+      getData()
+    })
+    .catch(() => {
+      elMsgError('已取消')
+    })
 }
 
 onMounted(() => {
