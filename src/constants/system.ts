@@ -1,3 +1,7 @@
+// 角色状态 [0:正常;1:禁用]
+export const ROLE_STATUS_ENABLE = 0
+export const ROLE_STATUS_DISABLE = 1
+
 // 菜单类型 [0:目录;1:菜单;2:按钮]
 export const MENU_TYPE_DIRECTORY = 0
 export const MENU_TYPE_MENU = 1
