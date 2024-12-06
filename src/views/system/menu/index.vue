@@ -273,8 +273,8 @@ const handleBatchDelete = () => {
       elMsgSuccess('删除成功')
       getData()
     })
-    .catch(() => {
-      elMsgError('已取消')
+    .catch(e => {
+      elMsgError(e.message || '已取消')
     })
 }
 
@@ -294,8 +294,8 @@ const handleDelete = (row: MenuTree) => {
       elMsgSuccess('删除成功')
       getData()
     })
-    .catch(() => {
-      elMsgError('已取消')
+    .catch(e => {
+      elMsgError(e.message || '已取消')
     })
 }
 
