@@ -12,12 +12,16 @@
     :before-close="close"
   >
     <slot name="header"></slot>
-    <el-scrollbar class="container" :height="height + 'px'">
+    <el-scrollbar class="container" :height="height + 'px'" v-loading="loading">
       <slot name="content"></slot>
     </el-scrollbar>
     <template #footer v-if="!footerHidden">
       <div class="dialog-footer">
-        <el-button type="primary" :loading="loading" v-throttle="handleConfirm">
+        <el-button
+          type="primary"
+          :loading="btnLoading"
+          v-throttle="handleConfirm"
+        >
           {{ confirmText }}
         </el-button>
         <el-button type="danger" @click="handleCancel">{{
@@ -30,7 +34,7 @@
 
 <script lang="ts" setup>
 import { elMsgSuccess, elMsgWarning } from '@/utils/elMsg'
-import { ElMessageBox } from 'element-plus'
+import { elMsgBox } from '@/utils/elMsgBox'
 import { ref } from 'vue'
 
 const visible = ref(false)
@@ -45,6 +49,7 @@ const {
   destroyOnClose = false,
   fullscreen = false,
   loading = false,
+  btnLoading = false,
   confirmText = '确定',
   cancelText = '取消',
   footerHidden = false,
@@ -52,13 +57,7 @@ const {
 
 // 关闭弹窗
 const close = () => {
-  ElMessageBox.confirm('您确认进行关闭么？', '温馨提示：', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
-    draggable: true,
-    dangerouslyUseHTMLString: true,
-  })
+  elMsgBox('您确认进行关闭么？')
     .then(() => {
       visible.value = false
       elMsgWarning('已关闭')
@@ -104,7 +103,8 @@ interface Props {
   draggable?: boolean // 是否可拖拽
   destroyOnClose?: boolean // 关闭时销毁 dom
   fullscreen?: boolean // 是否全屏
-  loading?: boolean // 是否显示loading
+  loading?: boolean // loading
+  btnLoading?: boolean // 按钮loading
   confirmText?: string // 确认按钮文字
   cancelText?: string // 取消按钮文字
   footerHidden?: boolean // 隐藏底部
