@@ -7,6 +7,14 @@ export const MENU_TYPE_BUTTON = 2
 export const MENU_NOT_LINK = 0
 export const MENU_IS_LINK = 1
 
+// 菜单状态 [0:正常;1:禁用]
+export const MENU_STATUS_ENABLE = 0
+export const MENU_STATUS_DISABLE = 1
+
+// 菜单显示状态 [0:显示;1:隐藏]
+export const MENU_SHOW_YES = 0
+export const MENU_SHOW_NO = 1
+
 // 连接打开方式 [0:内部;1:外部]
 export const MENU_LINK_TARGET_SELF = 0
 export const MENU_LINK_TARGET_BLANK = 1

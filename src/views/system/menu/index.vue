@@ -82,14 +82,26 @@
         empty-text="暂时没有数据"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" />
+        <el-table-column type="selection" align="center" width="55" />
         <el-table-column prop="menuName" label="菜单名称" width="160" />
         <el-table-column
           prop="menuType"
           label="菜单类型"
           align="center"
           width="100"
-        />
+        >
+          <template #default="{ row }">
+            <el-tag type="primary" v-if="row.menuType === MENU_TYPE_DIRECTORY"
+              >目录</el-tag
+            >
+            <el-tag type="warning" v-if="row.menuType === MENU_TYPE_MENU"
+              >菜单</el-tag
+            >
+            <el-tag type="success" v-if="row.menuType === MENU_TYPE_BUTTON"
+              >按钮</el-tag
+            >
+          </template>
+        </el-table-column>
         <el-table-column prop="icon" label="图标" align="center" width="80">
           <template #default="{ row }">
             <YoiGlobalIcon :icon="row.icon" size="20" />
@@ -113,13 +125,31 @@
           label="菜单状态"
           align="center"
           width="100"
-        />
+        >
+          <template #default="{ row }">
+            <el-tag type="success" v-if="row.status === MENU_STATUS_ENABLE"
+              >启用</el-tag
+            >
+            <el-tag type="danger" v-if="row.status === MENU_STATUS_DISABLE"
+              >停用</el-tag
+            >
+          </template>
+        </el-table-column>
         <el-table-column
           prop="visible"
           label="是否可见"
           align="center"
           width="100"
-        />
+        >
+          <template #default="{ row }">
+            <el-tag type="success" v-if="row.visible === MENU_SHOW_YES"
+              >显示</el-tag
+            >
+            <el-tag type="danger" v-if="row.visible === MENU_SHOW_NO"
+              >隐藏</el-tag
+            >
+          </template>
+        </el-table-column>
         <el-table-column
           prop="path"
           label="路由地址"
@@ -176,6 +206,15 @@ import MenuUpdate from './update/MenuUpdate.vue'
 import MenuBatchUpdate from './batchUpdate/MenuBatchUpdate.vue'
 import { elMsgError, elMsgSuccess, elMsgWarning } from '@/utils/elMsg'
 import { elMsgBox } from '@/utils/elMsgBox'
+import {
+  MENU_TYPE_DIRECTORY,
+  MENU_TYPE_MENU,
+  MENU_TYPE_BUTTON,
+  MENU_STATUS_ENABLE,
+  MENU_STATUS_DISABLE,
+  MENU_SHOW_YES,
+  MENU_SHOW_NO,
+} from '@/constants/system'
 
 const searchParams = ref<GetMenuListParams>({
   menuName: '',
