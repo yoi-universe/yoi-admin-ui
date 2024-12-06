@@ -256,7 +256,7 @@ export default abstract class AbsAxios {
     options?: Options,
   ): Promise<Result<T>> {
     this.configureOptions(options)
-    return this.instance.delete(url, data)
+    return this.instance.delete(url, { data })
   }
 
   /**
