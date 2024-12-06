@@ -12,7 +12,7 @@
           />
         </el-form-item>
 
-        <el-form-item label="菜单状态" prop="menuStatus">
+        <el-form-item label="菜单状态" prop="status">
           <el-select
             placeholder="请选择菜单状态"
             v-model.number="searchParams.status"
