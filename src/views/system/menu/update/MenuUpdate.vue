@@ -341,8 +341,8 @@ const handleConfirm = () => {
     if (valid) {
       btnLoading.value = true
       console.log('submit!')
-      const updateRes = await updateMenuApi(form.value).catch(e => e)
-      if (updateRes.code === 200) {
+      const result = await updateMenuApi(form.value).catch(e => e)
+      if (result.code === 200) {
         yoiDialogRef.value.confirmClose()
         emit('confirm')
       }
