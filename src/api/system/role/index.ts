@@ -15,6 +15,9 @@ enum Api {
   update = prefix + '/update',
   delete = prefix + '/delete',
   getInfo = prefix + '/get_info',
+  listMenuNormal = prefix + '/list_menu_normal',
+  roleMenuList = prefix + '/role_menu_list',
+  assignRoleMenu = prefix + '/assign_role_menu',
 }
 
 /**
@@ -66,4 +69,35 @@ export function deleteRoleApi(roleIds: number[]) {
  */
 export function getRoleInfoApi(roleId: number) {
   return yoiAxios.get<RoleInfo>(Api.getInfo, { roleId })
+}
+
+/**
+ * 获取菜单列表（树形结构）
+ * @param params 查询参数
+ * @returns Promise
+ */
+export function getNormalMenuListApi() {
+  return yoiAxios.get(Api.listMenuNormal)
+}
+
+/**
+ * 获取角色菜单列表
+ * @param roleId 角色id
+ * @returns Promise
+ */
+export function getRoleMenuListApi(roleId: number) {
+  return yoiAxios.get(Api.roleMenuList, { roleId })
+}
+
+/**
+ * 分配角色菜单
+ * @param roleId 角色id
+ * @param menuIds 菜单id数组
+ * @returns Promise
+ */
+export function assignRoleMenuApi(roleId: number, menuIds: number[]) {
+  const url = `${Api.assignRoleMenu}?roleId=${roleId}`
+  return yoiAxios.post(url, menuIds, {
+    showCodeMessage: true,
+  })
 }
