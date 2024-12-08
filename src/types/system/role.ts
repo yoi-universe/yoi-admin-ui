@@ -8,6 +8,9 @@ export interface RoleInfo {
   /* 角色编号 */
   roleKey: string
 
+  /* 数据范围 */
+  dataScope?: number
+
   /* 角色状态:0正常,1停用 */
   status: number
 

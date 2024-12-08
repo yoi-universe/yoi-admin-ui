@@ -12,3 +12,9 @@ export interface AddRoleInfoParams
   extends Omit<RoleInfo, OmitParams | 'roleId'> {}
 
 export interface UpdateRoleInfoParams extends Omit<RoleInfo, OmitParams> {}
+
+export interface AssignRoleDeptParams {
+  roleId: number
+  dataScope: number
+  deptIds?: number[]
+}

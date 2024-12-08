@@ -3,6 +3,7 @@ import type {
   GetRoleListParams,
   AddRoleInfoParams,
   UpdateRoleInfoParams,
+  AssignRoleDeptParams,
 } from './type'
 import type { RoleInfo } from '@/types/system/role'
 import type { PageInfo } from '@/types/page'
@@ -130,9 +131,8 @@ export function getRoleDeptListApi(roleId: number) {
  * @param deptIds 部门id数组
  * @returns Promise
  */
-export function assignRoleDeptApi(roleId: number, deptIds: number[]) {
-  const url = `${Api.assignRoleDept}?roleId=${roleId}`
-  return yoiAxios.post(url, deptIds, {
+export function assignRoleDeptApi(data: AssignRoleDeptParams) {
+  return yoiAxios.post(Api.assignRoleDept, data, {
     showCodeMessage: true,
   })
 }
