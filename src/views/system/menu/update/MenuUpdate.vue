@@ -307,12 +307,6 @@ const getData = async () => {
 }
 
 const resetForm = () => {
-  // 等待 Dom 更新完毕
-  nextTick(() => {
-    if (formRef.value) {
-      formRef.value.resetFields()
-    }
-  })
   form.value = {
     menuId: 0,
     parentId: 0,
@@ -331,6 +325,9 @@ const resetForm = () => {
     visible: 0,
     status: 0,
     sortNum: 0,
+  }
+  if (formRef.value) {
+    formRef.value.resetFields()
   }
 }
 const yoiDialogRef = ref()

@@ -45,7 +45,7 @@
       <!-- 表格头部按钮 -->
       <el-row :gutter="10">
         <el-col :span="1.5">
-          <el-button type="primary" icon="Plus" plain @click="handleAdd"
+          <el-button type="primary" icon="Plus" plain @click="handleAdd()"
             >新增</el-button
           >
         </el-col>
@@ -162,11 +162,20 @@
           align="center"
           width="90"
         />
-        <el-table-column label="操作" align="center" width="120" fixed="right">
+        <el-table-column label="操作" align="center" width="160" fixed="right">
           <template #default="{ row }">
-            <el-tooltip content="修改" placement="top">
+            <el-tooltip content="新增" placement="top">
               <el-button
                 type="primary"
+                icon="CirclePlus"
+                circle
+                plain
+                @click="handleAdd(row)"
+              ></el-button>
+            </el-tooltip>
+            <el-tooltip content="修改" placement="top">
+              <el-button
+                type="success"
                 icon="Edit"
                 circle
                 plain
@@ -253,8 +262,18 @@ const resetSearch = () => {
 }
 
 const addRef = ref()
-const handleAdd = () => {
-  addRef.value.open()
+const handleAdd = (row?: MenuTree) => {
+  if (row) {
+    let menuType = row.menuType
+    if (menuType === MENU_TYPE_DIRECTORY) {
+      menuType = MENU_TYPE_MENU
+    } else if (menuType === MENU_TYPE_MENU) {
+      menuType = MENU_TYPE_BUTTON
+    }
+    addRef.value.open(row.menuId, menuType)
+  } else {
+    addRef.value.open()
+  }
 }
 
 const batchUpdateRef = ref()

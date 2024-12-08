@@ -294,12 +294,6 @@ const getData = async () => {
 }
 
 const resetForm = () => {
-  // 等待 Dom 更新完毕
-  nextTick(() => {
-    if (formRef.value) {
-      formRef.value.resetFields()
-    }
-  })
   form.value = {
     parentId: 0,
     menuName: '',
@@ -317,6 +311,9 @@ const resetForm = () => {
     visible: 0,
     status: 0,
     sortNum: 0,
+  }
+  if (formRef.value) {
+    formRef.value.resetFields()
   }
 }
 const yoiDialogRef = ref()
@@ -341,9 +338,13 @@ const handleConfirm = () => {
 const handleCancel = () => {
   yoiDialogRef.value.close()
 }
-const open = () => {
+const open = (parentId?: number, menuType?: number) => {
   yoiDialogRef.value.open()
   resetForm()
+  if (parentId !== undefined && menuType !== undefined) {
+    form.value.parentId = parentId
+    form.value.menuType = menuType
+  }
   getData()
 }
 
