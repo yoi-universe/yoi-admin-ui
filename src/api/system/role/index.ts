@@ -18,6 +18,10 @@ enum Api {
   listMenuNormal = prefix + '/list_menu_normal',
   roleMenuList = prefix + '/role_menu_list',
   assignRoleMenu = prefix + '/assign_role_menu',
+
+  listDeptNormal = prefix + '/list_dept_normal',
+  deptList = prefix + '/dept_list',
+  assignRoleDept = prefix + '/assign_role_dept',
 }
 
 /**
@@ -98,6 +102,37 @@ export function getRoleMenuListApi(roleId: number) {
 export function assignRoleMenuApi(roleId: number, menuIds: number[]) {
   const url = `${Api.assignRoleMenu}?roleId=${roleId}`
   return yoiAxios.post(url, menuIds, {
+    showCodeMessage: true,
+  })
+}
+
+/**
+ * 获取部门列表（树形结构）
+ * @param params 查询参数
+ * @returns Promise
+ */
+export function getNormalDeptListApi() {
+  return yoiAxios.get(Api.listDeptNormal)
+}
+
+/**
+ * 获取角色部门列表
+ * @param roleId 角色id
+ * @returns Promise
+ */
+export function getRoleDeptListApi(roleId: number) {
+  return yoiAxios.get(Api.deptList, { roleId })
+}
+
+/**
+ * 分配角色部门
+ * @param roleId 角色id
+ * @param deptIds 部门id数组
+ * @returns Promise
+ */
+export function assignRoleDeptApi(roleId: number, deptIds: number[]) {
+  const url = `${Api.assignRoleDept}?roleId=${roleId}`
+  return yoiAxios.post(url, deptIds, {
     showCodeMessage: true,
   })
 }
