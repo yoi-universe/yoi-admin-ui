@@ -21,9 +21,9 @@
           />
         </el-form-item>
 
-        <el-form-item label="菜单状态" prop="status">
+        <el-form-item label="角色状态" prop="status">
           <el-select
-            placeholder="请选择菜单状态"
+            placeholder="请选择角色状态"
             v-model.number="searchParams.status"
             clearable
             style="width: 240px"
@@ -34,7 +34,11 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" icon="Search" plain v-throttle="getData"
+          <el-button
+            type="primary"
+            icon="Search"
+            plain
+            v-throttle="handleSearch"
             >搜索</el-button
           >
           <el-button type="danger" icon="refresh" plain v-debounce="resetSearch"
@@ -161,6 +165,20 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <br />
+      <!-- 分页 -->
+      <el-pagination
+        background
+        v-model:current-page="searchParams.pageNum"
+        v-model:page-size="searchParams.pageSize"
+        v-show="total > 0"
+        :page-sizes="[10, 20, 50, 100, 200]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="getData"
+        @current-change="getData"
+      />
     </YoiCard>
 
     <RoleAdd ref="addRef" @confirm="getData" />
@@ -170,7 +188,7 @@
   </div>
 </template>
 
-<script lang="ts" setup name="menuPage">
+<script lang="ts" setup name="rolePage">
 import { onMounted, ref } from 'vue'
 import YoiCard from '@/components/YoiCard/index.vue'
 import YoiToolbar from '@/components/YoiToolbar/index.vue'
@@ -192,6 +210,7 @@ const searchParams = ref<GetRoleListParams>({
   pageNum: 1,
   pageSize: 10,
 })
+const total = ref(0)
 const showSearch = ref(true)
 // 数据表格加载页面动画
 const loading = ref(false)
@@ -208,18 +227,25 @@ const getData = async () => {
   const roleRes = await getRoleListApi(searchParams.value)
   if (roleRes.code === 200) {
     tableList.value = roleRes.data.list
+    total.value = roleRes.data.total
   } else {
     elMsgError(roleRes.message)
   }
   loading.value = false
 }
 
+const handleSearch = () => {
+  searchParams.value.pageNum = 1
+  getData()
+}
+
 const resetSearch = () => {
   searchParams.value = {
-    ...searchParams.value,
     roleName: '',
     roleKey: '',
     status: null,
+    pageNum: 1,
+    pageSize: 10,
   }
   getData()
 }
