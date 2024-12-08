@@ -83,7 +83,7 @@ export function getDictTypeAllApi() {
  * @returns Promise
  */
 export function refreshDictCacheApi() {
-  return yoiAxios.post(Api.refresh, {
+  return yoiAxios.get(Api.refresh, undefined, {
     showCodeMessage: true,
   })
 }
