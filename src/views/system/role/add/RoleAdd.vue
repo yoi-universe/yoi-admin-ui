@@ -89,18 +89,15 @@ const rules = reactive({
 })
 
 const resetForm = () => {
-  // 等待 Dom 更新完毕
-  nextTick(() => {
-    if (formRef.value) {
-      formRef.value.resetFields()
-    }
-  })
   form.value = {
     roleName: '',
     roleKey: '',
     sortNum: 0,
     status: 0,
     remark: '',
+  }
+  if (formRef.value) {
+    formRef.value.resetFields()
   }
 }
 const yoiDialogRef = ref()
