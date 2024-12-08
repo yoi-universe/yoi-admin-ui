@@ -239,7 +239,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import YoiDialog from '@/components/YoiDialog/index.vue'
 import type { AddMenuInfoParams } from '@/api/system/menu/type'
 import type { FormInstance } from 'element-plus'

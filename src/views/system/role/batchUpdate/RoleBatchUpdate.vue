@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import YoiDialog from '@/components/YoiDialog/index.vue'
 import type { FormInstance } from 'element-plus'
 import type { UpdateRoleInfoParams } from '@/api/system/role/type'
