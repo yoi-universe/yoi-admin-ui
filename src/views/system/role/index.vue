@@ -133,7 +133,7 @@
           align="center"
           width="180"
         />
-        <el-table-column label="操作" align="center" width="180" fixed="right">
+        <el-table-column label="操作" align="center" width="200" fixed="right">
           <template #default="{ row }">
             <el-tooltip content="修改" placement="top">
               <el-button
@@ -162,6 +162,15 @@
                 @click="handleAssignMenu(row)"
               ></el-button>
             </el-tooltip>
+            <el-tooltip content="数据权限" placement="top">
+              <el-button
+                type="success"
+                icon="FolderOpened"
+                circle
+                plain
+                @click="handleAssignDept(row)"
+              ></el-button>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -185,6 +194,7 @@
     <RoleUpdate ref="updateRef" @confirm="getData" />
     <RoleBatchUpdate ref="batchUpdateRef" @confirm="getData" />
     <RoleAssignMenu ref="roleAssignMenuRef" @confirm="getData" />
+    <RoleAssignDept ref="roleAssignDeptRef" @confirm="getData" />
   </div>
 </template>
 
@@ -196,6 +206,7 @@ import RoleAdd from './add/RoleAdd.vue'
 import RoleUpdate from './update/RoleUpdate.vue'
 import RoleBatchUpdate from './batchUpdate/RoleBatchUpdate.vue'
 import RoleAssignMenu from './assignMenu/RoleAssignMenu.vue'
+import RoleAssignDept from './assignDept/RoleAssignDept.vue'
 import { elMsgError, elMsgSuccess, elMsgWarning } from '@/utils/elMsg'
 import { elMsgBox } from '@/utils/elMsgBox'
 import type { GetRoleListParams } from '@/api/system/role/type'
@@ -300,6 +311,11 @@ const handleDelete = (row: RoleInfo) => {
 const roleAssignMenuRef = ref()
 const handleAssignMenu = (row: RoleInfo) => {
   roleAssignMenuRef.value.open(row.roleId)
+}
+
+const roleAssignDeptRef = ref()
+const handleAssignDept = (row: RoleInfo) => {
+  roleAssignDeptRef.value.open(row.roleId)
 }
 
 onMounted(() => {
