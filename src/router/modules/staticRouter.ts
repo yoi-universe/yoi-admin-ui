@@ -8,7 +8,23 @@ export const layoutRouter: RouteRecordRaw[] = [
     name: 'layout',
     component: Layout,
     redirect: HOME_URL,
-    children: [],
+    children: [
+      {
+        path: '/dict_data/:dictType',
+        name: 'dictDataPage',
+        component: () => import('@/views/system/dict/data.vue'),
+        meta: {
+          parentId: 2,
+          title: '字典数据',
+          icon: 'Flag',
+          visible: 1,
+          isCache: 0,
+          isLink: 0,
+          linkType: 0,
+          linkUrl: '',
+        },
+      },
+    ],
   },
   {
     path: '/login',
