@@ -17,6 +17,9 @@ export interface MenuInfo {
   /* 组件路径 */
   component: string
 
+  /* 选中路由 */
+  activeMenu: string
+
   /* 路由参数 */
   query: string
 
