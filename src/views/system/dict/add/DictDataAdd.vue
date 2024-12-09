@@ -124,7 +124,7 @@ const listClassOptions = ref<DictDataInfo[]>([])
 
 const dictStore = useDictStore()
 const getData = async () => {
-  listClassOptions.value = await dictStore.getDictData('sys_tags_type')
+  listClassOptions.value = await dictStore.getDictData('sys_tag_type')
 }
 
 const resetForm = () => {

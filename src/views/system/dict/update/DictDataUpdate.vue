@@ -131,7 +131,7 @@ const listClassOptions = ref<DictDataInfo[]>([])
 const dictStore = useDictStore()
 const getData = async () => {
   loading.value = true
-  listClassOptions.value = await dictStore.getDictData('sys_tags_type')
+  listClassOptions.value = await dictStore.getDictData('sys_tag_type')
   const dictDataInfoRes = await getDictDataInfoApi(form.value.dictCode).catch(
     e => e,
   )
