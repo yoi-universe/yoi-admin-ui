@@ -124,17 +124,17 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="sortNum"
+          label="排序"
+          align="center"
+          width="90"
+        />
+        <el-table-column
           prop="remark"
           label="备注"
           align="center"
           width="200"
           show-overflow-tooltip
-        />
-        <el-table-column
-          prop="sortNum"
-          label="排序"
-          align="center"
-          width="90"
         />
         <el-table-column
           prop="createTime"
