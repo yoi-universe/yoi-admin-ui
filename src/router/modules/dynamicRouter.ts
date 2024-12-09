@@ -49,6 +49,7 @@ export const initDynamicRouter = async () => {
           isLink: item.isLink,
           linkType: item.linkType,
           linkUrl: item.linkUrl,
+          activeMenu: item.activeMenu,
         },
       }
       router.addRoute('layout', route)
