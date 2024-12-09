@@ -58,18 +58,13 @@ export const useTabsStore = defineStore('tabs', {
       const keepAliveList = this.tabList.filter(
         item => item.isCache === MENU_CACHE_YES,
       )
-      this.keepAliveList = keepAliveList.map(item => `${item.name}Page`)
+      this.keepAliveList = keepAliveList.map(item => item.name)
     },
     addKeepAliveList(name: string) {
-      const componentName = `${name}Page` // 添加页面标识,防止名称与html默认名称冲突导致命名错误问题
-      !this.keepAliveList.includes(componentName) &&
-        this.keepAliveList.push(componentName)
+      !this.keepAliveList.includes(name) && this.keepAliveList.push(name)
     },
     removeKeepAliveList(name: string) {
-      const componentName = `${name}Page`
-      this.keepAliveList = this.keepAliveList.filter(
-        item => item !== componentName,
-      )
+      this.keepAliveList = this.keepAliveList.filter(item => item !== name)
     },
   },
 })
