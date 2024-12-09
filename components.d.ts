@@ -55,6 +55,7 @@ declare module 'vue' {
     YoiDialog: typeof import('./src/components/YoiDialog/index.vue')['default']
     YoiGlobalIcon: typeof import('./src/components/YoiGlobalIcon/index.vue')['default']
     YoiSelectIcon: typeof import('./src/components/YoiSelectIcon/index.vue')['default']
+    YoiTag: typeof import('./src/components/YoiTag/index.vue')['default']
     YoiToolbar: typeof import('./src/components/YoiToolbar/index.vue')['default']
   }
   export interface ComponentCustomProperties {
