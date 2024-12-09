@@ -166,6 +166,32 @@
           <el-col
             :xs="{ span: 24 }"
             :sm="{ span: 12 }"
+            v-if="form.menuType < MENU_TYPE_BUTTON"
+          >
+            <!-- 选中路由 -->
+            <el-form-item label="选中路由" prop="activeMenu">
+              <el-input
+                v-model="form.activeMenu"
+                placeholder="例如：/dict_type"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }" class="pl-10px">
+            <!-- 菜单状态 -->
+            <el-form-item label="菜单状态" prop="status">
+              <el-radio-group v-model="form.status">
+                <el-radio :value="0">正常</el-radio>
+                <el-radio :value="1">停用</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col
+            :xs="{ span: 24 }"
+            :sm="{ span: 24 }"
             v-if="form.menuType == MENU_TYPE_MENU"
           >
             <!-- 是否缓存 -->
@@ -173,15 +199,6 @@
               <el-radio-group v-model="form.isCache">
                 <el-radio :value="0">是</el-radio>
                 <el-radio :value="1">否</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }" class="pl-10px">
-            <!-- 菜单状态 -->
-            <el-form-item label="菜单状态" prop="status">
-              <el-radio-group v-model="form.status">
-                <el-radio :value="0">正常</el-radio>
-                <el-radio :value="1">停用</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -204,7 +221,9 @@
           <el-col
             :xs="{ span: 24 }"
             :sm="{ span: 12 }"
-            v-if="form.isLink == MENU_IS_LINK"
+            v-if="
+              form.isLink == MENU_IS_LINK && form.menuType < MENU_TYPE_BUTTON
+            "
             class="pl-10px"
           >
             <!-- 链接类型 -->
@@ -221,7 +240,9 @@
           <el-col
             :xs="{ span: 24 }"
             :sm="{ span: 24 }"
-            v-if="form.isLink == MENU_IS_LINK"
+            v-if="
+              form.isLink == MENU_IS_LINK && form.menuType < MENU_TYPE_BUTTON
+            "
           >
             <!-- 外链地址 -->
             <el-form-item label="外链地址" prop="linkUrl">
@@ -260,6 +281,7 @@ const form = ref<AddMenuInfoParams>({
   path: '',
   routeName: '',
   component: '',
+  activeMenu: '',
   query: '',
   isLink: 0,
   linkType: 0,
@@ -300,6 +322,7 @@ const resetForm = () => {
     path: '',
     routeName: '',
     component: '',
+    activeMenu: '',
     query: '',
     isLink: 0,
     linkType: 0,
