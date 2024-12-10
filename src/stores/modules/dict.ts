@@ -12,7 +12,7 @@ export const useDictStore = defineStore('dict', {
         return this.dictDataMap.get(dictType)
       }
       const result = await getDictDataListByTypeApi(dictType)
-      if (result.code === 200 && result.data !== null) {
+      if (result.code === 200 && result.data !== null && result.data.length) {
         this.dictDataMap.set(dictType, result.data)
         return result.data
       }
