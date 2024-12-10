@@ -91,15 +91,7 @@
           width="100"
         >
           <template #default="{ row }">
-            <el-tag type="primary" v-if="row.menuType === MENU_TYPE_DIRECTORY"
-              >目录</el-tag
-            >
-            <el-tag type="warning" v-if="row.menuType === MENU_TYPE_MENU"
-              >菜单</el-tag
-            >
-            <el-tag type="success" v-if="row.menuType === MENU_TYPE_BUTTON"
-              >按钮</el-tag
-            >
+            <YoiTag :tag-options="menuTypeOptions" :value="row.menuType" />
           </template>
         </el-table-column>
         <el-table-column prop="icon" label="图标" align="center" width="80">
@@ -127,12 +119,7 @@
           width="100"
         >
           <template #default="{ row }">
-            <el-tag type="success" v-if="row.status === MENU_STATUS_ENABLE"
-              >启用</el-tag
-            >
-            <el-tag type="danger" v-if="row.status === MENU_STATUS_DISABLE"
-              >停用</el-tag
-            >
+            <YoiTag :tag-options="normalDisableOptions" :value="row.status" />
           </template>
         </el-table-column>
         <el-table-column
@@ -142,12 +129,7 @@
           width="100"
         >
           <template #default="{ row }">
-            <el-tag type="success" v-if="row.visible === MENU_SHOW_YES"
-              >显示</el-tag
-            >
-            <el-tag type="danger" v-if="row.visible === MENU_SHOW_NO"
-              >隐藏</el-tag
-            >
+            <YoiTag :tag-options="menuVisibleOptions" :value="row.visible" />
           </template>
         </el-table-column>
         <el-table-column
@@ -219,11 +201,9 @@ import {
   MENU_TYPE_DIRECTORY,
   MENU_TYPE_MENU,
   MENU_TYPE_BUTTON,
-  MENU_STATUS_ENABLE,
-  MENU_STATUS_DISABLE,
-  MENU_SHOW_YES,
-  MENU_SHOW_NO,
 } from '@/constants/system'
+import { useDictStore } from '@/stores'
+import YoiTag from '@/components/YoiTag/index.vue'
 
 const searchParams = ref<GetMenuListParams>({
   menuName: '',
@@ -241,8 +221,15 @@ const handleSelectionChange = (val: MenuTree[]) => {
   multiple.value = !val.length
 }
 
+const dictStore = useDictStore()
+const menuTypeOptions = ref([])
+const normalDisableOptions = ref([])
+const menuVisibleOptions = ref([])
 const getData = async () => {
   loading.value = true
+  menuTypeOptions.value = await dictStore.getDictData('sys_menu_type')
+  normalDisableOptions.value = await dictStore.getDictData('sys_normal_disable')
+  menuVisibleOptions.value = await dictStore.getDictData('sys_menu_visible')
   const menuRes = await getMenuListApi(searchParams.value)
   if (menuRes.code === 200) {
     tableList.value = menuRes.data
