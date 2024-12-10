@@ -106,12 +106,7 @@
           width="100"
         >
           <template #default="{ row }">
-            <el-tag type="success" v-if="row.status === ROLE_STATUS_ENABLE"
-              >启用</el-tag
-            >
-            <el-tag type="danger" v-if="row.status === ROLE_STATUS_DISABLE"
-              >停用</el-tag
-            >
+            <YoiTag :tag-options="normalDisableOptions" :value="row.status" />
           </template>
         </el-table-column>
         <el-table-column
@@ -212,7 +207,8 @@ import { elMsgBox } from '@/utils/elMsgBox'
 import type { GetRoleListParams } from '@/api/system/role/type'
 import type { RoleInfo } from '@/types/system/role'
 import { deleteRoleApi, getRoleListApi } from '@/api/system/role'
-import { ROLE_STATUS_ENABLE, ROLE_STATUS_DISABLE } from '@/constants/system'
+import { useDictStore } from '@/stores'
+import YoiTag from '@/components/YoiTag/index.vue'
 
 const searchParams = ref<GetRoleListParams>({
   roleName: '',
@@ -233,8 +229,11 @@ const handleSelectionChange = (val: RoleInfo[]) => {
   multiple.value = !val.length
 }
 
+const dictStore = useDictStore()
+const normalDisableOptions = ref([])
 const getData = async () => {
   loading.value = true
+  normalDisableOptions.value = await dictStore.getDictData('sys_normal_disable')
   const roleRes = await getRoleListApi(searchParams.value)
   if (roleRes.code === 200) {
     tableList.value = roleRes.data.list
