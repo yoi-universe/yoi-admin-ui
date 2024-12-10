@@ -76,8 +76,8 @@ export function getUserInfoApi(userId: number) {
  * @param userId 用户id
  * @returns Promise
  */
-export function getUserRoleListApi(userId: number) {
-  return yoiAxios.get(Api.listRoleNormal, { userId })
+export function getUserRoleListApi() {
+  return yoiAxios.get(Api.listRoleNormal)
 }
 
 /**
@@ -85,8 +85,8 @@ export function getUserRoleListApi(userId: number) {
  * @param userId 用户id
  * @returns Promise
  */
-export function getUserDeptListApi(userId: number) {
-  return yoiAxios.get(Api.listDeptNormal, { userId })
+export function getUserDeptListApi() {
+  return yoiAxios.get(Api.listDeptNormal)
 }
 
 /**
@@ -94,6 +94,6 @@ export function getUserDeptListApi(userId: number) {
  * @param userId 用户id
  * @returns Promise
  */
-export function getUserPostListApi(userId: number) {
-  return yoiAxios.get(Api.listPostNormal, { userId })
+export function getUserPostListApi() {
+  return yoiAxios.get(Api.listPostNormal)
 }
