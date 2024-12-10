@@ -77,7 +77,7 @@
         v-loading="loading"
         :data="tableList"
         border
-        row-key="menuId"
+        row-key="deptId"
         :tree-props="{ children: 'children' }"
         empty-text="暂时没有数据"
         @selection-change="handleSelectionChange"
