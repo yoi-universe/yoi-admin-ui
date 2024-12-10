@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', {
       this.permissions = permissions
     },
     getBreadcrumb(path: string) {
-      return getBreadcrumbList(this.MenuTreeList, path)
+      return getBreadcrumbList<Partial<MenuTree>>(this.MenuTreeList, path)
     },
   },
 })
