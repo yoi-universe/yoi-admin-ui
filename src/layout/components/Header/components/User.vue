@@ -31,30 +31,19 @@ import {
   USER_DROP_DOWN_MENU_LOGOUT,
   USER_DROP_DOWN_MENU_PROFILE,
 } from '@/constants/system'
-import {
-  useAuthStore,
-  useDictStore,
-  useTabsStore,
-  useUserStore,
-} from '@/stores'
+import { useUserStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
 const { userInfo } = storeToRefs(userStore)
-const authStore = useAuthStore()
-const tabsStore = useTabsStore()
-const dictStore = useDictStore()
 
 const router = useRouter()
 
 // 退出登录
 const logout = async () => {
   await logoutApi()
-  userStore.$reset()
-  authStore.$reset()
-  tabsStore.$reset()
-  dictStore.$reset()
+  userStore.logout()
   router.replace(LOGIN_URL)
 }
 

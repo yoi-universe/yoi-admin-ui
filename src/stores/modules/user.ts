@@ -1,6 +1,9 @@
 import { PINIA_PREFIX_KEY } from '@/config'
 import type { UserInfo } from '@/types/system/user'
 import { defineStore } from 'pinia'
+import { useAuthStore } from './auth'
+import { useTabsStore } from './tabs'
+import { useDictStore } from './dict'
 
 export const useUserStore = defineStore('user', {
   state: (): State => ({
@@ -37,6 +40,12 @@ export const useUserStore = defineStore('user', {
     },
     setUserInfo(userInfo: UserInfo) {
       this.userInfo = userInfo
+    },
+    logout() {
+      useUserStore().$reset()
+      useAuthStore().$reset()
+      useTabsStore().$reset()
+      useDictStore().$reset()
     },
   },
   persist: {
