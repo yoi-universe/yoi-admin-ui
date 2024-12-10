@@ -8,7 +8,7 @@ export interface UserInfo {
   /* 部门id */
   deptId: number
 
-  /* 用户名 */
+  /* 登录账号 */
   userName: string
 
   /* 昵称 */
