@@ -2,7 +2,7 @@ import { MENU_CACHE_YES } from '@/constants/system'
 import type { TabInfo } from '@/types/tabs'
 import { defineStore } from 'pinia'
 import router from '@/router/index'
-import { HOME_URL } from '@/config'
+import { HOME_URL, PINIA_PREFIX_KEY } from '@/config'
 
 export const useTabsStore = defineStore('tabs', {
   state: (): State => ({
@@ -66,6 +66,11 @@ export const useTabsStore = defineStore('tabs', {
     removeKeepAliveList(name: string) {
       this.keepAliveList = this.keepAliveList.filter(item => item !== name)
     },
+  },
+  persist: {
+    key: PINIA_PREFIX_KEY + 'tabs',
+    storage: localStorage,
+    pick: ['tabList'],
   },
 })
 
