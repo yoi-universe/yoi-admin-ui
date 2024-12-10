@@ -102,7 +102,14 @@
           width="160"
         >
           <template #default="{ row }">
-            <YoiTag :tag-options="dictDataOptions" :value="row.dictValue" />
+            <el-tag
+              :disable-transitions="true"
+              :key="row.dictCode"
+              :type="row.listClass"
+              :style="row.cssClass"
+            >
+              {{ row.dictLabel }}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column
@@ -222,13 +229,9 @@ const handleSelectionChange = (val: DictDataInfo[]) => {
 }
 
 const dictStore = useDictStore()
-const dictDataOptions = ref([])
 const normalDisableOptions = ref([])
 const getData = async () => {
   loading.value = true
-  dictDataOptions.value = await dictStore.getDictData(
-    searchParams.value.dictType!,
-  )
   normalDisableOptions.value = await dictStore.getDictData('sys_normal_disable')
   const dictTypeRes = await getDictTypeAllApi()
   if (dictTypeRes.code === 200) {
