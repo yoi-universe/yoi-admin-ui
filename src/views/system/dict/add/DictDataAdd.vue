@@ -58,7 +58,7 @@
             <!-- 字典状态 -->
             <el-form-item label="字典状态" prop="status">
               <el-select v-model="form.status" placeholder="请选择字典状态">
-                <el-option label="启用" :value="0" />
+                <el-option label="正常" :value="0" />
                 <el-option label="停用" :value="1" />
               </el-select>
             </el-form-item>

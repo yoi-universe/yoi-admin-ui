@@ -19,7 +19,7 @@
             clearable
             style="width: 240px"
           >
-            <el-option label="启用" :value="0" />
+            <el-option label="正常" :value="0" />
             <el-option label="停用" :value="1" />
           </el-select>
         </el-form-item>
