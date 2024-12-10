@@ -119,8 +119,7 @@
         </el-table-column>
         <el-table-column prop="status" label="状态" align="center" width="100">
           <template #default="{ row }">
-            <el-tag type="success" v-if="row.status === 0">启用</el-tag>
-            <el-tag type="danger" v-if="row.status === 1">停用</el-tag>
+            <YoiTag :tag-options="normalDisableOptions" :value="row.status" />
           </template>
         </el-table-column>
         <el-table-column
@@ -216,6 +215,8 @@ import {
   refreshDictCacheApi,
 } from '@/api/system/dict/dictType'
 import { useRouter } from 'vue-router'
+import { useDictStore } from '@/stores'
+import YoiTag from '@/components/YoiTag/index.vue'
 
 const searchParams = ref<GetDictTypeListParams>({
   dictName: '',
@@ -236,8 +237,11 @@ const handleSelectionChange = (val: DictTypeInfo[]) => {
   multiple.value = !val.length
 }
 
+const dictStore = useDictStore()
+const normalDisableOptions = ref([])
 const getData = async () => {
   loading.value = true
+  normalDisableOptions.value = await dictStore.getDictData('sys_normal_disable')
   const dictTypeRes = await getDictTypeListApi(searchParams.value)
   if (dictTypeRes.code === 200) {
     tableList.value = dictTypeRes.data.list
