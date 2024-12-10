@@ -1,3 +1,5 @@
+import { LOGIN_URL } from '@/config'
+import router from '@/router'
 import { useUserStore } from '@/stores'
 import AbsAxios, { type Options, type Result } from '@/utils/axios'
 import { elMsg } from '@/utils/elMsg'
@@ -52,7 +54,16 @@ class YoiAxios extends AbsAxios {
 
   public override onResponseRejected(error: AxiosResponse) {
     if (this.options.loading) this.closeLoading()
+    this.handleHttpErrorStatus(error)
     return super.onResponseRejected(error)
+  }
+
+  public handleHttpErrorStatus(error: AxiosResponse) {
+    if (error.status === 401) {
+      const userStore = useUserStore()
+      userStore.logout()
+      router.replace(LOGIN_URL)
+    }
   }
 
   /**
