@@ -6,12 +6,7 @@ export interface GetDeptListParams {
   status?: number | null
 }
 
-type OmitParams =
-  | 'createBy'
-  | 'createTime'
-  | 'updateBy'
-  | 'updateTime'
-  | 'remark'
+type OmitParams = 'createBy' | 'createTime' | 'updateBy' | 'updateTime'
 export interface AddDeptInfoParams
   extends Omit<DeptInfo, OmitParams | 'deptId'> {}
 
