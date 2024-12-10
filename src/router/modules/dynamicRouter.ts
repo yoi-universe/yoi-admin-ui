@@ -34,7 +34,8 @@ export const initDynamicRouter = async () => {
       if (item.component) {
         const componentString = item.component.replace(/^\/+/, '') // 过滤字符串前面所有 '/' 字符
         const componentPath = componentString.replace(/\.\w+$/, '') // 过滤掉后缀名，为了让 import 加入 .vue ，不然会有警告提示...
-        componentUrl = '/src/' + componentPath + '.vue'
+        const url = '/src/' + componentPath + '.vue'
+        modules[url] ? (componentUrl = url) : componentUrl
       }
       const route = {
         path: item.path,
