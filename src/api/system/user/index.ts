@@ -72,28 +72,25 @@ export function getUserInfoApi(userId: number) {
 }
 
 /**
- * 获取用户角色列表
- * @param userId 用户id
+ * 获取正常角色列表
  * @returns Promise
  */
-export function getUserRoleListApi() {
+export function getNormalRoleListApi() {
   return yoiAxios.get(Api.listRoleNormal)
 }
 
 /**
- * 获取用户部门列表
- * @param userId 用户id
+ * 获取正常部门列表
  * @returns Promise
  */
-export function getUserDeptListApi() {
+export function getNormalDeptListApi() {
   return yoiAxios.get(Api.listDeptNormal)
 }
 
 /**
- * 获取用户岗位列表
- * @param userId 用户id
+ * 获取正常岗位列表
  * @returns Promise
  */
-export function getUserPostListApi() {
+export function getNormalPostListApi() {
   return yoiAxios.get(Api.listPostNormal)
 }

@@ -33,13 +33,13 @@ export interface UserInfo {
   status: number
 
   /* 删除标志 */
-  delFlag: number
+  delFlag?: number
 
   /* 登录ip */
-  loginIp: string
+  loginIp?: string
 
   /* 登录时间 */
-  loginDate: string
+  loginDate?: string
 
   /* 排序 */
   sortNum: number

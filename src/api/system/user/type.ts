@@ -8,13 +8,16 @@ export interface GetUserListParams extends PageParams {
   deptId?: number | null
 }
 
-type OmitParams =
-  | 'createBy'
-  | 'createTime'
-  | 'updateBy'
-  | 'updateTime'
-  | 'remark'
+type OmitParams = 'createBy' | 'createTime' | 'updateBy' | 'updateTime'
 export interface AddUserInfoParams
-  extends Omit<UserInfo, OmitParams | 'deptId'> {}
+  extends Omit<UserInfo, OmitParams | 'userId'> {
+  password: string
+  postIds: number[]
+  roleIds: number[]
+}
 
-export interface UpdateUserInfoParams extends Omit<UserInfo, OmitParams> {}
+export interface UpdateUserInfoParams extends Omit<UserInfo, OmitParams> {
+  password: string
+  postIds: number[]
+  roleIds: number[]
+}

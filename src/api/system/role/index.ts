@@ -109,7 +109,6 @@ export function assignRoleMenuApi(roleId: number, menuIds: number[]) {
 
 /**
  * 获取部门列表（树形结构）
- * @param params 查询参数
  * @returns Promise
  */
 export function getNormalDeptListApi() {
