@@ -1,7 +1,8 @@
 <template>
   <YoiDialog
     ref="yoiDialogRef"
-    title="添加用户"
+    title="修改用户"
+    :loading="loading"
     :btn-loading="btnLoading"
     @confirm="handleConfirm"
     @cancel="handleCancel"
@@ -193,20 +194,23 @@ import { reactive, ref } from 'vue'
 import YoiDialog from '@/components/YoiDialog/index.vue'
 import YoiUploadImage from '@/components/YoiUpload/Image.vue'
 import type { FormInstance } from 'element-plus'
-import type { AddUserInfoParams } from '@/api/system/user/type'
 import {
-  addUserApi,
   getNormalDeptListApi,
   getNormalPostListApi,
   getNormalRoleListApi,
+  getUserInfoApi,
+  updateUserApi,
 } from '@/api/system/user'
 import type { RoleInfo } from '@/types/system/role'
 import type { PostInfo } from '@/types/system/post'
+import type { UpdateUserInfoParams } from '@/api/system/user/type'
 import { md5 } from 'js-md5'
 
+const loading = ref(false)
 const btnLoading = ref(false)
 const formRef = ref<FormInstance>()
-const form = ref<AddUserInfoParams>({
+const form = ref<UpdateUserInfoParams>({
+  userId: 0,
   deptId: 0,
   userName: '',
   nickName: '',
@@ -226,16 +230,7 @@ const rules = reactive({
   deptId: [{ required: true, message: '请选择状态', trigger: 'blur' }],
   userName: [{ required: true, message: '请输入登录账号', trigger: 'blur' }],
   nickName: [{ required: true, message: '请输入用户名称', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入登录密码', trigger: 'blur' }],
   userType: [{ required: true, message: '请选择用户类型', trigger: 'blur' }],
-  roleIds: [
-    {
-      required: true,
-      type: 'array',
-      message: '请选择分配角色',
-      trigger: 'blur',
-    },
-  ],
   phone: [
     { required: true, message: '请输入手机号', trigger: 'blur' },
     { min: 11, max: 11, message: '请输入正确的手机号码', trigger: 'blur' },
@@ -250,6 +245,7 @@ const roleList = ref<RoleInfo[]>([])
 const postList = ref<PostInfo[]>([])
 
 const getData = async () => {
+  loading.value = true
   const normalDeptRes = await getNormalDeptListApi()
   if (normalDeptRes.code === 200) {
     deptTreeList.value = normalDeptRes.data
@@ -262,10 +258,16 @@ const getData = async () => {
   if (normalRoleRes.code === 200) {
     roleList.value = normalRoleRes.data
   }
+  const userInfoRes = await getUserInfoApi(form.value.userId)
+  if (userInfoRes.code === 200) {
+    form.value = { ...userInfoRes.data, password: '' }
+  }
+  loading.value = false
 }
 
 const resetForm = () => {
   form.value = {
+    userId: 0,
     deptId: 0,
     userName: '',
     nickName: '',
@@ -293,11 +295,13 @@ const handleConfirm = () => {
     if (valid) {
       btnLoading.value = true
       console.log('submit!')
-      let params: AddUserInfoParams = {
+      let params: UpdateUserInfoParams = {
         ...form.value,
-        password: md5(form.value.password).toUpperCase(),
+        password: form.value.password
+          ? md5(form.value.password).toUpperCase()
+          : form.value.password,
       }
-      const result = await addUserApi(params).catch(e => e)
+      const result = await updateUserApi(params).catch(e => e)
       if (result.code === 200) {
         yoiDialogRef.value.confirmClose()
         emit('confirm')
@@ -311,9 +315,10 @@ const handleConfirm = () => {
 const handleCancel = () => {
   yoiDialogRef.value.close()
 }
-const open = () => {
+const open = (id: number) => {
   yoiDialogRef.value.open()
   resetForm()
+  form.value.userId = id
   getData()
 }
 
