@@ -3,6 +3,7 @@ import type {
   GetUserListParams,
   AddUserInfoParams,
   UpdateUserInfoParams,
+  UserInfoRes,
 } from './type'
 import type { PageInfo } from '@/types/page'
 import type { UserInfo } from '@/types/system/user'
@@ -68,7 +69,7 @@ export function deleteUserApi(userIds: number[]) {
  * @returns Promise
  */
 export function getUserInfoApi(userId: number) {
-  return yoiAxios.get<UserInfo>(Api.getInfo, { userId })
+  return yoiAxios.get<UserInfoRes>(Api.getInfo, { userId })
 }
 
 /**
@@ -76,7 +77,9 @@ export function getUserInfoApi(userId: number) {
  * @returns Promise
  */
 export function getNormalRoleListApi() {
-  return yoiAxios.get(Api.listRoleNormal)
+  return yoiAxios.get(Api.listRoleNormal, undefined, {
+    cancelRepeatRequest: false,
+  })
 }
 
 /**
@@ -84,7 +87,9 @@ export function getNormalRoleListApi() {
  * @returns Promise
  */
 export function getNormalDeptListApi() {
-  return yoiAxios.get(Api.listDeptNormal)
+  return yoiAxios.get(Api.listDeptNormal, undefined, {
+    cancelRepeatRequest: false,
+  })
 }
 
 /**
@@ -92,5 +97,7 @@ export function getNormalDeptListApi() {
  * @returns Promise
  */
 export function getNormalPostListApi() {
-  return yoiAxios.get(Api.listPostNormal)
+  return yoiAxios.get(Api.listPostNormal, undefined, {
+    cancelRepeatRequest: false,
+  })
 }

@@ -1,6 +1,11 @@
 import type { PageParams } from '@/types/page'
 import type { UserInfo } from '@/types/system/user'
 
+export interface UserInfoRes extends UserInfo {
+  postIds: number[]
+  roleIds: number[]
+}
+
 export interface GetUserListParams extends PageParams {
   userName?: string
   nickName?: string
@@ -10,14 +15,10 @@ export interface GetUserListParams extends PageParams {
 
 type OmitParams = 'createBy' | 'createTime' | 'updateBy' | 'updateTime'
 export interface AddUserInfoParams
-  extends Omit<UserInfo, OmitParams | 'userId'> {
+  extends Omit<UserInfoRes, OmitParams | 'userId'> {
   password: string
-  postIds: number[]
-  roleIds: number[]
 }
 
-export interface UpdateUserInfoParams extends Omit<UserInfo, OmitParams> {
+export interface UpdateUserInfoParams extends Omit<UserInfoRes, OmitParams> {
   password: string
-  postIds: number[]
-  roleIds: number[]
 }
