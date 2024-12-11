@@ -22,8 +22,7 @@ export const useTabsStore = defineStore('tabs', {
     addTabs(tab: TabInfo) {
       // 查找是否已经存在
       const isTab = this.tabList.some(item => item.path === tab.path)
-      if (isTab) return
-      this.tabList.push(tab)
+      !isTab && this.tabList.push(tab)
       tab.isCache === MENU_CACHE_YES && this.addKeepAliveList(tab.name)
     },
     /**
