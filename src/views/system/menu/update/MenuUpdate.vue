@@ -114,21 +114,26 @@
 
         <el-row>
           <el-col :xs="{ span: 24 }" :sm="{ span: 12 }">
-            <!-- 是否可见 -->
-            <el-form-item label="是否可见" prop="visible">
-              <el-radio-group v-model="form.visible">
-                <el-radio :value="0">是</el-radio>
-                <el-radio :value="1">否</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="{ span: 24 }" :sm="{ span: 12 }" class="pl-10px">
             <!-- 权限标识 -->
             <el-form-item label="权限标识" prop="perms">
               <el-input
                 v-model="form.perms"
                 placeholder="例如：system:user:list"
               ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col
+            :xs="{ span: 24 }"
+            :sm="{ span: 12 }"
+            class="pl-10px"
+            v-if="form.menuType < MENU_TYPE_BUTTON"
+          >
+            <!-- 是否可见 -->
+            <el-form-item label="是否可见" prop="visible">
+              <el-radio-group v-model="form.visible">
+                <el-radio :value="0">是</el-radio>
+                <el-radio :value="1">否</el-radio>
+              </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
