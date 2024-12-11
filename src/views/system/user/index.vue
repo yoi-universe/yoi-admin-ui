@@ -101,8 +101,6 @@
         v-loading="loading"
         :data="tableList"
         border
-        row-key="menuId"
-        :tree-props="{ children: 'children' }"
         empty-text="暂时没有数据"
         @selection-change="handleSelectionChange"
       >
@@ -254,7 +252,7 @@
   </div>
 </template>
 
-<script lang="ts" setup name="rolePage">
+<script lang="ts" setup name="userPage">
 import { onMounted, ref } from 'vue'
 import YoiCard from '@/components/YoiCard/index.vue'
 import YoiToolbar from '@/components/YoiToolbar/index.vue'

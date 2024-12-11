@@ -167,7 +167,7 @@
   </div>
 </template>
 
-<script lang="ts" setup name="menuPage">
+<script lang="ts" setup name="deptPage">
 import { onMounted, ref } from 'vue'
 import YoiCard from '@/components/YoiCard/index.vue'
 import YoiToolbar from '@/components/YoiToolbar/index.vue'

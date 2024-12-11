@@ -90,8 +90,6 @@
         v-loading="loading"
         :data="tableList"
         border
-        row-key="menuId"
-        :tree-props="{ children: 'children' }"
         empty-text="暂时没有数据"
         @selection-change="handleSelectionChange"
       >
