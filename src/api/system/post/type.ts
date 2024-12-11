@@ -7,13 +7,8 @@ export interface GetPostListParams extends PageParams {
   status?: number | null
 }
 
-type OmitParams =
-  | 'createBy'
-  | 'createTime'
-  | 'updateBy'
-  | 'updateTime'
-  | 'remark'
+type OmitParams = 'createBy' | 'createTime' | 'updateBy' | 'updateTime'
 export interface AddPostInfoParams
-  extends Omit<PostInfo, OmitParams | 'deptId'> {}
+  extends Omit<PostInfo, OmitParams | 'postId'> {}
 
 export interface UpdatePostInfoParams extends Omit<PostInfo, OmitParams> {}
