@@ -151,7 +151,7 @@
           align="center"
           width="160"
         />
-        <el-table-column label="操作" align="center" width="180" fixed="right">
+        <el-table-column label="操作" align="center" width="120" fixed="right">
           <template #default="{ row }">
             <el-tooltip content="修改" placement="top">
               <el-button
