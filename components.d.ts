@@ -25,6 +25,7 @@ declare module 'vue' {
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
+    ElImageViewer: typeof import('element-plus/es')['ElImageViewer']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElLink: typeof import('element-plus/es')['ElLink']
@@ -47,6 +48,8 @@ declare module 'vue' {
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
+    Image: typeof import('./src/components/YoiUpload/Image.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Tabs: typeof import('./src/components/Tabs/index.vue')['default']
@@ -57,6 +60,8 @@ declare module 'vue' {
     YoiSelectIcon: typeof import('./src/components/YoiSelectIcon/index.vue')['default']
     YoiTag: typeof import('./src/components/YoiTag/index.vue')['default']
     YoiToolbar: typeof import('./src/components/YoiToolbar/index.vue')['default']
+    YoiUpload: typeof import('./src/components/YoiUpload/index.vue')['default']
+    YoiUploadImage: typeof import('./src/components/YoiUploadImage/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
