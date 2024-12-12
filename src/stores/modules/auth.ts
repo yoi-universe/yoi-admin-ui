@@ -6,7 +6,7 @@ export const useAuthStore = defineStore('auth', {
   state: (): State => ({
     menuList: [],
     MenuTreeList: [],
-    roles: [],
+    roleKeys: [],
     permissions: [],
   }),
   getters: {
@@ -16,8 +16,8 @@ export const useAuthStore = defineStore('auth', {
     getMenuTreeList(state) {
       return state.MenuTreeList
     },
-    getRoles(state) {
-      return state.roles
+    getRoleKeys(state) {
+      return state.roleKeys
     },
     getPermissions(state) {
       return state.permissions
@@ -29,8 +29,8 @@ export const useAuthStore = defineStore('auth', {
       // 处理菜单树结构
       this.MenuTreeList = recursiveTree<MenuInfo, MenuTree>(menuList, 0)
     },
-    setRoles(roles: string[]) {
-      this.roles = roles
+    setRoleKeys(roleKeys: string[]) {
+      this.roleKeys = roleKeys
     },
     setPermissions(permissions: string[]) {
       this.permissions = permissions
@@ -44,6 +44,6 @@ export const useAuthStore = defineStore('auth', {
 interface State {
   menuList: MenuInfo[]
   MenuTreeList: MenuTree[]
-  roles: string[]
+  roleKeys: string[]
   permissions: string[]
 }

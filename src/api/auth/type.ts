@@ -17,7 +17,7 @@ export interface UserInfoRes {
   loginUser: UserInfo
 
   /* 用户角色 */
-  roles: string[]
+  roleKeys: string[]
 
   /* 用户权限 */
   permissions: string[]

@@ -15,7 +15,7 @@ export const initDynamicRouter = async () => {
     const userInfo = res[1].data
 
     authStore.setMenuList(menuList)
-    authStore.setRoles(userInfo.roles)
+    authStore.setRoleKeys(userInfo.roleKeys)
     authStore.setPermissions(userInfo.permissions)
     userStore.setUserInfo(userInfo.loginUser)
 
