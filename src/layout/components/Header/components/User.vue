@@ -12,12 +12,16 @@
       </div>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item :command="USER_DROP_DOWN_MENU_PROFILE"
-            >个人中心</el-dropdown-item
-          >
-          <el-dropdown-item :command="USER_DROP_DOWN_MENU_LOGOUT"
-            >退出登录</el-dropdown-item
-          >
+          <div v-auth="'system:personage:list'">
+            <el-dropdown-item :command="USER_DROP_DOWN_MENU_PROFILE">
+              个人中心
+            </el-dropdown-item>
+          </div>
+          <div>
+            <el-dropdown-item :command="USER_DROP_DOWN_MENU_LOGOUT"
+              >退出登录</el-dropdown-item
+            >
+          </div>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
