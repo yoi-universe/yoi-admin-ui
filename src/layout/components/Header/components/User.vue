@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <el-avatar :size="34" :src="userInfo.avatar" />
+    <el-avatar :size="34" :src="prefix + userInfo.avatar" />
     <el-dropdown class="ml-10px" @command="handleCommand">
       <div
         class="flex align-center cursor-pointer select-none color-[--el-color-primary]"
@@ -35,6 +35,7 @@ import { useUserStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
+const prefix = import.meta.env.VITE_FILE_URL + '/get_img/'
 const userStore = useUserStore()
 const { userInfo } = storeToRefs(userStore)
 
