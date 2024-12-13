@@ -43,7 +43,7 @@
                 highlight-current
                 :props="{
                   id: 'deptId',
-                  label: 'dept_name',
+                  label: 'deptName',
                   children: 'children',
                 }"
               />
