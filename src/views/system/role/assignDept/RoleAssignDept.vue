@@ -37,7 +37,7 @@
                 ref="treeRef"
                 :data="treeData"
                 show-checkbox
-                style="width: 100%"
+                style="width: 100%; height: 100%"
                 :default-expand-all="false"
                 node-key="deptId"
                 highlight-current
