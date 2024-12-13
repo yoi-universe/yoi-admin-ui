@@ -44,12 +44,12 @@
       </el-form>
       <!-- 表格头部按钮 -->
       <el-row :gutter="10">
-        <el-col :span="1.5">
+        <el-col :span="1.5" v-auth="['system:menu:add']">
           <el-button type="primary" icon="Plus" plain @click="handleAdd()"
             >新增</el-button
           >
         </el-col>
-        <el-col :span="1.5">
+        <el-col :span="1.5" v-auth="['system:menu:update']">
           <el-button
             type="success"
             icon="Edit"
@@ -59,7 +59,7 @@
             >修改</el-button
           >
         </el-col>
-        <el-col :span="1.5">
+        <el-col :span="1.5" v-auth="['system:menu:delete']">
           <el-button
             type="danger"
             icon="Delete"
@@ -149,7 +149,17 @@
           align="center"
           width="90"
         />
-        <el-table-column label="操作" align="center" width="160" fixed="right">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="160"
+          fixed="right"
+          v-auth="[
+            'system:menu:add',
+            'system:menu:update',
+            'system:menu:delete',
+          ]"
+        >
           <template #default="{ row }">
             <el-tooltip content="新增" placement="top">
               <el-button
@@ -158,6 +168,7 @@
                 circle
                 plain
                 @click="handleAdd(row)"
+                v-auth="['system:menu:add']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="修改" placement="top">
@@ -167,6 +178,7 @@
                 circle
                 plain
                 @click="handleUpdate(row)"
+                v-auth="['system:menu:update']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -176,6 +188,7 @@
                 circle
                 plain
                 @click="handleDelete(row)"
+                v-auth="['system:menu:delete']"
               ></el-button>
             </el-tooltip>
           </template>

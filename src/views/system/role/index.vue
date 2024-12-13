@@ -48,12 +48,12 @@
       </el-form>
       <!-- 表格头部按钮 -->
       <el-row :gutter="10">
-        <el-col :span="1.5">
+        <el-col :span="1.5" v-auth="['system:role:add']">
           <el-button type="primary" icon="Plus" plain @click="handleAdd"
             >新增</el-button
           >
         </el-col>
-        <el-col :span="1.5">
+        <el-col :span="1.5" v-auth="['system:role:update']">
           <el-button
             type="success"
             icon="Edit"
@@ -63,7 +63,7 @@
             >修改</el-button
           >
         </el-col>
-        <el-col :span="1.5">
+        <el-col :span="1.5" v-auth="['system:role:delete']">
           <el-button
             type="danger"
             icon="Delete"
@@ -126,7 +126,18 @@
           align="center"
           width="180"
         />
-        <el-table-column label="操作" align="center" width="200" fixed="right">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="200"
+          fixed="right"
+          v-auth="[
+            'system:role:update',
+            'system:role:delete',
+            'system:role:menu',
+            'system:role:data',
+          ]"
+        >
           <template #default="{ row }">
             <el-tooltip content="修改" placement="top">
               <el-button
@@ -135,6 +146,7 @@
                 circle
                 plain
                 @click="handleUpdate(row)"
+                v-auth="['system:role:update']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -144,6 +156,7 @@
                 circle
                 plain
                 @click="handleDelete(row)"
+                v-auth="['system:role:delete']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="分配菜单" placement="top">
@@ -153,6 +166,7 @@
                 circle
                 plain
                 @click="handleAssignMenu(row)"
+                v-auth="['system:role:menu']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="数据权限" placement="top">
@@ -162,6 +176,7 @@
                 circle
                 plain
                 @click="handleAssignDept(row)"
+                v-auth="['system:role:data']"
               ></el-button>
             </el-tooltip>
           </template>
