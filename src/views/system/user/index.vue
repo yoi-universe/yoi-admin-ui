@@ -118,19 +118,11 @@
           width="160"
         />
         <el-table-column
-          prop="deptId"
+          prop="deptName"
           label="部门名称"
           align="center"
           width="160"
-        >
-          <template #default="{ row }">
-            <template v-for="item in deptOptions">
-              <span v-if="item.deptId == row.deptId">
-                {{ item.deptName }}
-              </span>
-            </template>
-          </template>
-        </el-table-column>
+        />
         <el-table-column prop="avatar" label="头像" align="center" width="80">
           <template #default="{ row }">
             <div class="flex justify-center">

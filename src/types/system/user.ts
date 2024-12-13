@@ -58,4 +58,7 @@ export interface UserInfo {
 
   /* 备注 */
   remark: string
+
+  /* 部门名称 */
+  deptName?: string
 }
