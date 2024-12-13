@@ -22,7 +22,7 @@ enum Api {
 
   listDeptNormal = prefix + '/list_dept_normal',
   deptList = prefix + '/dept_list',
-  assignRoleDept = prefix + '/assign_role_dept',
+  assignDataAuth = prefix + '/assign_data_auth',
 }
 
 /**
@@ -130,8 +130,8 @@ export function getRoleDeptListApi(roleId: number) {
  * @param deptIds 部门id数组
  * @returns Promise
  */
-export function assignRoleDeptApi(data: AssignRoleDeptParams) {
-  return yoiAxios.post(Api.assignRoleDept, data, {
+export function assignDataAuthApi(data: AssignRoleDeptParams) {
+  return yoiAxios.post(Api.assignDataAuth, data, {
     showCodeMessage: true,
   })
 }

@@ -62,7 +62,7 @@ import YoiDialog from '@/components/YoiDialog/index.vue'
 import type { ElTree, FormInstance } from 'element-plus'
 import type { AssignRoleDeptParams } from '@/api/system/role/type'
 import {
-  assignRoleDeptApi,
+  assignDataAuthApi,
   getNormalDeptListApi,
   getRoleDeptListApi,
   getRoleInfoApi,
@@ -123,7 +123,7 @@ const handleConfirm = async () => {
     const finalKey: number[] = halfDeptIds.concat(deptIds)
     form.value.deptIds = finalKey
   }
-  const result = await assignRoleDeptApi(form.value).catch(e => e)
+  const result = await assignDataAuthApi(form.value).catch(e => e)
   if (result.code === 200) {
     yoiDialogRef.value.confirmClose()
     emit('confirm')

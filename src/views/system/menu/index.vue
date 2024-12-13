@@ -83,7 +83,12 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" align="center" width="55" />
-        <el-table-column prop="menuName" label="菜单名称" width="160" />
+        <el-table-column
+          prop="menuName"
+          label="菜单名称"
+          width="160"
+          show-overflow-tooltip
+        />
         <el-table-column
           prop="menuType"
           label="菜单类型"
