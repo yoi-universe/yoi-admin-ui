@@ -11,7 +11,7 @@ const auth: Directive = {
     const authStore = useAuthStore()
     if (
       Array.isArray(value) &&
-      value.some(item => !authStore.getPermissions.includes(item))
+      !value.some(item => authStore.getPermissions.includes(item))
     ) {
       el.parentNode?.removeChild(el) // 如果用户不拥有所有权限，则移除元素
     }
