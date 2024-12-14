@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { useAuthStore } from './auth'
 import { useTabsStore } from './tabs'
 import { useDictStore } from './dict'
+import { resetRouter } from '@/router'
 
 export const useUserStore = defineStore('user', {
   state: (): State => ({
@@ -42,6 +43,7 @@ export const useUserStore = defineStore('user', {
       this.userInfo = userInfo
     },
     logout() {
+      resetRouter() // 重置路由
       useUserStore().$reset()
       useAuthStore().$reset()
       useTabsStore().$reset()
