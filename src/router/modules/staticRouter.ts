@@ -1,13 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import { HOME_URL } from '@/config'
+// import { HOME_URL } from '@/config'
 
 export const layoutRouter: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'layout',
     component: Layout,
-    redirect: HOME_URL,
+    // redirect: HOME_URL,
     children: [
       {
         path: '/dict_data/:dictType',
