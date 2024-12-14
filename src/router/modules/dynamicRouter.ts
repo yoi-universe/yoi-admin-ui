@@ -42,9 +42,11 @@ export const initDynamicRouter = async () => {
         name: item.routeName,
         component: modules[componentUrl],
         meta: {
+          dynamic: true,
           parentId: item.parentId,
           title: item.menuName,
           icon: item.icon,
+          menuType: item.menuType,
           visible: item.visible,
           isCache: item.isCache,
           isLink: item.isLink,
