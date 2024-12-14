@@ -75,5 +75,7 @@ export function getDictDataInfoApi(dictCode: number) {
  * @returns Promise
  */
 export function getDictDataListByTypeApi(dictType: string) {
-  return yoiAxios.get(Api.listByType + '/' + dictType)
+  return yoiAxios.get(Api.listByType + '/' + dictType, undefined, {
+    cancelRepeatRequest: false,
+  })
 }
