@@ -20,49 +20,49 @@
                 >保存头像</el-button
               >
             </div>
-            <div class="flex justify-between mt-20px p-y-12px">
+            <div class="flex justify-between mt-20px p-y-12px flex-wrap">
               <div class="flex items-center">
                 <el-icon size="15"> <UserFilled /> </el-icon>
                 <div class="p-l-2px">登录名称</div>
               </div>
               <div v-text="personalData.userName"></div>
             </div>
-            <div class="flex justify-between p-y-12px">
+            <div class="flex justify-between p-y-12px flex-wrap">
               <div class="flex items-center">
                 <el-icon size="15"> <User /> </el-icon>
                 <div class="p-l-2px">用户名称</div>
               </div>
               <div v-text="personalData.nickName"></div>
             </div>
-            <div class="flex justify-between p-y-12px">
+            <div class="flex justify-between p-y-12px flex-wrap">
               <div class="flex items-center">
                 <el-icon size="15"> <Iphone /> </el-icon>
                 <div class="p-l-2px">手机号码</div>
               </div>
               <div v-text="personalData.phone"></div>
             </div>
-            <div class="flex justify-between p-y-12px">
+            <div class="flex justify-between p-y-12px flex-wrap">
               <div class="flex items-center">
                 <el-icon size="15"> <Message /> </el-icon>
                 <div class="p-l-2px">用户邮箱</div>
               </div>
               <div v-text="personalData.email"></div>
             </div>
-            <div class="flex justify-between p-y-12px">
+            <div class="flex justify-between p-y-12px flex-wrap">
               <div class="flex items-center">
                 <el-icon size="15"> <Postcard /> </el-icon>
                 <div class="p-l-2px">所属部门</div>
               </div>
               <div v-text="personalData.deptName"></div>
             </div>
-            <div class="flex justify-between p-y-12px">
+            <div class="flex justify-between p-y-12px flex-wrap">
               <div class="flex items-center">
                 <el-icon size="15"> <Collection /> </el-icon>
                 <div class="p-l-2px">所属角色</div>
               </div>
               <div v-text="personalData.roleName"></div>
             </div>
-            <div class="flex justify-between p-y-12px">
+            <div class="flex justify-between p-y-12px flex-wrap">
               <div class="flex items-center">
                 <el-icon size="15"> <Calendar /> </el-icon>
                 <div class="p-l-2px">创建日期</div>
