@@ -25,6 +25,21 @@ export const layoutRouter: RouteRecordRaw[] = [
           activeMenu: '/dict_type', // 默认选中哪个路由
         },
       },
+      {
+        path: '/personage',
+        name: 'personagePage',
+        component: () => import('@/views/personage/index.vue'),
+        meta: {
+          parentId: 0,
+          title: '个人中心',
+          icon: 'User',
+          visible: 1,
+          isCache: 1,
+          isLink: 0,
+          linkType: 0,
+          linkUrl: '',
+        },
+      },
     ],
   },
   {
