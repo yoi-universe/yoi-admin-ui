@@ -53,14 +53,14 @@ export const layoutRouter: RouteRecordRaw[] = [
 ]
 
 export const errorRouter: RouteRecordRaw[] = [
-  {
-    path: '/403',
-    name: '403',
-    component: () => import('@/views/error/403.vue'),
-    meta: {
-      title: '403页面',
-    },
-  },
+  // {
+  //   path: '/403',
+  //   name: '403',
+  //   component: () => import('@/views/error/403.vue'),
+  //   meta: {
+  //     title: '403页面',
+  //   },
+  // },
   {
     path: '/404',
     name: '404',
