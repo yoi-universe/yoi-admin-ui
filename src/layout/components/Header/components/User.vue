@@ -12,7 +12,7 @@
       </div>
       <template #dropdown>
         <el-dropdown-menu>
-          <div v-auth="'system:personage:list'">
+          <div>
             <el-dropdown-item :command="USER_DROP_DOWN_MENU_PROFILE">
               个人中心
             </el-dropdown-item>
@@ -55,7 +55,6 @@ const logout = async () => {
 const handleCommand = (command: string) => {
   switch (command) {
     case USER_DROP_DOWN_MENU_PROFILE:
-      // TODO: 跳转个人中心
       router.push('/personage')
       break
     case USER_DROP_DOWN_MENU_LOGOUT:
