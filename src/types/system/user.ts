@@ -45,19 +45,19 @@ export interface UserInfo {
   sortNum: number
 
   /* 创建者 */
-  createBy: string
+  createBy?: string
 
   /* 创建时间 */
-  createTime: string
+  createTime?: string
 
   /* 更新者 */
-  updateBy: string
+  updateBy?: string
 
   /* 更新时间 */
-  updateTime: string
+  updateTime?: string
 
   /* 备注 */
-  remark: string
+  remark?: string
 
   /* 部门名称 */
   deptName?: string
