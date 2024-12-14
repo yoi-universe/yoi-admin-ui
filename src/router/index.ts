@@ -63,12 +63,7 @@ router.beforeEach(
         elMsgWarning('您未登录，或者登录已经超时，请先登录！')
       }
       // 重置路由
-      authStore.getMenuList.forEach(route => {
-        const { routeName } = route
-        if (routeName && router.hasRoute(routeName)) {
-          router.removeRoute(routeName)
-        }
-      })
+      resetRouter()
       return next()
     }
 
@@ -82,6 +77,13 @@ router.beforeEach(
     if (!authStore.getMenuList.length) {
       await initDynamicRouter()
       return next({ ...to, replace: true })
+    }
+
+    if (to.path === '/') {
+      const firstRoutes = getFirstDynamicRoutes()
+      if (firstRoutes) {
+        return next(firstRoutes.path)
+      }
     }
 
     next()
@@ -106,6 +108,35 @@ router.afterEach(
     nProgress.done()
   },
 )
+
+/**
+ * 重置路由
+ */
+export const resetRouter = () => {
+  const authStore = useAuthStore()
+  authStore.getMenuList.forEach(route => {
+    const { routeName } = route
+    if (routeName && router.hasRoute(routeName)) {
+      router.removeRoute(routeName)
+    }
+  })
+}
+
+/**
+ * 获取第一个动态菜单
+ */
+export function getFirstDynamicRoutes() {
+  const routesList = router.getRoutes()
+  const firstRoutes = routesList.find(
+    item =>
+      item.meta &&
+      item.meta.dynamic &&
+      item.meta.menuType === 1 &&
+      item.meta.isLink === 0 &&
+      item.meta.visible === 0,
+  )
+  return firstRoutes
+}
 
 export default router
 
