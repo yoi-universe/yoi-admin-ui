@@ -1,8 +1,11 @@
 import { MENU_CACHE_YES } from '@/constants/system'
 import type { TabInfo } from '@/types/tabs'
 import { defineStore } from 'pinia'
-import router from '@/router/index'
-import { HOME_URL, PINIA_PREFIX_KEY } from '@/config'
+import router, { getFirstDynamicRoutes } from '@/router/index'
+import {
+  // HOME_URL,
+  PINIA_PREFIX_KEY,
+} from '@/config'
 
 export const useTabsStore = defineStore('tabs', {
   state: (): State => ({
@@ -50,9 +53,15 @@ export const useTabsStore = defineStore('tabs', {
      * @param reservePath 保留的path
      */
     delManyTabs(reservePath?: string) {
+      // this.tabList = this.tabList.filter(
+      //   item =>
+      //     item.path === reservePath || (!reservePath && item.path === HOME_URL),
+      // )
+      const firstRoutes = getFirstDynamicRoutes()
       this.tabList = this.tabList.filter(
         item =>
-          item.path === reservePath || (!reservePath && item.path === HOME_URL),
+          item.path === reservePath ||
+          (!reservePath && item.path === firstRoutes?.path),
       )
       const keepAliveList = this.tabList.filter(
         item => item.isCache === MENU_CACHE_YES,
