@@ -1,5 +1,13 @@
 import yoiAxios from '../yoiAxios'
-import type { LoginParams, LoginRes, MenuInfoRes, UserInfoRes } from './type'
+import type {
+  LoginParams,
+  LoginRes,
+  MenuInfoRes,
+  PersonalData,
+  UpdatePasswordParams,
+  UpdatePersonalDataParams,
+  UserInfoRes,
+} from './type'
 
 const prefix = '/sys_auth'
 
@@ -8,6 +16,9 @@ enum Api {
   getInfo = prefix + '/get_info',
   getMenu = prefix + '/get_menu',
   logout = prefix + '/logout',
+  getPersonalData = prefix + '/get_personal_data',
+  updatePersonalData = prefix + '/update_personal_data',
+  updatePassword = prefix + '/update_password',
 }
 
 /**
@@ -46,4 +57,29 @@ export function getUserMenuApi() {
  */
 export function logoutApi() {
   return yoiAxios.post(Api.logout)
+}
+
+/**
+ * 获取个人数据
+ */
+export function getPersonalDataApi() {
+  return yoiAxios.get<PersonalData>(Api.getPersonalData)
+}
+
+/**
+ * 修改个人数据
+ */
+export function updatePersonalDataApi(data: Partial<UpdatePersonalDataParams>) {
+  return yoiAxios.post(Api.updatePersonalData, data, {
+    showCodeMessage: true,
+  })
+}
+
+/**
+ * 修改密码
+ */
+export function updatePasswordApi(data: UpdatePasswordParams) {
+  return yoiAxios.post(Api.updatePassword, data, {
+    showCodeMessage: true,
+  })
 }
