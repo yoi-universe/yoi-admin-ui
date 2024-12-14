@@ -1,5 +1,9 @@
 <template>
-  <div class="tab-card" v-show="show" :style="{ left: position.x + 'px', top: position.y + 'px' }">
+  <div
+    class="tab-card"
+    v-show="show"
+    :style="{ left: position.x + 'px', top: position.y + 'px' }"
+  >
     <div class="tab-menu-item" @click="handleRefresh">
       <YoiGlobalIcon icon="Refresh" class="mr-5px" />重新刷新
     </div>
@@ -16,23 +20,23 @@
 </template>
 
 <script lang="ts" setup>
-import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue';
-import { HOME_URL } from '@/config';
-import { MENU_CACHE_YES } from '@/constants/system';
-import { useTabsStore } from '@/stores';
-import { inject, nextTick, reactive, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue'
+// import { HOME_URL } from '@/config'
+import { MENU_CACHE_YES } from '@/constants/system'
+import { useTabsStore } from '@/stores'
+import { inject, nextTick, reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
 const tabsStore = useTabsStore()
 
-const show = ref(false);
-const choosePath = ref('');
+const show = ref(false)
+const choosePath = ref('')
 const position = reactive({
   x: 0,
-  y: 0
-});
+  y: 0,
+})
 
 const refreshPage: Function = inject('refresh')!
 
@@ -41,10 +45,12 @@ const handleRefresh = () => {
   // 刷新页面不为当前页面时跳转至刷新页面
   if (route.fullPath !== choosePath.value) router.push(choosePath.value)
   setTimeout(() => {
-    route.meta.isCache === MENU_CACHE_YES && tabsStore.removeKeepAliveList(route.name as string)
+    route.meta.isCache === MENU_CACHE_YES &&
+      tabsStore.removeKeepAliveList(route.name as string)
     refreshPage(false)
     nextTick(() => {
-      route.meta.isCache === MENU_CACHE_YES && tabsStore.addKeepAliveList(route.name as string)
+      route.meta.isCache === MENU_CACHE_YES &&
+        tabsStore.addKeepAliveList(route.name as string)
       refreshPage(true)
     })
   }, 0)
@@ -64,26 +70,27 @@ const handleCloseOther = () => {
 // 关闭所有标签
 const handleCloseAll = () => {
   tabsStore.delManyTabs()
-  router.push(HOME_URL)
+  // router.push(HOME_URL)
+  router.push('/')
 }
 
 const handleHideMenu = () => {
   if (show.value) {
-    show.value = false;
+    show.value = false
   }
-  window.removeEventListener('click', handleHideMenu);
+  window.removeEventListener('click', handleHideMenu)
 }
 
 const handleShowMenu = (path: string, x: number, y: number) => {
-  show.value = true;
-  choosePath.value = path;
-  position.x = x;
-  position.y = y;
-  window.addEventListener('click', handleHideMenu);
+  show.value = true
+  choosePath.value = path
+  position.x = x
+  position.y = y
+  window.addEventListener('click', handleHideMenu)
 }
 
 defineExpose({
-  handleShowMenu
+  handleShowMenu,
 })
 </script>
 
