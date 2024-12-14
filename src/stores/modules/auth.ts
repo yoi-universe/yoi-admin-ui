@@ -41,6 +41,29 @@ export const useAuthStore = defineStore('auth', {
   },
 })
 
+// const staticMenu: MenuInfo[] = [
+//   {
+//     menuId: 1,
+//     parentId: 0,
+//     menuName: '首页',
+//     path: '/home',
+//     routeName: 'homePage',
+//     component: 'views/home/index',
+//     activeMenu: '',
+//     query: '',
+//     isLink: 0,
+//     linkType: 0,
+//     linkUrl: '',
+//     isCache: 0,
+//     menuType: 1,
+//     perms: 'system:home',
+//     icon: 'HomeFilled',
+//     visible: 0,
+//     status: 0,
+//     sortNum: 1,
+//   },
+// ]
+
 interface State {
   menuList: MenuInfo[]
   MenuTreeList: MenuTree[]
