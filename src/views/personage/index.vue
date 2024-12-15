@@ -217,7 +217,7 @@ const personalData = ref<PersonalData>({
   email: '',
   phone: '',
   avatar: '',
-  sex: 0,
+  sex: 2,
   deptName: '',
   roleName: '',
   createTime: '',
@@ -228,7 +228,7 @@ const baseForm = ref<UpdatePersonalDataParams>({
   nickName: '',
   phone: '',
   email: '',
-  sex: 0,
+  sex: 2,
   avatar: '',
 })
 const baseRules = reactive({
@@ -304,7 +304,7 @@ const resetBaseForm = () => {
     nickName: '',
     phone: '',
     email: '',
-    sex: 0,
+    sex: 2,
     avatar: personalData.value.avatar,
   }
   if (baseFormRef.value) {

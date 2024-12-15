@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', {
       userType: 0,
       phone: '',
       email: '',
-      sex: 0,
+      sex: 2,
       avatar: '',
       status: 0,
       delFlag: 0,
