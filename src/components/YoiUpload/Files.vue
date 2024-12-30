@@ -269,7 +269,7 @@ interface Props {
   limit?: number // 允许上传文件的最大数量
   disabled?: boolean // 是否禁用上传
   fileSize?: number // 文件大小
-  fileList?: FileInfo[] // 文件大小
+  fileList?: FileInfo[] // 文件列表
   isDownload?: boolean // 是否可以下载
 }
 </script>
