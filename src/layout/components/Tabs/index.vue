@@ -1,12 +1,30 @@
 <template>
-  <el-tabs v-model="activeTab" type="card" class="tabs" @tab-click="handleTabClick" @tab-remove="handleTabRemove"
-    @contextmenu.prevent.stop="handleContextMenu">
-    <el-tab-pane v-for="item in tabList" :key="item.path" :label="item.title" :name="item.path"
-      :closable="tabList.length > 1">
+  <el-tabs
+    v-model="activeTab"
+    type="card"
+    class="tabs"
+    @tab-click="handleTabClick"
+    @tab-remove="handleTabRemove"
+    @contextmenu.prevent.stop="handleContextMenu"
+  >
+    <el-tab-pane
+      v-for="item in tabList"
+      :key="item.path"
+      :label="item.title"
+      :name="item.path"
+      :closable="tabList.length > 1"
+    >
       <template #label>
-        <div class="flex flex-justify-center flex-items-center select-none"
-          @contextmenu.prevent.stop="handleTabsMenuChildren(item.path, $event)">
-          <YoiGlobalIcon class="m-r-5px" v-show="item.icon" :icon="item.icon" size="16" />
+        <div
+          class="flex flex-justify-center flex-items-center select-none"
+          @contextmenu.prevent.stop="handleTabsMenuChildren(item.path, $event)"
+        >
+          <YoiGlobalIcon
+            class="m-r-5px"
+            v-show="item.icon"
+            :icon="item.icon"
+            size="16"
+          />
           <div class="p-t-1px">
             <div>{{ item.title }}</div>
           </div>
@@ -18,13 +36,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue';
-import TabMenu from './components/TabMenu.vue';
-import type { TabInfo } from '@/types/tabs';
-import { useTabsStore } from '@/stores';
-import type { TabsPaneContext } from 'element-plus';
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import YoiGlobalIcon from '@/components/YoiGlobalIcon/index.vue'
+import TabMenu from './components/TabMenu.vue'
+import type { TabInfo } from '@/types/tabs'
+import { useTabsStore } from '@/stores'
+import type { TabsPaneContext } from 'element-plus'
 
 const route = useRoute()
 const router = useRouter()
@@ -49,7 +67,7 @@ const addTab = () => {
     name: route.name as string,
     path: fullPath,
     icon: meta.icon as string,
-    isCache: meta.isCache as number
+    isCache: meta.isCache as number,
   }
   tabsStore.addTabs(tab)
 }
@@ -71,14 +89,25 @@ const handleContextMenu = (e: PointerEvent) => {
   const elm = e.target as HTMLDivElement
   if (!elm.id) return
   const choosePath = elm.id.split('-')[1]
-  const x = e.pageX
+  let x = e.pageX
   const y = e.pageY
+  // 获取页面显示区域的大小
+  const { innerWidth } = window
+  if (x + 120 > innerWidth) {
+    x -= 120
+  }
   tabMenuRef.value.handleShowMenu(choosePath, x, y)
 }
 
 const handleTabsMenuChildren = (path: string, e: MouseEvent) => {
-  const x = e.pageX
+  let x = e.pageX
   const y = e.pageY
+  // 获取页面显示区域的大小
+  const { innerWidth } = window
+  if (x + 120 > innerWidth) {
+    x -= 120
+  }
+
   tabMenuRef.value.handleShowMenu(path, x, y)
 }
 

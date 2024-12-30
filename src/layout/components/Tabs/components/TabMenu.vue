@@ -96,6 +96,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .tab-card {
+  width: 120px;
   position: absolute;
   z-index: 9;
   background-color: var(--el-bg-color);
