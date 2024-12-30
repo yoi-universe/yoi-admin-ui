@@ -232,7 +232,7 @@ interface Props {
       width: v-bind(width);
       height: v-bind(height);
       overflow: hidden;
-      border: 2px dashed var(--el-color-primary);
+      border: 1px dashed var(--el-color-primary);
       border-radius: v-bind(borderRadius);
       transition: var(--el-transition-duration-fast);
       &:hover {
