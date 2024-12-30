@@ -4,30 +4,53 @@
       <div class="header-options">
         <YoiDark>
           <template #dark>
-            <el-button type="primary" circle />
+            <div
+              v-if="!globalStore.isDark"
+              class="w-32px h-32px bg-[rgba(50,50,50,0.06)] border-rd-50% flex justify-center items-center"
+            >
+              <SvgIcon name="yoi-sun" width="20" height="20"></SvgIcon>
+            </div>
+            <div
+              v-else
+              class="w-32px h-32px bg-[rgba(255,255,255,0.06)] border-rd-50% flex justify-center items-center"
+            >
+              <SvgIcon name="yoi-moon" width="20" height="20"></SvgIcon>
+            </div>
           </template>
         </YoiDark>
       </div>
       <el-col :span="16" class="flex! items-center justify-center">
         <div class="login-background w-85% h-100%"></div>
         <div class="absolute text-center">
-          <img :src="loginBg" width="400" height="360" alt="">
+          <img :src="loginBg" width="400" height="360" alt="" />
         </div>
       </el-col>
-      <el-col :span="8" class="dark:bg-#161616 bg-gray-100 flex! flex-col items-center justify-center">
+      <el-col
+        :span="8"
+        class="dark:bg-#161616 bg-gray-100 flex! flex-col items-center justify-center"
+      >
         <div class="text-center">
           <div class="mb-18px font-bold font-size-24px">Yoi管理平台</div>
           <div class="mb-18px color-gray flex justify-center items-center">
             <div class="w-40px h-1px bg-gray-3 mx-10px"></div>
-            <div>
-              账号密码登录
-            </div>
+            <div>账号密码登录</div>
             <div class="w-40px h-1px bg-gray-3 mx-10px"></div>
           </div>
         </div>
-        <el-form ref="formRef" class="w-60%" :model="formData" hide-required-asterisk :rules="rules">
+        <el-form
+          ref="formRef"
+          class="w-60%"
+          :model="formData"
+          hide-required-asterisk
+          :rules="rules"
+        >
           <el-form-item prop="userName">
-            <el-input v-model="formData.userName" type="text" placeholder="请输入用户名" autocomplete="off">
+            <el-input
+              v-model="formData.userName"
+              type="text"
+              placeholder="请输入用户名"
+              autocomplete="off"
+            >
               <template #prefix>
                 <el-icon>
                   <User />
@@ -37,7 +60,12 @@
           </el-form-item>
 
           <el-form-item prop="password">
-            <el-input v-model="formData.password" type="password" placeholder="请输入密码" autocomplete="off">
+            <el-input
+              v-model="formData.password"
+              type="password"
+              placeholder="请输入密码"
+              autocomplete="off"
+            >
               <template #prefix>
                 <el-icon>
                   <Lock />
@@ -47,8 +75,13 @@
           </el-form-item>
 
           <el-form-item prop="captcha">
-            <el-input v-model="formData.captcha" type="text" placeholder="请输入验证码" autocomplete="off"
-              @keyup.enter="submitForm">
+            <el-input
+              v-model="formData.captcha"
+              type="text"
+              placeholder="请输入验证码"
+              autocomplete="off"
+              @keyup.enter="submitForm"
+            >
               <template #prefix>
                 <el-icon>
                   <Key />
@@ -58,16 +91,34 @@
           </el-form-item>
 
           <el-form-item>
-            <el-image style="width: 100px; height: 30px" :src="captchaImage" @click="getCaptchaImage" />
-            <el-button class="ml-2 group" type="info" size="small" text @click="getCaptchaImage">
-              <span class=" font-size-12px group-hover:color-[--el-color-primary]">
+            <el-image
+              style="width: 100px; height: 30px"
+              :src="captchaImage"
+              @click="getCaptchaImage"
+            />
+            <el-button
+              class="ml-2 group"
+              type="info"
+              size="small"
+              text
+              @click="getCaptchaImage"
+            >
+              <span
+                class="font-size-12px group-hover:color-[--el-color-primary]"
+              >
                 看不起，换一张
               </span>
             </el-button>
           </el-form-item>
 
           <el-form-item>
-            <el-button class="w-100%" round type="primary" :loading="loading" v-throttle:1000="submitForm">
+            <el-button
+              class="w-100%"
+              round
+              type="primary"
+              :loading="loading"
+              v-throttle:1000="submitForm"
+            >
               登录
             </el-button>
           </el-form-item>
@@ -78,17 +129,18 @@
 </template>
 
 <script lang="ts" setup>
-import { getCaptchaImageApi } from '@/api/captcha';
-import { onMounted, reactive, ref } from 'vue';
-import YoiDark from '@/components/YoiDark/index.vue';
-import { type FormInstance, type FormRules } from 'element-plus';
-import { getAssets } from '@/utils/index';
-import type { LoginParams } from '@/api/auth/type';
-import { md5 } from 'js-md5';
-import { loginApi } from '@/api/auth';
-import { elMsgError, elMsgSuccess } from '@/utils/elMsg';
-import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/stores';
+import { getCaptchaImageApi } from '@/api/captcha'
+import { onMounted, reactive, ref } from 'vue'
+import YoiDark from '@/components/YoiDark/index.vue'
+import { type FormInstance, type FormRules } from 'element-plus'
+import { getAssets } from '@/utils/index'
+import type { LoginParams } from '@/api/auth/type'
+import { md5 } from 'js-md5'
+import { loginApi } from '@/api/auth'
+import { elMsgError, elMsgSuccess } from '@/utils/elMsg'
+import { useRoute, useRouter } from 'vue-router'
+import { useGlobalStore, useUserStore } from '@/stores'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const loginBg = getAssets('images/login/login-bg.png')
 const captchaImage = ref('')
@@ -101,12 +153,13 @@ const formData = reactive<LoginParams>({
   key: '',
 })
 
-
 const rules = reactive<FormRules<typeof formData>>({
-  userName: [{ required: true, message: '用户名不能为空', trigger: 'blur' },],
-  password: [{ required: true, message: '密码不能为空', trigger: 'blur' },],
-  captcha: [{ required: true, message: '验证码不能为空', trigger: 'blur' },],
+  userName: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
+  password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
+  captcha: [{ required: true, message: '验证码不能为空', trigger: 'blur' }],
 })
+
+const globalStore = useGlobalStore()
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -115,13 +168,13 @@ const submitForm = () => {
   // 判断是否已经提交
   if (loading.value) return
   if (!formRef.value) return
-  formRef.value.validate(async (valid) => {
+  formRef.value.validate(async valid => {
     if (valid) {
       loading.value = true
       console.log('submit!')
       let params: LoginParams = {
         ...formData,
-        password: md5(formData.password).toUpperCase()
+        password: md5(formData.password).toUpperCase(),
       }
       const res = await loginApi(params).catch(e => e)
       if (res.code === 200) {
@@ -160,7 +213,6 @@ const getCaptchaImage = () => {
 onMounted(() => {
   getCaptchaImage()
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -174,9 +226,13 @@ onMounted(() => {
     z-index: 9;
   }
 
-
   .login-background {
-    background: linear-gradient(155deg, #07070915 12%, var(--el-color-primary) 36%, #07070915 76%);
+    background: linear-gradient(
+      155deg,
+      #07070915 12%,
+      var(--el-color-primary) 36%,
+      #07070915 76%
+    );
     filter: blur(100px);
   }
 }
