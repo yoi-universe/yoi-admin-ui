@@ -8,6 +8,8 @@ import i18n from '@/languages'
 
 import ElementPlus from 'element-plus' // element-plus 组件库
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+// SVG插件配置
+import 'virtual:svg-icons-register'
 
 /**
  * css样式
