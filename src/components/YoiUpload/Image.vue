@@ -79,7 +79,7 @@ import {
 import { computed, inject, ref, useId } from 'vue'
 
 const uid = useId()
-const prefix = import.meta.env.VITE_FILE_URL + '/get_img/'
+const prefix = import.meta.env.VITE_IMAGE_URL + '/'
 const imageUrl = defineModel<string>('imageUrl')
 const {
   action = '/common/upload_img',
