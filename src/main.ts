@@ -4,18 +4,17 @@ import App from './App.vue'
 import router from './router'
 import pinia from '@/stores'
 
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
 import i18n from '@/languages'
+
+import ElementPlus from 'element-plus' // element-plus 组件库
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 /**
  * css样式
  */
 import '@/styles/index.scss' // 全局样式
 import 'nprogress/nprogress.css' // 进度条
-import 'element-plus/theme-chalk/el-message.css' // 消息提示样式
-import 'element-plus/theme-chalk/el-message-box.css'
-import 'element-plus/theme-chalk/el-loading.css'
+import 'element-plus/dist/index.css' // element-plus 样式
 import 'element-plus/theme-chalk/dark/css-vars.css' // element plus dark 样式
 import 'virtual:uno.css' // UnoCss
 
@@ -35,5 +34,6 @@ app.use(pinia)
 app.use(router)
 app.use(i18n)
 app.use(YoiDirectives)
+app.use(ElementPlus)
 
 app.mount('#app')
