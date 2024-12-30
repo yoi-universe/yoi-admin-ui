@@ -50,6 +50,7 @@ declare module 'vue' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
     ElUpload: typeof import('element-plus/es')['ElUpload']
+    Files: typeof import('./src/components/YoiUpload/Files.vue')['default']
     Image: typeof import('./src/components/YoiUpload/Image.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

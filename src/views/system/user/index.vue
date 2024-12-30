@@ -272,7 +272,7 @@ import {
 } from '@/api/system/user'
 import type { DeptInfo } from '@/types/system/dept'
 
-const prefix = import.meta.env.VITE_FILE_URL + '/get_img/'
+const prefix = import.meta.env.VITE_IMAGE_URL + '/'
 
 const searchParams = ref<GetUserListParams>({
   userName: '',

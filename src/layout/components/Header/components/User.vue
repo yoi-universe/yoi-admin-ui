@@ -39,7 +39,7 @@ import { useUserStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
-const prefix = import.meta.env.VITE_FILE_URL + '/get_img/'
+const prefix = import.meta.env.VITE_IMAGE_URL + '/'
 const userStore = useUserStore()
 const { userInfo } = storeToRefs(userStore)
 
