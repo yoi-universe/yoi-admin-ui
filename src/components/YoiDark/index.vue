@@ -7,9 +7,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { useGlobalStore } from '@/stores'
+import { onMounted, ref } from 'vue'
 
 const isDark = ref(false)
+const globalStore = useGlobalStore()
+const { setDark } = globalStore
 
 const switchTheme = () => {
   const html = document.documentElement
@@ -23,39 +26,45 @@ const handleSwitchDark = (event: MouseEvent) => {
   // 计算按钮到最远点的距离用作裁剪圆形的半径
   const endRadius = Math.hypot(
     Math.max(x, innerWidth - x),
-    Math.max(y, innerHeight - y)
+    Math.max(y, innerHeight - y),
   )
 
   if (document.startViewTransition == undefined) {
     console.log('你的浏览器不支持view transition')
     // 切换主题逻辑
     isDark.value = !isDark.value
+    setDark(isDark.value)
     switchTheme()
   } else {
     const transition = document.startViewTransition(() => {
       // 切换主题逻辑
       isDark.value = !isDark.value
+      setDark(isDark.value)
       switchTheme()
     })
     transition.ready.then(() => {
       const clipPath = [
         `circle(0px at ${x}px ${y}px)`,
         `circle(${endRadius}px at ${x}px ${y}px)`,
-      ];
+      ]
       document.documentElement.animate(
         { clipPath: isDark.value ? clipPath : [...clipPath].reverse() },
         {
           duration: 400,
-          easing: "ease-in",
+          easing: 'ease-in',
           pseudoElement: isDark.value
-            ? "::view-transition-new(root)"
-            : "::view-transition-old(root)",
-        }
+            ? '::view-transition-new(root)'
+            : '::view-transition-old(root)',
+        },
       )
     })
   }
-
 }
+
+onMounted(() => {
+  isDark.value = globalStore.isDark
+  switchTheme()
+})
 </script>
 
 <style lang="scss">
