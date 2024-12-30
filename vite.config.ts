@@ -5,12 +5,24 @@ import vue from '@vitejs/plugin-vue'
 // keepAlive 组件 name
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import UnoCSS from 'unocss/vite'
+// 引入svg需要的插件
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd())
   return {
-    plugins: [vue(), vueSetupExtend(), UnoCSS()],
+    plugins: [
+      vue(),
+      vueSetupExtend(),
+      UnoCSS(),
+      createSvgIconsPlugin({
+        // 配置SVG图片
+        iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+        symbolId: 'icon-[dir]-[name]',
+      }),
+    ],
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
