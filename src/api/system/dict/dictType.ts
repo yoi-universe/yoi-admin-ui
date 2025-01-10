@@ -75,7 +75,9 @@ export function getDictTypeInfoApi(dictId: number) {
  * @returns Promise
  */
 export function getDictTypeAllApi() {
-  return yoiAxios.get<DictTypeInfo[]>(Api.listAll)
+  return yoiAxios.get<DictTypeInfo[]>(Api.listAll, undefined, {
+    cancelRepeatRequest: false,
+  })
 }
 
 /**
