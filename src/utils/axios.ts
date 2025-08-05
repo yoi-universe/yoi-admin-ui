@@ -1,5 +1,6 @@
 import type {
   AxiosInstance,
+  AxiosRequestConfig,
   AxiosResponse,
   Canceler,
   CreateAxiosDefaults,
@@ -205,7 +206,7 @@ export default abstract class AbsAxios {
     options?: Options,
   ): Promise<Result<T>> {
     this.configureOptions(options)
-    return this.instance.get(url, { params })
+    return this.instance.get(url, { params, ...options?.config })
   }
 
   /**
@@ -222,7 +223,7 @@ export default abstract class AbsAxios {
     options?: Options,
   ): Promise<Result<T>> {
     this.configureOptions(options)
-    return this.instance.post(url, data)
+    return this.instance.post(url, data, options?.config)
   }
 
   /**
@@ -239,7 +240,7 @@ export default abstract class AbsAxios {
     options?: Options,
   ): Promise<Result<T>> {
     this.configureOptions(options)
-    return this.instance.put(url, data)
+    return this.instance.put(url, data, options?.config)
   }
 
   /**
@@ -256,7 +257,7 @@ export default abstract class AbsAxios {
     options?: Options,
   ): Promise<Result<T>> {
     this.configureOptions(options)
-    return this.instance.delete(url, { data })
+    return this.instance.delete(url, { data, ...options?.config })
   }
 
   /**
@@ -276,6 +277,7 @@ export default abstract class AbsAxios {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      ...options?.config,
     })
   }
 }
@@ -301,6 +303,8 @@ export interface Options {
   showCodeMessage?: boolean
   // 是否开启全局错误提示, 默认为true
   showMessage?: boolean
+  // 请求配置
+  config?: AxiosRequestConfig
 }
 
 /**
