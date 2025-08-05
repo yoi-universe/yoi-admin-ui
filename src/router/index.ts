@@ -133,7 +133,8 @@ export function getFirstDynamicRoutes() {
       item.meta.dynamic &&
       item.meta.menuType === 1 &&
       item.meta.isLink === 0 &&
-      item.meta.visible === 0,
+      item.meta.visible === 0 &&
+      !item.meta.activeMenu,
   )
   return firstRoutes
 }
