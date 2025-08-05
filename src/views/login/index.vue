@@ -46,7 +46,7 @@
         >
           <el-form-item prop="userName">
             <el-input
-              v-model="formData.userName"
+              v-model.trim="formData.userName"
               type="text"
               placeholder="请输入用户名"
               autocomplete="off"
@@ -61,7 +61,7 @@
 
           <el-form-item prop="password">
             <el-input
-              v-model="formData.password"
+              v-model.trim="formData.password"
               type="password"
               placeholder="请输入密码"
               autocomplete="off"
@@ -76,7 +76,7 @@
 
           <el-form-item prop="captcha">
             <el-input
-              v-model="formData.captcha"
+              v-model.trim="formData.captcha"
               type="text"
               placeholder="请输入验证码"
               autocomplete="off"
@@ -176,7 +176,10 @@ const submitForm = () => {
         ...formData,
         password: md5(formData.password).toUpperCase(),
       }
-      const res = await loginApi(params).catch(e => e)
+      const res = await loginApi(params).catch(e => {
+        getCaptchaImage()
+        return e
+      })
       if (res.code === 200) {
         const data = res.data
         userStore.setToken(data.token)
