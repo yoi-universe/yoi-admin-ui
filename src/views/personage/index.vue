@@ -87,7 +87,7 @@
                   <el-col :xs="{ span: 24 }" :sm="{ span: 24 }">
                     <el-form-item label="用户名称" prop="nickName">
                       <el-input
-                        v-model="baseForm.nickName"
+                        v-model.trim="baseForm.nickName"
                         placeholder="请输入用户名称"
                         clearable
                       />
@@ -96,7 +96,7 @@
                   <el-col :xs="{ span: 24 }" :sm="{ span: 24 }">
                     <el-form-item label="手机号码" prop="phone">
                       <el-input
-                        v-model="baseForm.phone"
+                        v-model.trim="baseForm.phone"
                         placeholder="请输入手机号码"
                         clearable
                       />
@@ -105,7 +105,7 @@
                   <el-col :xs="{ span: 24 }" :sm="{ span: 24 }">
                     <el-form-item label="邮箱" prop="email">
                       <el-input
-                        v-model="baseForm.email"
+                        v-model.trim="baseForm.email"
                         placeholder="请输入邮箱"
                         clearable
                       />
@@ -145,7 +145,7 @@
                   <el-col :xs="{ span: 24 }" :sm="{ span: 24 }">
                     <el-form-item label="密码" prop="password">
                       <el-input
-                        v-model="pwdForm.password"
+                        v-model.trim="pwdForm.password"
                         placeholder="请输入旧密码"
                         show-password
                         clearable
@@ -155,7 +155,7 @@
                   <el-col :xs="{ span: 24 }" :sm="{ span: 24 }">
                     <el-form-item label="新密码" prop="newPassword">
                       <el-input
-                        v-model="pwdForm.newPassword"
+                        v-model.trim="pwdForm.newPassword"
                         placeholder="请输入新密码"
                         show-password
                         clearable
@@ -165,7 +165,7 @@
                   <el-col :xs="{ span: 24 }" :sm="{ span: 24 }">
                     <el-form-item label="确认密码" prop="confirmPassword">
                       <el-input
-                        v-model="pwdForm.confirmPassword"
+                        v-model.trim="pwdForm.confirmPassword"
                         placeholder="请输入确认密码"
                         show-password
                         clearable

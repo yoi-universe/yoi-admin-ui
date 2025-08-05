@@ -46,7 +46,7 @@
             <!-- 部门名称 -->
             <el-form-item label="部门名称" prop="deptName">
               <el-input
-                v-model="form.deptName"
+                v-model.trim="form.deptName"
                 placeholder="请输入部门名称"
               ></el-input>
             </el-form-item>
@@ -55,7 +55,7 @@
             <!-- 负责人 -->
             <el-form-item label="负责人" prop="leader">
               <el-input
-                v-model="form.leader"
+                v-model.trim="form.leader"
                 placeholder="请输入负责人"
               ></el-input>
             </el-form-item>
@@ -67,7 +67,7 @@
             <!-- 联系电话 -->
             <el-form-item label="联系电话" prop="phone">
               <el-input
-                v-model="form.phone"
+                v-model.trim="form.phone"
                 placeholder="请输入联系电话"
               ></el-input>
             </el-form-item>
@@ -76,7 +76,7 @@
             <!-- 邮箱 -->
             <el-form-item label="邮箱" prop="email">
               <el-input
-                v-model="form.email"
+                v-model.trim="form.email"
                 placeholder="请输入邮箱"
               ></el-input>
             </el-form-item>

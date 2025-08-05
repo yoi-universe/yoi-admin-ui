@@ -15,7 +15,7 @@
             <!-- 字典名称 -->
             <el-form-item label="字典名称" prop="dictName">
               <el-input
-                v-model="form.dictName"
+                v-model.trim="form.dictName"
                 placeholder="请输入字典名称"
               ></el-input>
             </el-form-item>
@@ -24,7 +24,7 @@
             <!-- 字典类型 -->
             <el-form-item label="字典类型" prop="dictType">
               <el-input
-                v-model="form.dictType"
+                v-model.trim="form.dictType"
                 placeholder="请输入字典类型"
               ></el-input>
             </el-form-item>

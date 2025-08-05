@@ -71,7 +71,7 @@
             <!-- 菜单名称 -->
             <el-form-item label="菜单名称" prop="menuName">
               <el-input
-                v-model="form.menuName"
+                v-model.trim="form.menuName"
                 placeholder="请输入菜单名称"
               ></el-input>
             </el-form-item>
@@ -92,7 +92,7 @@
             <!-- 路由名称 -->
             <el-form-item label="路由名称" prop="routeName">
               <el-input
-                v-model="form.routeName"
+                v-model.trim="form.routeName"
                 placeholder="例如：userPage[唯一]"
               ></el-input>
             </el-form-item>
@@ -106,7 +106,7 @@
             <!-- 路由地址 -->
             <el-form-item label="路由地址" prop="path">
               <el-input
-                v-model="form.path"
+                v-model.trim="form.path"
                 placeholder="例如：/user[唯一]"
               ></el-input>
             </el-form-item>
@@ -118,7 +118,7 @@
             <!-- 权限标识 -->
             <el-form-item label="权限标识" prop="perms">
               <el-input
-                v-model="form.perms"
+                v-model.trim="form.perms"
                 placeholder="例如：system:user:list"
               ></el-input>
             </el-form-item>
@@ -148,7 +148,7 @@
             <!-- 路由参数 -->
             <el-form-item label="路由参数" prop="query">
               <el-input
-                v-model="form.query"
+                v-model.trim="form.query"
                 placeholder="例如：{'id':1}"
               ></el-input>
             </el-form-item>
@@ -162,7 +162,7 @@
             <!-- 组件路径 -->
             <el-form-item label="组件路径" prop="component">
               <el-input
-                v-model="form.component"
+                v-model.trim="form.component"
                 placeholder="例如：views/system/user/index"
               ></el-input>
             </el-form-item>
@@ -178,7 +178,7 @@
             <!-- 选中路由 -->
             <el-form-item label="选中路由" prop="activeMenu">
               <el-input
-                v-model="form.activeMenu"
+                v-model.trim="form.activeMenu"
                 placeholder="例如：/dict_type"
               ></el-input>
             </el-form-item>
@@ -254,7 +254,7 @@
             <!-- 外链地址 -->
             <el-form-item label="外链地址" prop="linkUrl">
               <el-input
-                v-model="form.linkUrl"
+                v-model.trim="form.linkUrl"
                 placeholder="例如：http://www.baidu.com"
               ></el-input>
             </el-form-item>

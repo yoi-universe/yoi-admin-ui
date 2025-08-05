@@ -15,7 +15,7 @@
             <!-- 字典标签 -->
             <el-form-item label="字典标签" prop="dictLabel">
               <el-input
-                v-model="form.dictLabel"
+                v-model.trim="form.dictLabel"
                 placeholder="请输入字典标签"
               ></el-input>
             </el-form-item>
@@ -24,7 +24,7 @@
             <!-- 字典数据 -->
             <el-form-item label="字典数据" prop="dictValue">
               <el-input
-                v-model="form.dictValue"
+                v-model.trim="form.dictValue"
                 placeholder="请输入字典数据"
               ></el-input>
             </el-form-item>
@@ -48,7 +48,7 @@
           <el-col :xs="{ span: 24 }" :sm="{ span: 12 }" class="pl-10px">
             <el-form-item label="样式属性" prop="cssClass">
               <el-input
-                v-model="form.cssClass"
+                v-model.trim="form.cssClass"
                 placeholder="例如：width: 100px;"
               ></el-input>
             </el-form-item>

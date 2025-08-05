@@ -15,7 +15,7 @@
             <!-- 角色名称 -->
             <el-form-item label="角色名称" prop="roleName">
               <el-input
-                v-model="form.roleName"
+                v-model.trim="form.roleName"
                 placeholder="请输入角色名称"
               ></el-input>
             </el-form-item>
@@ -24,7 +24,7 @@
             <!-- 角色编号 -->
             <el-form-item label="角色编号" prop="roleKey">
               <el-input
-                v-model="form.roleKey"
+                v-model.trim="form.roleKey"
                 placeholder="请输入角色编号"
               ></el-input>
             </el-form-item>

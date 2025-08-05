@@ -15,7 +15,7 @@
             <!-- 登录账号 -->
             <el-form-item label="登录账号" prop="userName">
               <el-input
-                v-model="form.userName"
+                v-model.trim="form.userName"
                 placeholder="请输入登录账号"
               ></el-input>
             </el-form-item>
@@ -54,7 +54,7 @@
             <!-- 用户名称 -->
             <el-form-item label="用户名称" prop="nickName">
               <el-input
-                v-model="form.nickName"
+                v-model.trim="form.nickName"
                 placeholder="请输入用户名称"
               ></el-input>
             </el-form-item>
@@ -63,7 +63,7 @@
             <!-- 密码 -->
             <el-form-item label="密码" prop="password">
               <el-input
-                v-model="form.password"
+                v-model.trim="form.password"
                 type="password"
                 placeholder="请输入密码"
               ></el-input>
@@ -115,7 +115,7 @@
             <!-- 手机号码 -->
             <el-form-item label="手机号码" prop="phone">
               <el-input
-                v-model="form.phone"
+                v-model.trim="form.phone"
                 placeholder="请输入手机号码"
               ></el-input>
             </el-form-item>
@@ -124,7 +124,7 @@
             <!-- 邮箱 -->
             <el-form-item label="邮箱" prop="email">
               <el-input
-                v-model="form.email"
+                v-model.trim="form.email"
                 placeholder="请输入邮箱"
               ></el-input>
             </el-form-item>
