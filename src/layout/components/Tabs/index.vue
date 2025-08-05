@@ -126,6 +126,10 @@ onMounted(() => {
 .tabs {
   border-bottom: 1px solid var(--el-border-color-light);
   @apply dark:border-[--el-border-color-light];
+
+  :deep(.el-tabs__nav) {
+    padding-top: 1px;
+  }
 }
 
 :deep(.el-tabs__item:first-child) {
