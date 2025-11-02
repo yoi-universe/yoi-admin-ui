@@ -280,6 +280,14 @@ export default abstract class AbsAxios {
       ...options?.config,
     })
   }
+
+  /**
+   * 获取 axios 实例
+   * @returns AxiosInstance
+   */
+  public getInstance(): AxiosInstance {
+    return this.instance
+  }
 }
 
 /**
