@@ -109,7 +109,7 @@
           <template #default="{ row }">
             <el-link
               type="primary"
-              :underline="false"
+              underline="never"
               @click="handleView(row)"
               >{{ row.dictType }}</el-link
             >
