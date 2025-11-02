@@ -25,6 +25,11 @@ import 'virtual:uno.css' // UnoCss
  */
 import YoiDirectives from '@/directives/index'
 
+/**
+ * 插件
+ */
+import 'default-passive-events'
+
 const app = createApp(App)
 
 // 注册element plus 所有图标
