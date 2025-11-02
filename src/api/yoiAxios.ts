@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores'
 import AbsAxios, { type Options, type Result } from '@/utils/axios'
 import { elMsg } from '@/utils/elMsg'
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
-import { ElLoading, type LoadingOptions, type messageType } from 'element-plus'
+import { ElLoading, type LoadingOptions, type MessageType } from 'element-plus'
 
 class YoiAxios extends AbsAxios {
   public options: IOptions = {}
@@ -24,7 +24,7 @@ class YoiAxios extends AbsAxios {
         timeout: 10000,
       },
       {
-        showMessage(message: string, type: messageType) {
+        showMessage(message: string, type: MessageType) {
           elMsg(message, type)
         },
       },
