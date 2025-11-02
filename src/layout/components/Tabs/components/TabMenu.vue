@@ -70,8 +70,6 @@ const handleCloseOther = () => {
 // 关闭所有标签
 const handleCloseAll = () => {
   tabsStore.delManyTabs()
-  // router.push(HOME_URL)
-  router.push('/')
 }
 
 const handleHideMenu = () => {

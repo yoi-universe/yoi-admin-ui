@@ -34,11 +34,22 @@ export const useTabsStore = defineStore('tabs', {
      * @param isCurrent 是否是当前页
      */
     delTabs(path: string, isCurrent: boolean) {
+      // 获取第一个动态路由。如果 path 是第一个动态路由，并且 只有一个 tab，则不删除
+      const firstRoutes = getFirstDynamicRoutes()
+      if (path === firstRoutes?.path && this.tabList.length === 1) {
+        this.delManyTabs()
+        return
+      }
       const tabItem = this.tabList.find(item => item.path === path)
       tabItem?.isCache === MENU_CACHE_YES &&
         this.removeKeepAliveList(tabItem.name)
       const oldTabsList = this.tabList
       this.tabList = this.tabList.filter(item => item.path !== path)
+      // 判断标签页是否被清空，清空就跳转到首页
+      if (!this.tabList.length) {
+        router.push('/')
+        return
+      }
       // 判断删除的是否是当前页，为当前页面，就选上一个或者下一个
       isCurrent &&
         oldTabsList.forEach((item, index) => {
@@ -67,6 +78,7 @@ export const useTabsStore = defineStore('tabs', {
         item => item.isCache === MENU_CACHE_YES,
       )
       this.keepAliveList = keepAliveList.map(item => item.name)
+      router.push('/')
     },
     addKeepAliveList(name: string) {
       !this.keepAliveList.includes(name) && this.keepAliveList.push(name)
