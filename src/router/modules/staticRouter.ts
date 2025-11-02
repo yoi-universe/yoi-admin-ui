@@ -22,7 +22,7 @@ export const layoutRouter: RouteRecordRaw[] = [
           isLink: 0,
           linkType: 0,
           linkUrl: '',
-          activeMenu: '/dict_type', // 默认选中哪个路由
+          activeMenu: '/system/dict_type', // 默认选中哪个路由
         },
       },
       {

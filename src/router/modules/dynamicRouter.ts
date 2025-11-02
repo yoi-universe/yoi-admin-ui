@@ -2,6 +2,7 @@ import { getUserInfoApi, getUserMenuApi } from '@/api/auth'
 import { useAuthStore, useUserStore } from '@/stores'
 import router from '..'
 import { LOGIN_URL } from '@/config'
+import type { RouteRecordRaw } from 'vue-router'
 
 export const initDynamicRouter = async () => {
   const modules = import.meta.glob('@/views/**/*.vue')
@@ -37,9 +38,11 @@ export const initDynamicRouter = async () => {
         const url = '/src/' + componentPath + '.vue'
         modules[url] ? (componentUrl = url) : componentUrl
       }
-      const route = {
+      const route: RouteRecordRaw = {
         path: item.path,
         name: item.routeName,
+        redirect: undefined,
+        children: [],
         component: modules[componentUrl],
         meta: {
           dynamic: true,

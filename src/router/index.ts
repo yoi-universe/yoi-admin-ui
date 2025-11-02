@@ -29,7 +29,7 @@ const routerMode: RouterMode = {
 }
 
 const router = createRouter({
-  history: routerMode[mode](),
+  history: routerMode[mode]!(),
   routes: [...layoutRouter, ...errorRouter],
   scrollBehavior() {
     return { left: 0, top: 0 }
