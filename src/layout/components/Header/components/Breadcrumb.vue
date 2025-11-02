@@ -46,7 +46,7 @@ const breadcrumbList = computed(() => {
 const router = useRouter()
 const handleBreadcrumb = (item: Partial<MenuTree>) => {
   if (item.children && item.children.length) {
-    const firstRouter = item.children[0]
+    const firstRouter = item.children[0]!
     router.push(firstRouter.path)
   }
 }

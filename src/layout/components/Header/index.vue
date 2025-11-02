@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts" setup>
-import Collapse from './components/Collapse.vue';
-import Breadcrumb from './components/Breadcrumb.vue';
-import Toolbar from './components/Toolbar.vue';
+import Collapse from './components/Collapse.vue'
+import Breadcrumb from './components/Breadcrumb.vue'
+import Toolbar from './components/Toolbar.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -24,6 +24,7 @@ import Toolbar from './components/Toolbar.vue';
   height: $aside-header-height;
 
   .header-left {
+    flex: 1;
     display: flex;
     align-items: center;
     overflow: hidden;
