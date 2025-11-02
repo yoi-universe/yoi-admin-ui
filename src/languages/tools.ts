@@ -13,8 +13,8 @@ const generateLangModuleMap = () => {
   const fullPaths = Object.keys(langModules)
   fullPaths.forEach(fullPath => {
     const moduleName = fullPath.split('/').slice(-2)[0]
-    langCode.push(moduleName)
-    langModuleMap.set(moduleName, (langModules[fullPath] as any)?.default)
+    langCode.push(moduleName!)
+    langModuleMap.set(moduleName!, (langModules[fullPath] as any)?.default)
   })
 }
 
