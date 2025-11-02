@@ -19,14 +19,19 @@
           </template>
         </YoiDark>
       </div>
-      <el-col :span="16" class="flex! items-center justify-center">
-        <div class="login-background w-85% h-100%"></div>
-        <div class="absolute text-center">
-          <img :src="loginBg" width="400" height="360" alt="" />
+      <el-col :lg="16" :md="12" :sm="15" :xs="0">
+        <div class="flex! items-center justify-center h-100%">
+          <div class="login-background w-85% h-100%"></div>
+          <div class="absolute text-center">
+            <img :src="loginBg" width="400" height="360" alt="" />
+          </div>
         </div>
       </el-col>
       <el-col
-        :span="8"
+        :lg="8"
+        :md="12"
+        :sm="9"
+        :xs="24"
         class="dark:bg-#161616 bg-gray-100 flex! flex-col items-center justify-center"
       >
         <div class="text-center">
@@ -39,7 +44,7 @@
         </div>
         <el-form
           ref="formRef"
-          class="w-60%"
+          class="w-260px"
           :model="formData"
           hide-required-asterisk
           :rules="rules"
