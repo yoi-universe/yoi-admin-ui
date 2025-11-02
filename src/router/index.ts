@@ -126,15 +126,14 @@ export const resetRouter = () => {
  * 获取第一个动态菜单
  */
 export function getFirstDynamicRoutes() {
-  const routesList = router.getRoutes()
-  const firstRoutes = routesList.find(
+  const authStore = useAuthStore()
+  const firstRoutes = authStore.menuList.find(
     item =>
-      item.meta &&
-      item.meta.dynamic &&
-      item.meta.menuType === 1 &&
-      item.meta.isLink === 0 &&
-      item.meta.visible === 0 &&
-      !item.meta.activeMenu,
+      item &&
+      item.menuType === 1 &&
+      item.isLink === 0 &&
+      item.visible === 0 &&
+      !item.activeMenu,
   )
   return firstRoutes
 }
